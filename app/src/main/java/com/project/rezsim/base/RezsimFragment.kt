@@ -13,7 +13,6 @@ open class RezsimFragment : Fragment() {
 
     protected open val contentId: Int = 0
 
-    open fun createViewModel() {}
     open fun setupViews() {}
     open fun subscribeObservers() {}
 
@@ -29,6 +28,7 @@ open class RezsimFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupViews()
         subscribeObservers()
     }
 

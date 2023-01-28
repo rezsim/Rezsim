@@ -22,6 +22,8 @@ class MainActivityViewModel : RezsimViewModel() {
         currentFragmentTag = SplashFragment.TAG
     }
 
+    fun currentFragmentTag() = currentFragmentTag
+
     private fun setWorkFragment(fragmentTag: String) {
         loadWorkFragmentLiveData.value = currentFragmentTag
         headerVisbileLiveData.value = fragmentTag != SplashFragment.TAG
