@@ -1,5 +1,6 @@
 package com.project.rezsim.ui
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.base.RezsimViewModel
 import com.project.rezsim.ui.household.HouseholdFragment
@@ -26,6 +27,7 @@ class MainActivityViewModel : RezsimViewModel() {
         }
 
     init {
+        Log.d("DEBINFO", "MainActivityViewModel.init")
         currentFragmentTag = SplashFragment.TAG
         splashViewModel.finishedLiveData.observeForever { splashFinished() }
     }

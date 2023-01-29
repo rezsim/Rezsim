@@ -15,6 +15,7 @@ open class RezsimFragment : Fragment() {
 
     open fun setupViews() {}
     open fun subscribeObservers() {}
+    open fun start() {}
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,5 +33,9 @@ open class RezsimFragment : Fragment() {
         subscribeObservers()
     }
 
+    override fun onStart() {
+        super.onStart()
+        start()
+    }
 
 }
