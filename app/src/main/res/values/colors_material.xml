@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="material_grey_0">#FAFAFA</color>
+    <color name="material_grey_1">#F5F5F5</color>
+    <color name="material_grey_2">#EEEEEE</color>
+    <color name="material_grey_3">#E0E0E0</color>
+    <color name="material_grey_4">#BDBDBD</color>
+    <color name="material_grey_5">#9E9E9E</color>
+    <color name="material_grey_6">#757575</color>
+    <color name="material_grey_7">#616161</color>
+    <color name="material_grey_8">#F5F5F5</color>
+    <color name="material_grey_9">#212121</color>
+
+
+
+</resources>

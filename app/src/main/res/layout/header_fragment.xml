@@ -2,12 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#aa9988">
+    android:background="@color/header_background">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="MAIN PHONE"
+        android:text="HEADER"
         android:gravity="center"
         android:textSize="30sp"/>
 

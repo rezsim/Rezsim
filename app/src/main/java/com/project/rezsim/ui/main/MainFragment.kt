@@ -7,26 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.project.rezsim.R
+import com.project.rezsim.base.RezsimFragment
 
-class MainFragment : Fragment() {
+class MainFragment : RezsimFragment() {
+
+    override val contentId = R.layout.main_fragment
+
 
     companion object {
+        const val TAG = "MainFragment"
         fun newInstance() = MainFragment()
-    }
-
-    private lateinit var viewModel: MainViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
 }

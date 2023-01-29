@@ -1,4 +1,11 @@
 package com.project.rezsim.ui.login
 
-class LoginFragment {
+import com.project.rezsim.R
+import com.project.rezsim.base.RezsimFragment
+
+class LoginFragment : RezsimFragment() {
+
+    override val contentId = R.layout.login_fragment
+
+
 }

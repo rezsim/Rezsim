@@ -1,8 +1,8 @@
 package com.project.rezsim.ui.footer
 
-import androidx.lifecycle.ViewModel
+import com.project.rezsim.base.RezsimViewModel
 
-class FooterViewModel : ViewModel() {
+class FooterViewModel : RezsimViewModel() {
 
 
 }

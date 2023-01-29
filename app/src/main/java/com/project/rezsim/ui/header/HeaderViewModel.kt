@@ -1,7 +1,7 @@
 package com.project.rezsim.ui.header
 
-import androidx.lifecycle.ViewModel
+import com.project.rezsim.base.RezsimViewModel
 
-class HeaderViewModel : ViewModel() {
+class HeaderViewModel : RezsimViewModel() {
 
 }
