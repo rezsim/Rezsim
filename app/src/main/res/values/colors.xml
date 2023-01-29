@@ -10,7 +10,7 @@
 
 
 
-
+    <color name="text_color">@color/material_grey_8</color>
 
     <color name="footer_background">@color/material_grey_3</color>
 
