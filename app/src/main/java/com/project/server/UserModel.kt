@@ -9,8 +9,14 @@ class UserModel : KoinComponent, Singleton {
 
     val loggedInLiveData = MutableLiveData<Boolean>()
 
+    fun isLoggedIn() = loggedInLiveData.value == true
+
+    fun hasHousehold() = false
+
+
+
     fun login() {
-        Timer.runDelayed({ loggedInLiveData.postValue(true) }, 3000)
+        Timer.runDelayed({ loggedInLiveData.postValue(false) }, 3000)
     }
 
 }

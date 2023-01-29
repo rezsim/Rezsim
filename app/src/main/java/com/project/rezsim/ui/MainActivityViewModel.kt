@@ -3,13 +3,22 @@ package com.project.rezsim.ui
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.base.RezsimViewModel
+import com.project.rezsim.ui.household.HouseholdFragment
+import com.project.rezsim.ui.login.LoginFragment
+import com.project.rezsim.ui.main.MainFragment
 import com.project.rezsim.ui.splash.SplashFragment
+import com.project.rezsim.ui.splash.SplashViewModel
+import com.project.server.UserModel
+import org.koin.core.component.inject
 
 class MainActivityViewModel : RezsimViewModel() {
 
     val headerVisbileLiveData = MutableLiveData<Boolean>()
     val footerVisbileLiveData = MutableLiveData<Boolean>()
     val loadWorkFragmentLiveData = MutableLiveData<String>()
+
+    private val splashViewModel: SplashViewModel by inject()
+    private val userModel: UserModel by inject()
 
     private var currentFragmentTag: String = ""
         set(value) {
@@ -20,14 +29,32 @@ class MainActivityViewModel : RezsimViewModel() {
     init {
         Log.d("DEBINFO", "MainActivityViewModel.init")
         currentFragmentTag = SplashFragment.TAG
+        splashViewModel.loadedLiveData.observeForever { splashLoaded() }
     }
 
     fun currentFragmentTag() = currentFragmentTag
 
     private fun setWorkFragment(fragmentTag: String) {
-        loadWorkFragmentLiveData.value = currentFragmentTag
-        headerVisbileLiveData.value = fragmentTag != SplashFragment.TAG
-        footerVisbileLiveData.value = fragmentTag != SplashFragment.TAG
+        loadWorkFragmentLiveData.value = fragmentTag
+        headerVisbileLiveData.value = needHeader(fragmentTag)
+        footerVisbileLiveData.value = needFooter(fragmentTag)
     }
+
+    private fun splashLoaded() {
+        if (currentFragmentTag == SplashFragment.TAG) {
+            if (!userModel.isLoggedIn()) {
+                setWorkFragment(LoginFragment.TAG)
+            } else {
+                setWorkFragment(MainFragment.TAG)
+            }
+        }
+    }
+
+    private fun needHeader(fragmentId: String) =
+        fragmentId in listOf(MainFragment.TAG, HouseholdFragment.TAG)
+
+    private fun needFooter(fragmentId: String) =
+        fragmentId in listOf(MainFragment.TAG, HouseholdFragment.TAG)
+
 
 }

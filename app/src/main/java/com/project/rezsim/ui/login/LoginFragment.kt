@@ -7,5 +7,10 @@ class LoginFragment : RezsimFragment() {
 
     override val contentId = R.layout.login_fragment
 
+    companion object {
+        const val TAG = "LoginFragment"
+        fun newInstance() = LoginFragment()
+    }
+
 
 }

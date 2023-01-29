@@ -23,18 +23,20 @@ class SplashViewModel : RezsimViewModel() {
         if (mainActivityViewModel.currentFragmentTag() != SplashFragment.TAG) {
             return
         }
+
         timerEnd = false
         Timer.runDelayed({
             timerEnd = true
             processFinished()
         }, 2000)
+
         if (userModel.loggedInLiveData.value != true) {
             userModel.login()
         }
     }
 
     fun processFinished() {
-        if (userModel.loggedInLiveData.value == true && timerEnd) {
+        if (userModel.loggedInLiveData.value != null && timerEnd) {
             loadedLiveData.postValue(true)
         }
     }
