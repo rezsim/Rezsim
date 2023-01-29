@@ -2,42 +2,54 @@ package com.project.rezsim.ui.splash
 
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.base.RezsimViewModel
-import com.project.rezsim.base.singleton.Singleton
 import com.project.rezsim.tool.Timer
 import com.project.rezsim.ui.MainActivityViewModel
 import com.project.server.UserModel
-import org.koin.android.ext.android.inject
-import org.koin.core.component.KoinComponent
+import com.project.server.login.Login
+import com.project.server.login.LoginResult
 import org.koin.core.component.inject
 
 class SplashViewModel : RezsimViewModel() {
 
-    val loadedLiveData = MutableLiveData<Boolean>()
+    val finishedLiveData = MutableLiveData<LoginResult?>()
 
     private val userModel: UserModel by inject()
     private val mainActivityViewModel: MainActivityViewModel by inject()
 
-    private var timerEnd = false
+    private var timerFinished = false
+    private var loginFinished = false
+    private var loginResult: LoginResult? = null
 
-    fun load() {
+    fun start() {
         if (mainActivityViewModel.currentFragmentTag() != SplashFragment.TAG) {
             return
         }
 
-        timerEnd = false
-        Timer.runDelayed({
-            timerEnd = true
-            processFinished()
-        }, 2000)
+        val login = Login()
 
-        if (userModel.loggedInLiveData.value != true) {
-            userModel.login()
+        timerFinished = false
+        Timer.runDelayed({
+            timerFinished = true
+            processFinished()
+        }, 3000)
+
+        loginResult = null
+        if (!userModel.isLoggedIn() && userModel.hasLoginAuthenticationData()) {
+            login.login(userModel.getEmail()!!, userModel.getPassword()!!).observeForever {
+                loginResult = it
+                userModel.setLoginResult(it)
+                loginFinished = true
+                processFinished()
+            }
+        } else {
+            loginFinished = true
+            processFinished()
         }
     }
 
-    fun processFinished() {
-        if (userModel.loggedInLiveData.value != null && timerEnd) {
-            loadedLiveData.postValue(true)
+    private fun processFinished() {
+        if (loginFinished && timerFinished) {
+            finishedLiveData.postValue(loginResult)
         }
     }
 

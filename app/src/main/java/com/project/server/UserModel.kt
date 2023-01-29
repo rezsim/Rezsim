@@ -2,21 +2,49 @@ package com.project.server
 
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.base.singleton.Singleton
+import com.project.rezsim.device.SettingsRepository
 import com.project.rezsim.tool.Timer
+import com.project.server.login.LoginResponse
+import com.project.server.login.LoginResult
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class UserModel : KoinComponent, Singleton {
 
-    val loggedInLiveData = MutableLiveData<Boolean>()
+    private val settingsRepository: SettingsRepository by inject()
 
-    fun isLoggedIn() = loggedInLiveData.value == true
+    private var email = settingsRepository.readUserEmail()
+    private var password = settingsRepository.readUserPassword()
+
+    private var token: String? = null
+
+    fun hasLoginAuthenticationData() = email != null && password != null
+
+    fun isLoggedIn() = token != null
 
     fun hasHousehold() = false
 
+    fun getEmail() = email
+    fun getPassword() = password
 
-
-    fun login() {
-        Timer.runDelayed({ loggedInLiveData.postValue(false) }, 3000)
+    fun setLoginResult(loginResult: LoginResult) {
+        if (loginResult.response?.isSuccessed() == true) {
+            email = loginResult.email.also {
+                settingsRepository.writeUserEmail(it)
+            }
+            password = loginResult.password.also {
+                settingsRepository.writeUserPassword(it)
+            }
+            token = loginResult.response.token
+        } else {
+            logout()
+        }
     }
+
+    fun logout() {
+        token = null
+    }
+
+
 
 }

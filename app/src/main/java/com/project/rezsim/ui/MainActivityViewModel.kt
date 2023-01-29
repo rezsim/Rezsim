@@ -1,6 +1,5 @@
 package com.project.rezsim.ui
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.base.RezsimViewModel
 import com.project.rezsim.ui.household.HouseholdFragment
@@ -27,9 +26,8 @@ class MainActivityViewModel : RezsimViewModel() {
         }
 
     init {
-        Log.d("DEBINFO", "MainActivityViewModel.init")
         currentFragmentTag = SplashFragment.TAG
-        splashViewModel.loadedLiveData.observeForever { splashLoaded() }
+        splashViewModel.finishedLiveData.observeForever { splashFinished() }
     }
 
     fun currentFragmentTag() = currentFragmentTag
@@ -40,7 +38,7 @@ class MainActivityViewModel : RezsimViewModel() {
         footerVisbileLiveData.value = needFooter(fragmentTag)
     }
 
-    private fun splashLoaded() {
+    private fun splashFinished() {
         if (currentFragmentTag == SplashFragment.TAG) {
             if (!userModel.isLoggedIn()) {
                 setWorkFragment(LoginFragment.TAG)

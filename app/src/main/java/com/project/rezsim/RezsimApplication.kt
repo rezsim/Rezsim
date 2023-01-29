@@ -1,6 +1,7 @@
 package com.project.rezsim
 
 import android.app.Application
+import com.project.rezsim.di.deviceModule
 import com.project.rezsim.di.serverModule
 import com.project.rezsim.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
@@ -12,7 +13,7 @@ class RezsimApplication : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@RezsimApplication)
-            modules(listOf(viewModelModule, serverModule))
+            modules(listOf(viewModelModule, serverModule, deviceModule))
         }
     }
 }

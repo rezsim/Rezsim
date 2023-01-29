@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.madhava.keyboard.vario.base.Singletons
 import com.project.rezsim.ui.MainActivityViewModel
 import com.project.rezsim.ui.footer.FooterFragment
 import com.project.rezsim.ui.header.HeaderFragment
@@ -15,6 +16,7 @@ import com.project.rezsim.ui.login.LoginFragment
 import com.project.rezsim.ui.main.MainFragment
 import com.project.rezsim.ui.splash.SplashFragment
 import org.koin.android.ext.android.inject
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +28,12 @@ class MainActivity : AppCompatActivity() {
 
         setupViews()
         subscribeObservers()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Singletons.clearAll()
+        exitProcess(0)
     }
 
     private fun setupViews() {
