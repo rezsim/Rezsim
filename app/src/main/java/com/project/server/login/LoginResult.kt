@@ -4,4 +4,6 @@ data class LoginResult(
     val response: LoginResponse?,
     val email: String,
     val password: String
-)
+) {
+    fun isSuccessed() = response?.isSuccessed() == true
+}

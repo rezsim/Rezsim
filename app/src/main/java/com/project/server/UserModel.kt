@@ -28,10 +28,10 @@ class UserModel : KoinComponent, Singleton {
     fun getPassword() = password
 
     fun setLoginResult(loginResult: LoginResult) {
+        email = loginResult.email.also {
+            settingsRepository.writeUserEmail(it)
+        }
         if (loginResult.response?.isSuccessed() == true) {
-            email = loginResult.email.also {
-                settingsRepository.writeUserEmail(it)
-            }
             password = loginResult.password.also {
                 settingsRepository.writeUserPassword(it)
             }

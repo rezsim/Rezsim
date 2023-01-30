@@ -8,6 +8,9 @@
     <string name="login_password_title">Jelszó</string>
     <string name="login_password_hint">JELSZÓ</string>
     <string name="login_button">BEJELENTKEZÉS</string>
+    <string name="login_login_success">Bejelentkeztünk!</string>
+    <string name="login_login_failed">Ne sikerült a bejelentkezés. Kérem próbálja újra!</string>
+    <string name="login_login_invalid_credidental">Érvénytelen email / jelszó. A bejelentkezés sikertelen.</string>
 
 
 </resources>

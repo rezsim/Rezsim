@@ -8,9 +8,9 @@ import java.util.concurrent.Executors
 
 class Login : KoinComponent {
 
-    private val testEmail = "test@test.com"
+    private val testEmail = "teszt@teszt.com"
     private val testPassword = "Alma1234"
-    private val testToken = "test_token"
+    private val testToken = "teszt_token"
 
     private lateinit var resultLiveData: MutableLiveData<LoginResult>
 
