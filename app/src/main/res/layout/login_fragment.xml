@@ -84,6 +84,7 @@
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:hint="@string/login_email_hint"
+                android:imeOptions="actionNext"
                 tools:text="teszt@teszt.com"
                 android:textColorHint="@color/material_grey_4"/>
 
@@ -118,6 +119,7 @@
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:hint="@string/login_password_hint"
+                android:imeOptions="actionDone"
                 tools:text="Alma1234"
                 android:textColorHint="@color/material_grey_4"/>
 

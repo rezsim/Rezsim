@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.base.RezsimViewModel
 import com.project.rezsim.ui.household.HouseholdFragment
 import com.project.rezsim.ui.login.LoginFragment
+import com.project.rezsim.ui.login.LoginViewModel
 import com.project.rezsim.ui.main.MainFragment
 import com.project.rezsim.ui.splash.SplashFragment
 import com.project.rezsim.ui.splash.SplashViewModel
@@ -19,6 +20,7 @@ class MainActivityViewModel : RezsimViewModel() {
     val showProgressLiveData = MutableLiveData<Boolean>()
 
     private val splashViewModel: SplashViewModel by inject()
+    private val loginViewModel: LoginViewModel by inject()
     private val userModel: UserModel by inject()
 
     private var currentFragmentTag: String = ""
@@ -31,6 +33,7 @@ class MainActivityViewModel : RezsimViewModel() {
         Log.d("DEBINFO", "MainActivityViewModel.init")
         currentFragmentTag = SplashFragment.TAG
         splashViewModel.finishedLiveData.observeForever { splashFinished() }
+        loginViewModel.finishedLiveData.observeForever { loginFinished() }
     }
 
     fun currentFragmentTag() = currentFragmentTag
@@ -47,11 +50,13 @@ class MainActivityViewModel : RezsimViewModel() {
 
     private fun splashFinished() {
         if (currentFragmentTag == SplashFragment.TAG) {
-            if (!userModel.isLoggedIn()) {
-                setWorkFragment(LoginFragment.TAG)
-            } else {
-                setWorkFragment(MainFragment.TAG)
-            }
+            currentFragmentTag = if (!userModel.isLoggedIn()) LoginFragment.TAG else MainFragment.TAG
+        }
+    }
+
+    private fun loginFinished() {
+        if (currentFragmentTag == LoginFragment.TAG) {
+            currentFragmentTag = MainFragment.TAG
         }
     }
 

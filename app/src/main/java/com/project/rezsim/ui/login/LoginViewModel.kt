@@ -6,10 +6,12 @@ import com.project.rezsim.base.RezsimViewModel
 import com.project.rezsim.ui.MainActivityViewModel
 import com.project.server.UserModel
 import com.project.server.login.Login
+import com.project.server.login.LoginResult
 import org.koin.core.component.inject
 
 class LoginViewModel : RezsimViewModel() {
 
+    val finishedLiveData = MutableLiveData<LoginResult?>()
     val emailLiveData: MutableLiveData<String> = MutableLiveData()
     val passwordLiveData: MutableLiveData<String> = MutableLiveData()
     val loginButtonEnabledLiveData: MutableLiveData<Boolean> = MutableLiveData()
@@ -47,6 +49,7 @@ class LoginViewModel : RezsimViewModel() {
                 }
             } else {
                 messageLiveData.value = R.string.login_login_success
+                finishedLiveData.value = it
             }
         }
     }
