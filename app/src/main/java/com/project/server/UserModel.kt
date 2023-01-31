@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.base.singleton.Singleton
 import com.project.rezsim.device.SettingsRepository
 import com.project.rezsim.tool.Timer
+import com.project.server.dto.User
 import com.project.server.login.LoginResponse
 import com.project.server.login.LoginResult
 import org.koin.core.component.KoinComponent
@@ -12,6 +13,8 @@ import org.koin.core.component.inject
 class UserModel : KoinComponent, Singleton {
 
     private val settingsRepository: SettingsRepository by inject()
+
+    private var user: User? = null
 
     private var email = settingsRepository.readUserEmail()
     private var password = settingsRepository.readUserPassword()
@@ -22,7 +25,7 @@ class UserModel : KoinComponent, Singleton {
 
     fun isLoggedIn() = token != null
 
-    fun hasHousehold() = false
+    fun hasHousehold() = user?.households?.isNotEmpty() ?: false
 
     fun getEmail() = email
     fun getPassword() = password
@@ -36,6 +39,7 @@ class UserModel : KoinComponent, Singleton {
                 settingsRepository.writeUserPassword(it)
             }
             token = loginResult.response.token
+            user = loginResult.user
         } else {
             logout()
         }

@@ -50,15 +50,17 @@ class MainActivityViewModel : RezsimViewModel() {
 
     private fun splashFinished() {
         if (currentFragmentTag == SplashFragment.TAG) {
-            currentFragmentTag = if (!userModel.isLoggedIn()) LoginFragment.TAG else MainFragment.TAG
+            currentFragmentTag = if (!userModel.isLoggedIn()) LoginFragment.TAG else startScreen()
         }
     }
 
     private fun loginFinished() {
         if (currentFragmentTag == LoginFragment.TAG) {
-            currentFragmentTag = MainFragment.TAG
+            currentFragmentTag = startScreen()
         }
     }
+
+    private fun startScreen() = if (userModel.hasHousehold()) MainFragment.TAG else HouseholdFragment.TAG
 
     private fun needHeader(fragmentId: String) =
         fragmentId in listOf(MainFragment.TAG, HouseholdFragment.TAG)

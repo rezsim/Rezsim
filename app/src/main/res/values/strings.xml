@@ -12,5 +12,17 @@
     <string name="login_login_failed">Ne sikerült a bejelentkezés. Kérem próbálja újra!</string>
     <string name="login_login_invalid_credidental">Érvénytelen email / jelszó. A bejelentkezés sikertelen.</string>
 
+    <string name="household_title_change">Háztartás szerkesztése</string>
+    <string name="household_title_create">Háztartás létrehozása</string>
+    <string name="household_name_title">Megnevezés</string>
+    <string name="household_meters_title">Jelenlegi óraállások</string>
+    <string name="household_electriciy_title">Áram</string>
+    <string name="household_usage_title">Felhasználás módja</string>
+    <string name="household_pricing_type_a_title">Felhasználási hely árszabása (A)</string>
+    <string name="household_pricing_type_b_title">Felhasználási hely árszabása (B)</string>
+    <string name="household_gas_title">Gáz</string>
+    <string name="household_heating_value_title">Fűtőérték</string>
+    <string name="household_children_count_title">Gyermekek száma</string>
+    <string name="household_children_count_description">A 3 gyermekesek évi 600 (gyermekenként 200) köbméterrel több, összesen évi 2329 köbméter gázt fogyaszthatnak rezsicsökkentett áron, és minden újabb gyereknél további évi 300 köbméterrel nő a kedvezményes foyasztás lehetősége.</string>
 
 </resources>

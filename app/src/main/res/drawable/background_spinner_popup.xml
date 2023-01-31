@@ -9,6 +9,15 @@
     <corners
         android:radius="16dp"/>
 
+    <padding
+        android:left="8dp"
+        android:top="8dp"
+        android:right="8dp"
+        android:bottom="8dp"/>
+
+    <stroke
+        android:width="2dp"
+        android:color="@color/material_grey_6"/>
 
     <solid
         android:color="@color/material_grey_2"/>
