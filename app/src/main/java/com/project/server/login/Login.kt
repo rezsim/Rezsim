@@ -17,7 +17,7 @@ class Login : KoinComponent {
     fun login(email: String, password: String): MutableLiveData<LoginResult> {
         resultLiveData = MutableLiveData()
         Executors.newSingleThreadExecutor().execute {
-            Thread.sleep(10000)
+            Thread.sleep(5000)
             val response = if (email == testEmail && password == testPassword) {
                 LoginResponse(200, testToken)
             } else {
