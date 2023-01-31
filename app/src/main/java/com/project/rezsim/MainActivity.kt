@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
+import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.madhava.keyboard.vario.base.Singletons
@@ -22,6 +23,8 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainActivityViewModel by inject()
 
+    private lateinit var progress: ContentLoadingProgressBar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
@@ -37,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViews() {
+        progress = findViewById(R.id.pbProgress)
         setFragment(R.id.flHeader, HeaderFragment.TAG)
         setFragment(R.id.flFooter, FooterFragment.TAG)
     }
@@ -45,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.loadWorkFragmentLiveData.observe(this) { setFragment(R.id.flWork, it) }
         viewModel.headerVisbileLiveData.observe(this) { setFragmentVisible(R.id.flHeader, it) }
         viewModel.footerVisbileLiveData.observe(this) { setFragmentVisible(R.id.flFooter, it) }
+        viewModel.showProgressLiveData.observe(this) { showProgress(it) }
     }
 
     private fun setFragment(containerId: Int, fragmentTag: String) {
@@ -72,6 +77,14 @@ class MainActivity : AppCompatActivity() {
             View.VISIBLE
         } else {
             View.GONE
+        }
+    }
+
+    private fun showProgress(visible: Boolean) {
+        if (visible) {
+            progress.show()
+        } else {
+            progress.hide()
         }
     }
 

@@ -23,5 +23,17 @@
     <color name="material_orange_8">#EF6C00</color>
     <color name="material_orange_9">#E65100</color>
 
+    <color name="material_red_0">#FFEBEE</color>
+    <color name="material_red_1">#FFCDD2</color>
+    <color name="material_red_2">#EF9A9A</color>
+    <color name="material_red_3">#E57373</color>
+    <color name="material_red_4">#EF5350</color>
+    <color name="material_red_5">#F44336</color>
+    <color name="material_red_6">#E53935</color>
+    <color name="material_red_7">#D32F2F</color>
+    <color name="material_red_8">#C62828</color>
+    <color name="material_red_9">#B71C1C</color>
+
+
 
 </resources>

@@ -16,6 +16,7 @@ class MainActivityViewModel : RezsimViewModel() {
     val headerVisbileLiveData = MutableLiveData<Boolean>()
     val footerVisbileLiveData = MutableLiveData<Boolean>()
     val loadWorkFragmentLiveData = MutableLiveData<String>()
+    val showProgressLiveData = MutableLiveData<Boolean>()
 
     private val splashViewModel: SplashViewModel by inject()
     private val userModel: UserModel by inject()
@@ -33,6 +34,10 @@ class MainActivityViewModel : RezsimViewModel() {
     }
 
     fun currentFragmentTag() = currentFragmentTag
+
+    fun showProgress() = showProgressLiveData.postValue(true)
+
+    fun hideProgress() = showProgressLiveData.postValue(false)
 
     private fun setWorkFragment(fragmentTag: String) {
         loadWorkFragmentLiveData.value = fragmentTag

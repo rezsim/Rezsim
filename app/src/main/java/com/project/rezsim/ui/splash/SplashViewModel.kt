@@ -50,6 +50,9 @@ class SplashViewModel : RezsimViewModel() {
     private fun processFinished() {
         if (loginFinished && timerFinished) {
             finishedLiveData.postValue(loginResult)
+            mainActivityViewModel.hideProgress()
+        } else if (timerFinished) {
+            mainActivityViewModel.showProgress()
         }
     }
 
