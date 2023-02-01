@@ -11,6 +11,8 @@
 
 
     <color name="text_color">@color/material_grey_8</color>
+    <color name="imagebutton_color">@color/material_grey_8</color>
+    <color name="imagebutton_color_disabled">@color/material_grey_5</color>
     <color name="edit_text_color">@color/material_grey_6</color>
     <color name="edit_hint_color">@color/material_red_6</color>
     <color name="button_text_color">@color/material_grey_0</color>
