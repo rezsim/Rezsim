@@ -87,6 +87,7 @@
                android:inputType="number"
                android:lines="1"
                android:maxLength="@integer/meter_digit_count"
+               android:imeOptions="actionDone"
                android:gravity="center"
                android:drawableStart="@drawable/ic_electricity"
                android:drawableTint="@color/material_grey_6"
@@ -120,6 +121,7 @@
                android:textSize="@dimen/text_size_edit"
                android:inputType="number"
                android:lines="1"
+               android:imeOptions="actionDone"
                android:maxLength="@integer/meter_digit_count"
                android:gravity="center"
                android:drawableStart="@drawable/ic_gas"
@@ -311,6 +313,7 @@
                android:textSize="@dimen/text_size_edit"
                android:inputType="number"
                android:lines="1"
+               android:imeOptions="actionDone"
                android:maxLength="@integer/meter_digit_count"
                android:gravity="center"
                android:paddingStart="40dp"
@@ -357,6 +360,7 @@
                android:textSize="@dimen/text_size_edit"
                android:inputType="number"
                android:lines="1"
+               android:imeOptions="actionDone"
                android:gravity="center"/>
 
            <androidx.appcompat.widget.AppCompatImageButton
@@ -368,7 +372,7 @@
                app:layout_constraintBottom_toBottomOf="@id/etChildrenCount"
                android:layout_marginEnd="16dp"
                android:background="@drawable/ic_minus"
-               android:tint="@drawable/color_statelist_imagebutton"/>
+               android:backgroundTint="@drawable/color_statelist_imagebutton"/>
 
            <androidx.appcompat.widget.AppCompatImageButton
                android:id="@+id/btChildrenPlus"

@@ -25,7 +25,7 @@ class HouseholdViewModel : RezsimViewModel() {
     fun pricingTypeBItems() = listOf("Kérem válasszon!", "Első elem", "Második elem", "Harmadik elem")
 
     fun childrenButtonClicked(oldValue: String?, add: Int) {
-        val value = if (oldValue.isNullOrBlank()) 0 else oldValue.toInt()
+        val value = if (oldValue.isNullOrBlank()) -1 else oldValue.toInt()
         childrenValueLiveData.value = value + add
     }
 

@@ -46,6 +46,7 @@ class HouseholdFragment : RezsimFragment() {
             }
             buttonChildrenMinus = it.findViewById<AppCompatImageButton>(R.id.btChildrenMinus).apply {
                 setOnClickListener { viewModel.childrenButtonClicked(editChildren.text.toString(), -1) }
+                isEnabled = false
             }
             buttonChildrenPlus = it.findViewById<AppCompatImageButton>(R.id.btChildrenPlus).apply {
                 setOnClickListener { viewModel.childrenButtonClicked(editChildren.text.toString(), 1) }
