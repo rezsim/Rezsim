@@ -18,6 +18,8 @@
     <color name="button_text_color">@color/material_grey_0</color>
     <color name="button_text_color_disabled">@color/material_grey_3</color>
     <color name="progress">@color/material_red_8</color>
+    <color name="fab_background_color">@color/material_grey_4</color>
+    <color name="fab_foreground_color">@color/material_grey_8</color>
 
     <color name="footer_background">@color/material_grey_3</color>
 

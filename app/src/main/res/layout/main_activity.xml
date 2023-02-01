@@ -43,4 +43,20 @@
         android:visibility="invisible"
         android:indeterminateTint="@color/progress"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/flFooter"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_floppy"
+        app:borderWidth="0dp"
+        android:contentDescription="@string/fab_save"
+        android:backgroundTint="@color/fab_background_color"
+        android:foregroundTint="@color/fab_foreground_color"
+        android:visibility="gone"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -44,7 +44,6 @@ class LoginFragment : RezsimFragment() {
         viewModel.passwordLiveData.observe(this) { editPassword.setText(it) }
         viewModel.loginButtonEnabledLiveData.observe(this) { setLoginButtonState(it) }
         viewModel.inputEnabledLiveData.observe(this) { setInputState(it) }
-        viewModel.messageLiveData.observe(this) { showMessage(it) }
     }
 
     private fun inputChanged() {
@@ -65,10 +64,6 @@ class LoginFragment : RezsimFragment() {
 
     private fun loginButtonClicked() {
         viewModel.loginButtonClicked(editEmail.text.toString(), editPassword.text.toString())
-    }
-
-    private fun showMessage(messageResId: Int) {
-        Toast.makeText(requireContext(), resources.getString(messageResId), Toast.LENGTH_LONG).show()
     }
 
     companion object {

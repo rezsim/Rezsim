@@ -16,8 +16,10 @@ class MainActivityViewModel : RezsimViewModel() {
 
     val headerVisbileLiveData = MutableLiveData<Boolean>()
     val footerVisbileLiveData = MutableLiveData<Boolean>()
+    val fabVisibleLiveData = MutableLiveData<Boolean>()
     val loadWorkFragmentLiveData = MutableLiveData<String>()
     val showProgressLiveData = MutableLiveData<Boolean>()
+    val messageLiveData: MutableLiveData<Int> = MutableLiveData()
 
     private val splashViewModel: SplashViewModel by inject()
     private val loginViewModel: LoginViewModel by inject()
@@ -42,10 +44,15 @@ class MainActivityViewModel : RezsimViewModel() {
 
     fun hideProgress() = showProgressLiveData.postValue(false)
 
+    fun showMessage(messageResId: Int) {
+        messageLiveData.postValue(messageResId)
+    }
+
     private fun setWorkFragment(fragmentTag: String) {
         loadWorkFragmentLiveData.value = fragmentTag
         headerVisbileLiveData.value = needHeader(fragmentTag)
         footerVisbileLiveData.value = needFooter(fragmentTag)
+        fabVisibleLiveData.value = needFab(fragmentTag)
     }
 
     private fun splashFinished() {
@@ -66,7 +73,10 @@ class MainActivityViewModel : RezsimViewModel() {
         fragmentId in listOf(MainFragment.TAG, HouseholdFragment.TAG)
 
     private fun needFooter(fragmentId: String) =
-        fragmentId in listOf(MainFragment.TAG, HouseholdFragment.TAG)
+        fragmentId in listOf(MainFragment.TAG)
+
+    private fun needFab(fragmentId: String) =
+        fragmentId in listOf(HouseholdFragment.TAG)
 
 
 }

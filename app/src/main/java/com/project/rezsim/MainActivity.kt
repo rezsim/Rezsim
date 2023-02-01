@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.madhava.keyboard.vario.base.Singletons
 import com.project.rezsim.ui.MainActivityViewModel
 import com.project.rezsim.ui.footer.FooterFragment
@@ -24,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainActivityViewModel by inject()
 
     private lateinit var progress: ContentLoadingProgressBar
+    private lateinit var fab: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupViews() {
         progress = findViewById(R.id.pbProgress)
+        fab = findViewById(R.id.fabFab)
         setFragment(R.id.flHeader, HeaderFragment.TAG)
         setFragment(R.id.flFooter, FooterFragment.TAG)
     }
@@ -50,6 +55,8 @@ class MainActivity : AppCompatActivity() {
         viewModel.headerVisbileLiveData.observe(this) { setFragmentVisible(R.id.flHeader, it) }
         viewModel.footerVisbileLiveData.observe(this) { setFragmentVisible(R.id.flFooter, it) }
         viewModel.showProgressLiveData.observe(this) { showProgress(it) }
+        viewModel.fabVisibleLiveData.observe(this) { showFab(it) }
+        viewModel.messageLiveData.observe(this) { showMessage(it) }
     }
 
     private fun setFragment(containerId: Int, fragmentTag: String) {
@@ -87,5 +94,15 @@ class MainActivity : AppCompatActivity() {
             progress.hide()
         }
     }
+
+    private fun showFab(visible: Boolean) {
+        fab.visibility = if (visible) View.VISIBLE else View.GONE
+    }
+
+    private fun showMessage(messageResId: Int) {
+        val root = findViewById<ConstraintLayout>(R.id.clRoot)
+        Snackbar.make(root, resources.getString(messageResId), Snackbar.LENGTH_LONG).show()
+    }
+
 
 }

@@ -6,6 +6,8 @@ import android.widget.ImageButton
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatSpinner
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.widget.TextViewCompat
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
 import com.project.rezsim.view.spinner.TextSpinnerAdapter
@@ -18,6 +20,7 @@ class HouseholdFragment : RezsimFragment() {
 
     private val viewModel: HouseholdViewModel by inject()
 
+    private lateinit var textViewTitle: AppCompatTextView
     private lateinit var spinnerUsage: AppCompatSpinner
     private lateinit var spinnerPricingTypeA: AppCompatSpinner
     private lateinit var spinnerPricingTypeB: AppCompatSpinner
@@ -28,10 +31,12 @@ class HouseholdFragment : RezsimFragment() {
 
     private val spinnerItemSelectedListener = TextSpinnerOnItemSelectedListener()
 
-
     override fun setupViews() {
         super.setupViews()
         view?.let {
+            textViewTitle = it.findViewById<AppCompatTextView>(R.id.tvTitle).apply {
+                setText(if (viewModel.isCreatingNew()) R.string.household_title_create else R.string.household_title_change)
+            }
             spinnerUsage = it.findViewById<AppCompatSpinner?>(R.id.spUsage).apply {
                 adapter = TextSpinnerAdapter(requireContext(), viewModel.usageItems())
                 onItemSelectedListener = spinnerItemSelectedListener
@@ -69,6 +74,10 @@ class HouseholdFragment : RezsimFragment() {
     override fun subscribeObservers() {
         super.subscribeObservers()
         viewModel.childrenValueLiveData.observe(this) {editChildren.setText(it.toString())}
+    }
+
+    private fun setContent() {
+
     }
 
 

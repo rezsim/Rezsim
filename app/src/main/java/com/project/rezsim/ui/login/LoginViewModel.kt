@@ -16,7 +16,6 @@ class LoginViewModel : RezsimViewModel() {
     val passwordLiveData: MutableLiveData<String> = MutableLiveData()
     val loginButtonEnabledLiveData: MutableLiveData<Boolean> = MutableLiveData()
     val inputEnabledLiveData: MutableLiveData<Boolean> = MutableLiveData()
-    val messageLiveData: MutableLiveData<Int> = MutableLiveData()
 
     private val userModel: UserModel by inject()
     private val mainActivityViewModel: MainActivityViewModel by inject()
@@ -43,12 +42,11 @@ class LoginViewModel : RezsimViewModel() {
                 inputEnabledLiveData.value = true
                 if (it.response?.httpResponse == 401) {
                     passwordLiveData.value = ""
-                    messageLiveData.value = R.string.login_login_invalid_credidental
+                    mainActivityViewModel.showMessage(R.string.login_login_invalid_credidental)
                 } else {
-                    messageLiveData.value = R.string.login_login_failed
+                    mainActivityViewModel.showMessage(R.string.login_login_failed)
                 }
             } else {
-                messageLiveData.value = R.string.login_login_success
                 finishedLiveData.value = it
             }
         }

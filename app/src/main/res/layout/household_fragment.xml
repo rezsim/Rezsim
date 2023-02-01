@@ -47,7 +47,7 @@
                android:background="@drawable/statelist_edittext"
                android:textColor="@color/edit_text_color"
                android:textSize="@dimen/text_size_edit"
-               android:hint="-"
+               android:hint="---"
                android:textColorHint="@color/edit_hint_color"
                android:gravity="center"
                tools:text="Lakás"/>
@@ -355,7 +355,7 @@
                android:layout_marginTop="4dp"
                android:background="@drawable/statelist_edittext"
                android:textColor="@color/edit_text_color"
-               android:hint="-"
+               android:hint="---"
                android:textColorHint="@color/edit_hint_color"
                android:textSize="@dimen/text_size_edit"
                android:inputType="number"
