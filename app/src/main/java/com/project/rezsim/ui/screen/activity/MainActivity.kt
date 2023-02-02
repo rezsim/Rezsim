@@ -1,4 +1,4 @@
-package com.project.rezsim.ui.screen
+package com.project.rezsim.ui.screen.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,6 +18,9 @@ import com.project.rezsim.ui.screen.household.HouseholdFragment
 import com.project.rezsim.ui.screen.login.LoginFragment
 import com.project.rezsim.ui.screen.main.MainFragment
 import com.project.rezsim.ui.screen.splash.SplashFragment
+import com.project.rezsim.ui.view.message.Message
+import com.project.rezsim.ui.view.message.MessageSeverity
+import com.project.rezsim.ui.view.message.MessageType
 import org.koin.android.ext.android.inject
 import kotlin.system.exitProcess
 
@@ -25,8 +28,11 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainActivityViewModel by inject()
 
+    private lateinit var rootView: View
     private lateinit var progress: ContentLoadingProgressBar
     private lateinit var fab: FloatingActionButton
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +49,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViews() {
+        rootView = findViewById(R.id.clRoot)
         progress = findViewById(R.id.pbProgress)
         fab = findViewById(R.id.fabFab)
         setFragment(R.id.flHeader, HeaderFragment.TAG)
@@ -98,10 +105,15 @@ class MainActivity : AppCompatActivity() {
         fab.visibility = if (visible) View.VISIBLE else View.GONE
     }
 
-    private fun showMessage(messageResId: Int) {
-        val root = findViewById<ConstraintLayout>(R.id.clRoot)
-        Snackbar.make(root, resources.getString(messageResId), Snackbar.LENGTH_LONG).show()
+    private fun showMessage(messageData: MessageData) {
+        Message.show(this, rootView, messageData.message, messageData.messageType, messageData.severity, messageData.runnable)
     }
 
+    data class MessageData(
+        val message: String,
+        val messageType: MessageType,
+        val severity: MessageSeverity,
+        val runnable: Runnable? = null
+    )
 
 }

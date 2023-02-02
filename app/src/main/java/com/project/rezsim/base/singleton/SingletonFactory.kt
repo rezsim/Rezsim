@@ -1,6 +1,6 @@
 package com.project.rezsim.base.singleton
 
-import com.project.rezsim.ui.screen.MainActivityViewModel
+import com.project.rezsim.ui.screen.activity.MainActivityViewModel
 import com.project.rezsim.ui.screen.footer.FooterViewModel
 import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.screen.household.HouseholdViewModel

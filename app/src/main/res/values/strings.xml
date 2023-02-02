@@ -25,5 +25,6 @@
     <string name="household_heating_value_title">Fűtőérték</string>
     <string name="household_children_count_title">Gyermekek száma</string>
     <string name="household_children_count_description">A 3 gyermekesek évi 600 (gyermekenként 200) köbméterrel több, összesen évi 2329 köbméter gázt fogyaszthatnak rezsicsökkentett áron, és minden újabb gyereknél további évi 300 köbméterrel nő a kedvezményes foyasztás lehetősége.</string>
+    <string name="household_no_household_yet">Még nem vitte fel háztartásának adatait.\nTöltse ki a mezőket, majd nyomja meg a mentés gombot!</string>
 
 </resources>

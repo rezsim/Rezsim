@@ -1,4 +1,4 @@
-package com.project.rezsim.ui.screen
+package com.project.rezsim.ui.screen.activity
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -9,6 +9,8 @@ import com.project.rezsim.ui.screen.login.LoginViewModel
 import com.project.rezsim.ui.screen.main.MainFragment
 import com.project.rezsim.ui.screen.splash.SplashFragment
 import com.project.rezsim.ui.screen.splash.SplashViewModel
+import com.project.rezsim.ui.view.message.MessageSeverity
+import com.project.rezsim.ui.view.message.MessageType
 import com.project.server.UserModel
 import org.koin.core.component.inject
 
@@ -19,7 +21,7 @@ class MainActivityViewModel : RezsimViewModel() {
     val fabVisibleLiveData = MutableLiveData<Boolean>()
     val loadWorkFragmentLiveData = MutableLiveData<String>()
     val showProgressLiveData = MutableLiveData<Boolean>()
-    val messageLiveData: MutableLiveData<Int> = MutableLiveData()
+    val messageLiveData: MutableLiveData<MainActivity.MessageData> = MutableLiveData()
 
     private val splashViewModel: SplashViewModel by inject()
     private val loginViewModel: LoginViewModel by inject()
@@ -44,8 +46,14 @@ class MainActivityViewModel : RezsimViewModel() {
 
     fun hideProgress() = showProgressLiveData.postValue(false)
 
-    fun showMessage(messageResId: Int) {
-        messageLiveData.postValue(messageResId)
+
+    fun showMessage(messageResId: Int, type: MessageType = MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, severity: MessageSeverity = MessageSeverity.INFO, runnable: Runnable? = null) {
+        showMessage(context.resources.getString(messageResId), type, severity, runnable)
+    }
+
+    fun showMessage(message: String, type: MessageType = MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, severity: MessageSeverity = MessageSeverity.INFO, runnable: Runnable? = null) {
+        val messageData = MainActivity.MessageData(message, type, severity, runnable)
+        messageLiveData.postValue(messageData)
     }
 
     private fun setWorkFragment(fragmentTag: String) {

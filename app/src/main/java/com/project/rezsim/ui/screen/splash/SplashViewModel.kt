@@ -3,7 +3,7 @@ package com.project.rezsim.ui.screen.splash
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.base.RezsimViewModel
 import com.project.rezsim.tool.Timer
-import com.project.rezsim.ui.screen.MainActivityViewModel
+import com.project.rezsim.ui.screen.activity.MainActivityViewModel
 import com.project.server.UserModel
 import com.project.server.login.Login
 import com.project.server.login.LoginResult

@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Rezsim">
         <activity
-            android:name=".ui.screen.MainActivity"
+            android:name=".ui.screen.activity.MainActivity"
             android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>

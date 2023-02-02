@@ -1,7 +1,7 @@
 package com.project.rezsim.di
 
 import com.madhava.keyboard.vario.base.Singletons
-import com.project.rezsim.ui.screen.MainActivityViewModel
+import com.project.rezsim.ui.screen.activity.MainActivityViewModel
 import com.project.rezsim.ui.screen.footer.FooterViewModel
 import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.screen.household.HouseholdViewModel

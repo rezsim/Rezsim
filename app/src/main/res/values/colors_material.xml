@@ -34,6 +34,17 @@
     <color name="material_red_8">#C62828</color>
     <color name="material_red_9">#B71C1C</color>
 
+    <color name="material_indigo_0">#E8EAF6</color>
+    <color name="material_indigo_1">#C5CAE9</color>
+    <color name="material_indigo_2">#9FA8DA</color>
+    <color name="material_indigo_3">#7986CB</color>
+    <color name="material_indigo_4">#5C6BC0</color>
+    <color name="material_indigo_5">#3F51B5</color>
+    <color name="material_indigo_6">#3949AB</color>
+    <color name="material_indigo_7">#303F9F</color>
+    <color name="material_indigo_8">#283593</color>
+    <color name="material_indigo_9">#1A237E</color>
+
 
 
 </resources>

@@ -3,7 +3,8 @@ package com.project.rezsim.ui.screen.login
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimViewModel
-import com.project.rezsim.ui.screen.MainActivityViewModel
+import com.project.rezsim.ui.screen.activity.MainActivityViewModel
+import com.project.rezsim.ui.view.message.MessageSeverity
 import com.project.server.UserModel
 import com.project.server.login.Login
 import com.project.server.login.LoginResult
@@ -42,9 +43,9 @@ class LoginViewModel : RezsimViewModel() {
                 inputEnabledLiveData.value = true
                 if (it.response?.httpResponse == 401) {
                     passwordLiveData.value = ""
-                    mainActivityViewModel.showMessage(R.string.login_login_invalid_credidental)
+                    mainActivityViewModel.showMessage(messageResId = R.string.login_login_invalid_credidental, severity = MessageSeverity.ERROR)
                 } else {
-                    mainActivityViewModel.showMessage(R.string.login_login_failed)
+                    mainActivityViewModel.showMessage(messageResId = R.string.login_login_failed, severity = MessageSeverity.ERROR)
                 }
             } else {
                 finishedLiveData.value = it

@@ -3,7 +3,8 @@ package com.project.rezsim.ui.screen.household
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimViewModel
-import com.project.rezsim.ui.screen.MainActivityViewModel
+import com.project.rezsim.ui.screen.activity.MainActivityViewModel
+import com.project.rezsim.ui.view.message.MessageType
 import com.project.server.UserModel
 import com.project.server.dto.Household
 import org.koin.core.component.inject
@@ -24,7 +25,7 @@ class HouseholdViewModel : RezsimViewModel() {
 
     init {
         if (!userModel.hasHousehold()) {
-            mainActivityViewModel.showMessage(R.string.household_electriciy_title)
+            mainActivityViewModel.showMessage(messageResId = R.string.household_no_household_yet, type = MessageType.SNACKBAR_MANUALCLOSE)
         }
     }
 
