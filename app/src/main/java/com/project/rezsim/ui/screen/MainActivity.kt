@@ -1,4 +1,4 @@
-package com.project.rezsim
+package com.project.rezsim.ui.screen
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,17 +8,16 @@ import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.madhava.keyboard.vario.base.Singletons
-import com.project.rezsim.ui.MainActivityViewModel
-import com.project.rezsim.ui.footer.FooterFragment
-import com.project.rezsim.ui.header.HeaderFragment
-import com.project.rezsim.ui.household.HouseholdFragment
-import com.project.rezsim.ui.login.LoginFragment
-import com.project.rezsim.ui.main.MainFragment
-import com.project.rezsim.ui.splash.SplashFragment
+import com.project.rezsim.R
+import com.project.rezsim.ui.screen.footer.FooterFragment
+import com.project.rezsim.ui.screen.header.HeaderFragment
+import com.project.rezsim.ui.screen.household.HouseholdFragment
+import com.project.rezsim.ui.screen.login.LoginFragment
+import com.project.rezsim.ui.screen.main.MainFragment
+import com.project.rezsim.ui.screen.splash.SplashFragment
 import org.koin.android.ext.android.inject
 import kotlin.system.exitProcess
 

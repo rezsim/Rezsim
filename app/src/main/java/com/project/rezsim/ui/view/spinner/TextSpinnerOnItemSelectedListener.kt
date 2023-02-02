@@ -1,4 +1,4 @@
-package com.project.rezsim.view.spinner
+package com.project.rezsim.ui.view.spinner
 
 import android.view.View
 import android.widget.AdapterView

@@ -1,14 +1,14 @@
-package com.project.rezsim.ui
+package com.project.rezsim.ui.screen
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.base.RezsimViewModel
-import com.project.rezsim.ui.household.HouseholdFragment
-import com.project.rezsim.ui.login.LoginFragment
-import com.project.rezsim.ui.login.LoginViewModel
-import com.project.rezsim.ui.main.MainFragment
-import com.project.rezsim.ui.splash.SplashFragment
-import com.project.rezsim.ui.splash.SplashViewModel
+import com.project.rezsim.ui.screen.household.HouseholdFragment
+import com.project.rezsim.ui.screen.login.LoginFragment
+import com.project.rezsim.ui.screen.login.LoginViewModel
+import com.project.rezsim.ui.screen.main.MainFragment
+import com.project.rezsim.ui.screen.splash.SplashFragment
+import com.project.rezsim.ui.screen.splash.SplashViewModel
 import com.project.server.UserModel
 import org.koin.core.component.inject
 

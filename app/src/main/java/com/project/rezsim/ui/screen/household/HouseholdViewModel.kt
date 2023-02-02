@@ -1,10 +1,9 @@
-package com.project.rezsim.ui.household
+package com.project.rezsim.ui.screen.household
 
-import androidx.annotation.IntegerRes
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimViewModel
-import com.project.rezsim.ui.MainActivityViewModel
+import com.project.rezsim.ui.screen.MainActivityViewModel
 import com.project.server.UserModel
 import com.project.server.dto.Household
 import org.koin.core.component.inject

@@ -1,4 +1,4 @@
-package com.project.rezsim.ui.footer
+package com.project.rezsim.ui.screen.footer
 
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment

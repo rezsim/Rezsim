@@ -1,11 +1,11 @@
 package com.project.rezsim.base.singleton
 
-import com.project.rezsim.ui.MainActivityViewModel
-import com.project.rezsim.ui.footer.FooterViewModel
-import com.project.rezsim.ui.header.HeaderViewModel
-import com.project.rezsim.ui.household.HouseholdViewModel
-import com.project.rezsim.ui.login.LoginViewModel
-import com.project.rezsim.ui.splash.SplashViewModel
+import com.project.rezsim.ui.screen.MainActivityViewModel
+import com.project.rezsim.ui.screen.footer.FooterViewModel
+import com.project.rezsim.ui.screen.header.HeaderViewModel
+import com.project.rezsim.ui.screen.household.HouseholdViewModel
+import com.project.rezsim.ui.screen.login.LoginViewModel
+import com.project.rezsim.ui.screen.splash.SplashViewModel
 import com.project.server.UserModel
 import kotlin.reflect.KClass
 

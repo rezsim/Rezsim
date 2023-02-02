@@ -1,17 +1,15 @@
-package com.project.rezsim.ui.household
+package com.project.rezsim.ui.screen.household
 
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.ImageButton
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.widget.TextViewCompat
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
-import com.project.rezsim.view.spinner.TextSpinnerAdapter
-import com.project.rezsim.view.spinner.TextSpinnerOnItemSelectedListener
+import com.project.rezsim.ui.view.spinner.TextSpinnerAdapter
+import com.project.rezsim.ui.view.spinner.TextSpinnerOnItemSelectedListener
 import org.koin.android.ext.android.inject
 
 class HouseholdFragment : RezsimFragment() {

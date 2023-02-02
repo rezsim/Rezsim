@@ -1,10 +1,9 @@
-package com.project.rezsim.ui.splash
+package com.project.rezsim.ui.screen.splash
 
 import android.os.Bundle
 import android.view.View
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
-import com.project.server.UserModel
 import org.koin.android.ext.android.inject
 
 class SplashFragment : RezsimFragment() {

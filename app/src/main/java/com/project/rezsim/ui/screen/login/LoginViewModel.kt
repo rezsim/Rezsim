@@ -1,9 +1,9 @@
-package com.project.rezsim.ui.login
+package com.project.rezsim.ui.screen.login
 
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimViewModel
-import com.project.rezsim.ui.MainActivityViewModel
+import com.project.rezsim.ui.screen.MainActivityViewModel
 import com.project.server.UserModel
 import com.project.server.login.Login
 import com.project.server.login.LoginResult

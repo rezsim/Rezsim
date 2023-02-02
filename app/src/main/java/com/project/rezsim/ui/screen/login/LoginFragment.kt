@@ -1,13 +1,8 @@
-package com.project.rezsim.ui.login
+package com.project.rezsim.ui.screen.login
 
-import android.content.Context
-import android.text.Editable
-import android.text.TextWatcher
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
 import org.koin.android.ext.android.inject
