@@ -2,6 +2,7 @@
     <string name="app_name">Rezsim</string>
 
     <string name="fab_save">Mentés</string>
+    <string name="fill_all_mandatory">Töltsön ki minden pirossal jelölt kötelező mezőt!</string>
 
     <string name="login_title">BEJELENTKEZÉS</string>
     <string name="login_description">A folytatáshoz jelentkezzen be:</string>

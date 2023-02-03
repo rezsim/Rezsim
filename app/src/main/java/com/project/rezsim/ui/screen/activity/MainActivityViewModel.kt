@@ -22,6 +22,7 @@ class MainActivityViewModel : RezsimViewModel() {
     val loadWorkFragmentLiveData = MutableLiveData<String>()
     val showProgressLiveData = MutableLiveData<Boolean>()
     val messageLiveData: MutableLiveData<MainActivity.MessageData> = MutableLiveData()
+    val fabPressedLiveData: MutableLiveData<FabOperation> = MutableLiveData()
 
     private val splashViewModel: SplashViewModel by inject()
     private val loginViewModel: LoginViewModel by inject()

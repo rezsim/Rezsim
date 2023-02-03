@@ -6,10 +6,14 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.appcompat.widget.AppCompatTextView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
+import com.project.rezsim.tool.numericValue
+import com.project.rezsim.ui.screen.activity.MainActivityViewModel
 import com.project.rezsim.ui.view.spinner.TextSpinnerAdapter
 import com.project.rezsim.ui.view.spinner.TextSpinnerOnItemSelectedListener
+import com.project.server.dto.Household
 import org.koin.android.ext.android.inject
 
 class HouseholdFragment : RezsimFragment() {
@@ -17,6 +21,7 @@ class HouseholdFragment : RezsimFragment() {
     override val contentId = R.layout.household_fragment
 
     private val viewModel: HouseholdViewModel by inject()
+    private val activityViewModel: MainActivityViewModel by inject()
 
     private lateinit var textViewTitle: AppCompatTextView
     private lateinit var spinnerUsage: AppCompatSpinner
@@ -71,12 +76,39 @@ class HouseholdFragment : RezsimFragment() {
 
     override fun subscribeObservers() {
         super.subscribeObservers()
+        activityViewModel.fabPressedLiveData.observe(this) { save() }
         viewModel.childrenValueLiveData.observe(this) {editChildren.setText(it.toString())}
     }
 
     private fun setContent() {
 
     }
+
+    private fun save() {
+        val content = collectValues()
+        viewModel.save(content)
+    }
+
+    private fun collectValues(): Household =
+        view?.let {
+            Household(
+                id = -1,
+                userId = -1,
+                name = it.findViewById<AppCompatEditText>(R.id.etName).text.toString(),
+                electricityUsage = spinnerUsage.selectedItemPosition,
+                electricityService = -1,
+                electricityPricingTypeA = spinnerPricingTypeA.selectedItemPosition,
+                electricityPricingTypeB = spinnerPricingTypeB.selectedItemPosition,
+                electricityPricingTypeH = -1,
+                electricityConsumptionUnit = -1,
+                gasService = -1,
+                gasChildren = editChildren.numericValue() ?: -1,
+                gasConsumptionUnit = -1,
+                gasHeatingValue = it.findViewById<AppCompatEditText>(R.id.etHeatingValue).numericValue() ?: -1,
+                measurements = listOf()
+            )
+        } ?: error("View is null when collect values")
+
 
 
     companion object {

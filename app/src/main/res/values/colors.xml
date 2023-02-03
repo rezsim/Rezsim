@@ -23,7 +23,7 @@
     <color name="snackbar_background_info">@color/material_grey_3</color>
     <color name="snackbar_background_error">@color/material_red_8</color>
     <color name="snackbar_text_color_info">@color/material_grey_8</color>
-    <color name="snackbar_text_color_error">@color/material_grey_1</color>
+    <color name="snackbar_text_color_error">@color/material_grey_0</color>
     <color name="snackbar_button_color_info">@color/material_indigo_7</color>
     <color name="snackbar_button_color_error">@color/material_indigo_7</color>
 

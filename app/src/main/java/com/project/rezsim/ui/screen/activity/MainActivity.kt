@@ -51,7 +51,9 @@ class MainActivity : AppCompatActivity() {
     private fun setupViews() {
         rootView = findViewById(R.id.clRoot)
         progress = findViewById(R.id.pbProgress)
-        fab = findViewById(R.id.fabFab)
+        fab = findViewById<FloatingActionButton>(R.id.fabFab).apply {
+            setOnClickListener { fabPressed() }
+        }
         setFragment(R.id.flHeader, HeaderFragment.TAG)
         setFragment(R.id.flFooter, FooterFragment.TAG)
     }
@@ -107,6 +109,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun showMessage(messageData: MessageData) {
         Message.show(this, rootView, messageData.message, messageData.messageType, messageData.severity, messageData.runnable)
+    }
+
+    private fun fabPressed() {
+        viewModel.fabPressedLiveData.value = FabOperation.SAVE
     }
 
     data class MessageData(

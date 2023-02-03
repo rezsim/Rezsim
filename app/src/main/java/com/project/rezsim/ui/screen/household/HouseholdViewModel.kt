@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimViewModel
 import com.project.rezsim.ui.screen.activity.MainActivityViewModel
+import com.project.rezsim.ui.view.message.MessageSeverity
 import com.project.rezsim.ui.view.message.MessageType
 import com.project.server.UserModel
 import com.project.server.dto.Household
@@ -41,6 +42,22 @@ class HouseholdViewModel : RezsimViewModel() {
         val value = if (oldValue.isNullOrBlank()) -1 else oldValue.toInt()
         childrenValueLiveData.value = value + add
     }
+
+    fun save(data: Household) {
+        if (data.electricityUsage == -1
+            || data.electricityPricingTypeA == -1
+            || data.electricityPricingTypeB == -1
+            || data.electricityUsage == -1
+            || data.gasChildren == -1
+            || data.gasHeatingValue == -1
+            || data.name.isEmpty()
+        ) {
+            mainActivityViewModel.showMessage(messageResId = R.string.fill_all_mandatory, severity = MessageSeverity.ERROR)
+        } else {
+
+        }
+    }
+
 
 
 
