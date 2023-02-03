@@ -1,6 +1,6 @@
-package com.project.server.login
+package com.project.rezsim.server.login
 
-import com.project.server.dto.User
+import com.project.rezsim.server.dto.User
 
 data class LoginResult(
     val response: LoginResponse?,

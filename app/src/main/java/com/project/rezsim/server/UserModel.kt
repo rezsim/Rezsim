@@ -1,12 +1,10 @@
-package com.project.server
+package com.project.rezsim.server
 
-import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.base.singleton.Singleton
 import com.project.rezsim.device.SettingsRepository
-import com.project.rezsim.tool.Timer
-import com.project.server.dto.User
-import com.project.server.login.LoginResponse
-import com.project.server.login.LoginResult
+import com.project.rezsim.server.dto.Household
+import com.project.rezsim.server.dto.User
+import com.project.rezsim.server.login.LoginResult
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -29,6 +27,7 @@ class UserModel : KoinComponent, Singleton {
 
     fun getEmail() = email
     fun getPassword() = password
+    fun getUser() = user
 
     fun setLoginResult(loginResult: LoginResult) {
         email = loginResult.email.also {
@@ -47,6 +46,17 @@ class UserModel : KoinComponent, Singleton {
 
     fun logout() {
         token = null
+    }
+
+    fun updateHousehold(houseHold: Household) {
+        getUser()?.let {
+            val source = it.households.find { it.id == houseHold.id }
+            if (source != null) {
+
+            } else {
+
+            }
+        }
     }
 
 

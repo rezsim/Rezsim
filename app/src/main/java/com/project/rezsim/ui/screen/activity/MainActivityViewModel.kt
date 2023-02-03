@@ -11,7 +11,7 @@ import com.project.rezsim.ui.screen.splash.SplashFragment
 import com.project.rezsim.ui.screen.splash.SplashViewModel
 import com.project.rezsim.ui.view.message.MessageSeverity
 import com.project.rezsim.ui.view.message.MessageType
-import com.project.server.UserModel
+import com.project.rezsim.server.UserModel
 import org.koin.core.component.inject
 
 class MainActivityViewModel : RezsimViewModel() {

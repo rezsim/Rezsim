@@ -1,7 +1,7 @@
 package com.project.rezsim.di
 
 import com.madhava.keyboard.vario.base.Singletons
-import com.project.server.UserModel
+import com.project.rezsim.server.UserModel
 import org.koin.dsl.module
 
 val serverModule = module {

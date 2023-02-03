@@ -1,12 +1,10 @@
-package com.project.server.login
+package com.project.rezsim.server.login
 
 import androidx.lifecycle.MutableLiveData
-import com.project.server.UserModel
-import com.project.server.dto.Household
-import com.project.server.dto.Measurement
-import com.project.server.dto.User
+import com.project.rezsim.server.dto.Household
+import com.project.rezsim.server.dto.Measurement
+import com.project.rezsim.server.dto.User
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import java.util.concurrent.Executors
 
 class Login : KoinComponent {
@@ -43,7 +41,7 @@ class Login : KoinComponent {
         registrationDate = "2022-10-18 21:31:23. 189000",
         lastSignin = "2022-10-18 21:31:37. 000000",
         households = listOf(
-/*            Household(
+            Household(
                 id = 1,
                 userId = 0,
                 name = "Lakás",
@@ -59,13 +57,24 @@ class Login : KoinComponent {
                 gasHeatingValue = 37,
                 measurements = listOf(
                     Measurement(
-                        id = 3,
+                        id = 2,
                         userId = 0,
                         householdId = 1,
                         utility = 0,
                         period = 0,
                         date = "2022-10-22 18:52:11. 000000",
                         position = 1234,
+                        consumption = 0,
+                        level = 0
+                    ),
+                    Measurement(
+                        id = 3,
+                        userId = 0,
+                        householdId = 1,
+                        utility = 0,
+                        period = 0,
+                        date = "2022-10-22 18:53:11. 000000",
+                        position = 4567,
                         consumption = 0,
                         level = 0
                     )
@@ -87,19 +96,30 @@ class Login : KoinComponent {
                 gasHeatingValue = 38,
                 measurements = listOf(
                     Measurement(
-                        id = 4,
+                        id = 5,
                         userId = 0,
                         householdId = 4,
                         utility = 0,
                         period = 0,
                         date = "2023-01-05 09:45:44. 000000",
-                        position = 5678,
+                        position = 1122,
+                        consumption = 0,
+                        level = 0
+                    ),
+                    Measurement(
+                        id = 6,
+                        userId = 0,
+                        householdId = 4,
+                        utility = 0,
+                        period = 0,
+                        date = "2023-01-05 09:51:44. 000000",
+                        position = 2211,
                         consumption = 0,
                         level = 0
                     )
                 )
             ),
-*/        )
+        )
     )
 
 }

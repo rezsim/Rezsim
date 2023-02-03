@@ -1,4 +1,4 @@
-package com.project.server.dto
+package com.project.rezsim.server.dto
 
 data class User(
 

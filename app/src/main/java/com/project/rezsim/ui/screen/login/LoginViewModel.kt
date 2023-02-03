@@ -5,9 +5,9 @@ import com.project.rezsim.R
 import com.project.rezsim.base.RezsimViewModel
 import com.project.rezsim.ui.screen.activity.MainActivityViewModel
 import com.project.rezsim.ui.view.message.MessageSeverity
-import com.project.server.UserModel
-import com.project.server.login.Login
-import com.project.server.login.LoginResult
+import com.project.rezsim.server.UserModel
+import com.project.rezsim.server.login.Login
+import com.project.rezsim.server.login.LoginResult
 import org.koin.core.component.inject
 
 class LoginViewModel : RezsimViewModel() {

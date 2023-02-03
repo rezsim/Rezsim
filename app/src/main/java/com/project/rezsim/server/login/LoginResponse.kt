@@ -1,4 +1,4 @@
-package com.project.server.login
+package com.project.rezsim.server.login
 
 data class LoginResponse(
     val httpResponse: Int,

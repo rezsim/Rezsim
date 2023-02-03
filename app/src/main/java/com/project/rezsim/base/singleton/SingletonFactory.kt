@@ -6,7 +6,7 @@ import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.screen.household.HouseholdViewModel
 import com.project.rezsim.ui.screen.login.LoginViewModel
 import com.project.rezsim.ui.screen.splash.SplashViewModel
-import com.project.server.UserModel
+import com.project.rezsim.server.UserModel
 import kotlin.reflect.KClass
 
 object SingletonFactory {
