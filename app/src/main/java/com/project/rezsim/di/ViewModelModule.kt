@@ -6,6 +6,7 @@ import com.project.rezsim.ui.screen.footer.FooterViewModel
 import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.screen.household.HouseholdViewModel
 import com.project.rezsim.ui.screen.login.LoginViewModel
+import com.project.rezsim.ui.screen.main.MainViewModel
 import com.project.rezsim.ui.screen.splash.SplashViewModel
 import org.koin.dsl.module
 
@@ -23,6 +24,8 @@ val viewModelModule = module {
     single { Singletons.instance(LoginViewModel::class) as LoginViewModel }
 
     single { Singletons.instance(HouseholdViewModel::class) as HouseholdViewModel}
+
+    single { Singletons.instance(MainViewModel::class) as MainViewModel }
 
 }
 

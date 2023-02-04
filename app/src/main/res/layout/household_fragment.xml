@@ -35,6 +35,7 @@
                android:layout_marginStart="12dp"
                android:textStyle="bold"
                android:textColor="@color/text_color"
+               android:textSize="@dimen/text_size_normal"
                android:text="@string/household_name_title"/>
 
            <androidx.appcompat.widget.AppCompatEditText
@@ -75,6 +76,7 @@
                    android:layout_marginTop="16dp"
                    android:layout_marginStart="12dp"
                    android:textStyle="bold"
+                   android:textSize="@dimen/text_size_normal"
                    android:textColor="@color/text_color"
                    android:text="@string/household_meters_title"/>
 
@@ -191,6 +193,7 @@
                android:layout_marginTop="16dp"
                android:layout_marginStart="12dp"
                android:textStyle="bold"
+               android:textSize="@dimen/text_size_normal"
                android:textColor="@color/text_color"
                android:text="@string/household_usage_title"/>
 
@@ -218,6 +221,7 @@
                android:layout_marginTop="16dp"
                android:layout_marginStart="12dp"
                android:textStyle="bold"
+               android:textSize="@dimen/text_size_normal"
                android:textColor="@color/text_color"
                android:text="@string/household_pricing_type_a_title"/>
 
@@ -245,6 +249,7 @@
                android:layout_marginTop="16dp"
                android:layout_marginStart="12dp"
                android:textStyle="bold"
+               android:textSize="@dimen/text_size_normal"
                android:textColor="@color/text_color"
                android:text="@string/household_pricing_type_b_title"/>
 
@@ -304,6 +309,7 @@
                android:layout_marginTop="16dp"
                android:layout_marginStart="12dp"
                android:textStyle="bold"
+               android:textSize="@dimen/text_size_normal"
                android:textColor="@color/text_color"
                android:text="@string/household_heating_value_title"/>
 
@@ -351,6 +357,7 @@
                android:layout_marginTop="32dp"
                android:layout_marginStart="12dp"
                android:textStyle="bold"
+               android:textSize="@dimen/text_size_normal"
                android:textColor="@color/text_color"
                android:text="@string/household_children_count_title"/>
 
