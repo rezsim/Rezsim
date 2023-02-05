@@ -1,5 +1,6 @@
 package com.project.rezsim.ui.screen.main
 
+import android.content.DialogInterface
 import android.graphics.PorterDuff
 import android.text.Layout
 import android.view.Gravity
@@ -8,9 +9,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
-import androidx.appcompat.widget.AppCompatButton
-import androidx.appcompat.widget.AppCompatSpinner
-import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.appcompat.widget.*
 import androidx.core.content.res.ResourcesCompat
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
@@ -30,19 +29,27 @@ class MainFragment : RezsimFragment() {
 
     private var spinnerHouseholds: AppCompatSpinner? = null
 
+    private val householdsButtons = mutableListOf<AppCompatButton>()
+    private var householdsButtonClickListener = object : View.OnClickListener {
+        override fun onClick(button: View) {
+            onClickHouseholdsButton(button as AppCompatButton)
+        }
+
+    }
+
     override fun setupViews() {
         super.setupViews()
         view?.let {
             if (screenRepository.isTablet()) {
-                val layout: LinearLayoutCompat = it.findViewById(R.id.llHouseholds)
+                val layout: LinearLayout = it.findViewById(R.id.llHouseholds)
                 viewModel.householdItems().forEachIndexed { index, s ->
                     if (index > 0) {
-                        val lp = ViewGroup.MarginLayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT).apply {
-                            setMargins(0, 0, 100, 0)
-                        }
-                        layout.addView(createHouseholdButton(index, s), lp)
+                        val button = createHouseholdButton(index, s)
+                        householdsButtons.add(button)
+                        layout.addView(button)
                     }
                 }
+                householdsButtons[0].performClick()
             } else {
                 spinnerHouseholds = it.findViewById<AppCompatSpinner?>(R.id.spHousehold).apply {
                     adapter = TextSpinnerAdapter(requireContext(), viewModel.householdItems())
@@ -62,15 +69,24 @@ class MainFragment : RezsimFragment() {
     private fun createHouseholdButton(id: Int, text: String) = AppCompatButton(requireContext()).apply {
         setId(id)
         layoutParams =  ViewGroup.MarginLayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT).apply {
-            setMargins(0, 0, 100, 0)
+            setMargins(0, 0, 8.dp, 0)
         }
         background = ResourcesCompat.getDrawable(resources, R.drawable.statelist_button_background, null)
         setText(text)
-        setTextColor(resources.getColor(R.color.button_text_color))
+        setTextColor(resources.getColor(R.color.button_text_color_dark))
         textAlignment = View.TEXT_ALIGNMENT_CENTER
         setPadding(0, 0, 0, 0)
-        backgroundTintList = resources.getColorStateList(R.color.material_grey_8, null)
+        backgroundTintList = resources.getColorStateList(R.color.material_grey_5, null)
         backgroundTintMode = PorterDuff.Mode.ADD
+        isAllCaps = false
+        setOnClickListener(householdsButtonClickListener)
+    }
+
+    private fun onClickHouseholdsButton(button: AppCompatButton) {
+        householdsButtons.forEach {
+            it.isEnabled = it.id != button.id
+        }
+        viewModel.householdSelected(householdsButtons.indexOf(button))
     }
 
     companion object {
