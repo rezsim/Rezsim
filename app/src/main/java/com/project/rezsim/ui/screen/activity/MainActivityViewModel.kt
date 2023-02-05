@@ -33,6 +33,10 @@ class MainActivityViewModel : RezsimViewModel() {
     private val householdViewModel: HouseholdViewModel by inject()
     private val userModel: UserModel by inject()
 
+    init {
+        mainViewModel.addHouseholdLiveData.observeForever { addNewHousehold() }
+    }
+
     private var currentFragmentTag: String = ""
         set(value) {
             field = value
@@ -106,6 +110,13 @@ class MainActivityViewModel : RezsimViewModel() {
 
     private fun fabIcon(fragmentId: String) =
         fabImages[fragmentId]
+
+    private fun addNewHousehold() {
+        if (currentFragmentTag == MainFragment.TAG) {
+            currentFragmentTag = HouseholdFragment.TAG
+            householdViewModel.houseHold = null
+        }
+    }
 
 
 }

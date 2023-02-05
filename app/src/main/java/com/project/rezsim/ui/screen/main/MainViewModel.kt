@@ -12,6 +12,7 @@ import org.koin.core.component.inject
 
 class MainViewModel : RezsimViewModel() {
 
+    val addHouseholdLiveData = MutableLiveData<Boolean>()
     val electricityMeasurementLiveData = MutableLiveData<Measurement>()
     val gasMeasurementLiveData = MutableLiveData<Measurement>()
 

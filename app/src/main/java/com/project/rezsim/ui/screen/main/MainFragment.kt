@@ -41,6 +41,7 @@ class MainFragment : RezsimFragment() {
     override fun setupViews() {
         super.setupViews()
         view?.let {
+            it.findViewById<AppCompatButton>(R.id.btAddHousehold).setOnClickListener { viewModel.addHouseholdLiveData.value = true }
             if (screenRepository.isTablet()) {
                 val layout: LinearLayout = it.findViewById(R.id.llHouseholds)
                 viewModel.householdItems().forEachIndexed { index, s ->
