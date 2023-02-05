@@ -54,7 +54,7 @@
             <FrameLayout
                 android:id="@+id/flHouseholdSelector"
                 android:layout_width="match_parent"
-                android:layout_height="32dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btAddHousehold"
                 android:layout_marginTop="16dp">

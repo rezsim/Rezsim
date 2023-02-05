@@ -18,7 +18,7 @@ class HouseholdViewModel : RezsimViewModel() {
     private val userModel: UserModel by inject()
     private val mainActivityViewModel: MainActivityViewModel by inject()
 
-    private var houseHold: Household? = null
+    var houseHold: Household? = null
     set(value) {
         field = value
         contentLiveData.postValue(value?.let { Content.fromHousehold(value) } )

@@ -16,6 +16,7 @@ import com.project.rezsim.base.RezsimFragment
 import com.project.rezsim.device.ScreenRepository
 import com.project.rezsim.device.dp
 import com.project.rezsim.server.dto.Household
+import com.project.rezsim.server.dto.Measurement
 import com.project.rezsim.ui.view.spinner.TextSpinnerAdapter
 import com.project.rezsim.ui.view.spinner.TextSpinnerOnItemSelectedListener
 import org.koin.android.ext.android.inject
@@ -63,6 +64,28 @@ class MainFragment : RezsimFragment() {
                     setSelection(1)
                 }
             }
+        }
+    }
+
+    override fun subscribeObservers() {
+        super.subscribeObservers()
+        viewModel.electricityMeasurementLiveData.observe(this) { fillElectricityMeasurement(it) }
+        viewModel.gasMeasurementLiveData.observe(this) { fillGasMeasurement(it) }
+    }
+
+    private fun fillElectricityMeasurement(measurement: Measurement) {
+        view?.let {
+            it.findViewById<AppCompatTextView>(R.id.tvValueLastMeterElectricity).text = resources.getString(R.string.electricity_value, measurement.position)
+            it.findViewById<AppCompatTextView>(R.id.tvDateLastMeterElectricity).text = measurement.date.substring(0, 10)
+            it.findViewById<AppCompatTextView>(R.id.tvValueMonthlyConsumptionElectricity).text = resources.getString(R.string.electricity_value, measurement.consumption)
+        }
+    }
+
+    private fun fillGasMeasurement(measurement: Measurement) {
+        view?.let {
+            it.findViewById<AppCompatTextView>(R.id.tvValueLastMeterGas).text = resources.getString(R.string.gas_value, measurement.position)
+            it.findViewById<AppCompatTextView>(R.id.tvDateLastMeterGas).text = measurement.date.substring(0, 10)
+            it.findViewById<AppCompatTextView>(R.id.tvValueMonthlyConsumptionGas).text = resources.getString(R.string.gas_value, measurement.consumption)
         }
     }
 

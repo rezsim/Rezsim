@@ -24,6 +24,7 @@ class HouseholdFragment : RezsimFragment() {
     private val activityViewModel: MainActivityViewModel by inject()
 
     private lateinit var textViewTitle: AppCompatTextView
+    private lateinit var editName: AppCompatEditText
     private lateinit var layoutMeters: ConstraintLayout
     private lateinit var spinnerUsage: AppCompatSpinner
     private lateinit var spinnerPricingTypeA: AppCompatSpinner
@@ -31,6 +32,7 @@ class HouseholdFragment : RezsimFragment() {
     private lateinit var buttonChildrenMinus: AppCompatImageButton
     private lateinit var buttonChildrenPlus: AppCompatImageButton
     private lateinit var editChildren: AppCompatEditText
+    private lateinit var editGasHeating: AppCompatEditText
 
 
     private val spinnerItemSelectedListener = TextSpinnerOnItemSelectedListener()
@@ -39,6 +41,7 @@ class HouseholdFragment : RezsimFragment() {
         super.setupViews()
         view?.let {
             textViewTitle = it.findViewById(R.id.tvTitle)
+            editName = it.findViewById(R.id.etName)
             layoutMeters = it.findViewById(R.id.clMeters)
             spinnerUsage = it.findViewById<AppCompatSpinner?>(R.id.spUsage).apply {
                 adapter = TextSpinnerAdapter(requireContext(), viewModel.usageItems())
@@ -71,6 +74,7 @@ class HouseholdFragment : RezsimFragment() {
                     }
                 })
             }
+            editGasHeating = it.findViewById(R.id.etHeatingValue)
         }
     }
 
@@ -84,7 +88,14 @@ class HouseholdFragment : RezsimFragment() {
     private fun setContent(content: Content?) {
         textViewTitle.setText(if (content == null) R.string.household_title_create else R.string.household_title_change)
         layoutMeters.visibility = if (content == null) View.VISIBLE else View.GONE
-
+        content?.let {
+            editName.setText(it.name)
+            spinnerUsage.setSelection(it.electricityUseMode + 1)
+            spinnerPricingTypeA.setSelection(it.electricityPricingA + 1)
+            spinnerPricingTypeB.setSelection(it.electricityPricingB + 1)
+            editGasHeating.setText(it.gasHeating.toString())
+            editChildren.setText(it.gasChildren.toString())
+        }
     }
 
     private fun save() {

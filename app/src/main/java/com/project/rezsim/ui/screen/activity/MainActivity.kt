@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fabPressed() {
-        viewModel.fabPressedLiveData.value = FabOperation.SAVE
+        viewModel.fabPressed()
     }
 
     data class MessageData(

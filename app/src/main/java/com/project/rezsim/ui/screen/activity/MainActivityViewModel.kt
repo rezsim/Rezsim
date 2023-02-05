@@ -13,6 +13,8 @@ import com.project.rezsim.ui.screen.splash.SplashViewModel
 import com.project.rezsim.ui.view.message.MessageSeverity
 import com.project.rezsim.ui.view.message.MessageType
 import com.project.rezsim.server.UserModel
+import com.project.rezsim.ui.screen.household.HouseholdViewModel
+import com.project.rezsim.ui.screen.main.MainViewModel
 import org.koin.core.component.inject
 
 class MainActivityViewModel : RezsimViewModel() {
@@ -23,10 +25,12 @@ class MainActivityViewModel : RezsimViewModel() {
     val loadWorkFragmentLiveData = MutableLiveData<String>()
     val showProgressLiveData = MutableLiveData<Boolean>()
     val messageLiveData: MutableLiveData<MainActivity.MessageData> = MutableLiveData()
-    val fabPressedLiveData: MutableLiveData<FabOperation> = MutableLiveData()
+    val fabPressedLiveData = MutableLiveData<Boolean>()
 
     private val splashViewModel: SplashViewModel by inject()
     private val loginViewModel: LoginViewModel by inject()
+    private val mainViewModel: MainViewModel by inject()
+    private val householdViewModel: HouseholdViewModel by inject()
     private val userModel: UserModel by inject()
 
     private var currentFragmentTag: String = ""
@@ -61,6 +65,16 @@ class MainActivityViewModel : RezsimViewModel() {
     fun showMessage(message: String, type: MessageType = MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, severity: MessageSeverity = MessageSeverity.INFO, runnable: Runnable? = null) {
         val messageData = MainActivity.MessageData(message, type, severity, runnable)
         messageLiveData.postValue(messageData)
+    }
+
+    fun fabPressed() {
+        when (currentFragmentTag) {
+            MainFragment.TAG -> {
+                currentFragmentTag = HouseholdFragment.TAG
+                householdViewModel.houseHold = userModel.getUser()?.households?.get(mainViewModel.getCurrentHousehold())
+            }
+            HouseholdFragment.TAG -> fabPressedLiveData.value = true
+        }
     }
 
     private fun setWorkFragment(fragmentTag: String) {
