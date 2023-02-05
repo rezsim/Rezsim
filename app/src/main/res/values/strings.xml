@@ -31,6 +31,11 @@
     <string name="main_title">Háztartások</string>
     <string name="main_new_household">Új háztartás</string>
     <string name="main_spinner_household_prompt">Válasszon háztartást</string>
+    <string name="main_read">Leolvasok</string>
+    <string name="main_title_last_read">Utolsó rögzített</string>
+    <string name="main_title_monthly_consumption">Havi fogyasztás</string>
+    <string name="main_title_electricity">Áram</string>
+    <string name="main_title_gas">Gáz</string>
 
 
 </resources>

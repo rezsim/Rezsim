@@ -45,6 +45,17 @@
     <color name="material_indigo_8">#283593</color>
     <color name="material_indigo_9">#1A237E</color>
 
+    <color name="material_green_0">#E8F5E9</color>
+    <color name="material_green_1">#C8E6C9</color>
+    <color name="material_green_2">#A5D6A7</color>
+    <color name="material_green_3">#81C784</color>
+    <color name="material_green_4">#66BB6A</color>
+    <color name="material_green_5">#4CAF50</color>
+    <color name="material_green_6">#43A047</color>
+    <color name="material_green_7">#388E3C</color>
+    <color name="material_green_8">#2E7D32</color>
+    <color name="material_green_9">#1B5E20</color>
+
 
 
 </resources>
