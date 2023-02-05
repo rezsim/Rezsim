@@ -73,17 +73,266 @@
 
             </FrameLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clElectricity"
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cwElectricity"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/flHouseholdSelector"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="16dp"
+                app:cardUseCompatPadding="true"
+                app:cardElevation="8dp"
+                app:cardCornerRadius="6dp"
+                android:backgroundTint="@color/material_indigo_0">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivIconElectricity"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:src="@drawable/ic_electricity"/>
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTitleElectricity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/ivIconElectricity"
+                        app:layout_constraintTop_toTopOf="@id/ivIconElectricity"
+                        app:layout_constraintBottom_toBottomOf="@id/ivIconElectricity"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/main_title_electricity"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="bold"
+                        android:textColor="@color/material_indigo_8"/>
 
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btReadElectricity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="26dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/ivIconElectricity"
+                        app:layout_constraintBottom_toBottomOf="@id/ivIconElectricity"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/statelist_button_background"
+                        android:backgroundTint="@color/material_indigo_9"
+                        android:backgroundTintMode="add"
+                        android:text="@string/main_read"
+                        android:textAllCaps="false"
+                        android:textColor="@color/material_grey_1"
+                        android:textSize="@dimen/text_size_small"/>
+
+                    <View
+                        android:id="@+id/vElectricity"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        app:layout_constraintTop_toBottomOf="@id/btReadElectricity"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginHorizontal="12dp"
+                        android:background="@color/material_indigo_3"/>
+
+                    <TextView
+                        android:id="@+id/tvTitleLastMeterElectricity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/vElectricity"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginTop="16dp"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_size_small"
+                        android:text="@string/main_title_last_read"/>
+
+                    <TextView
+                        android:id="@+id/tvValueLastMeterElectricity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="@id/tvTitleLastMeterElectricity"
+                        app:layout_constraintTop_toBottomOf="@id/tvTitleLastMeterElectricity"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="bold"
+                        tools:text="439 kWh"/>
+
+                    <TextView
+                        android:id="@+id/tvDateLastMeterElectricity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="@id/tvTitleLastMeterElectricity"
+                        app:layout_constraintTop_toBottomOf="@id/tvValueLastMeterElectricity"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_size_small"
+                        android:layout_marginBottom="16dp"
+                        tools:text="2022.07.29"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tvTitleLastMeterElectricity"
+                        app:layout_constraintBottom_toBottomOf="@id/tvDateLastMeterElectricity"
+                        android:layout_marginStart="24dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvTitleMonthlyConsumptionElectricity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_color"
+                            android:textSize="@dimen/text_size_small"
+                            android:text="@string/main_title_monthly_consumption"/>
+
+                        <TextView
+                            android:id="@+id/tvValueMonthlyConsumptionElectricity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_color"
+                            android:textSize="@dimen/text_size_very_large"
+                            android:textStyle="bold"
+                            tools:text="231 kWh"/>
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cwGas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/cwElectricity"
+                android:layout_marginTop="16dp"
+                app:cardUseCompatPadding="true"
+                app:cardElevation="8dp"
+                app:cardCornerRadius="6dp"
+                android:backgroundTint="@color/material_orange_0">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivIconGas"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:src="@drawable/ic_gas"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTitleGas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/ivIconGas"
+                        app:layout_constraintTop_toTopOf="@id/ivIconGas"
+                        app:layout_constraintBottom_toBottomOf="@id/ivIconGas"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/main_title_gas"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="bold"
+                        android:textColor="@color/material_orange_8"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btReadGas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="26dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/ivIconGas"
+                        app:layout_constraintBottom_toBottomOf="@id/ivIconGas"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/statelist_button_background"
+                        android:backgroundTint="@color/material_orange_9"
+                        android:backgroundTintMode="add"
+                        android:text="@string/main_read"
+                        android:textAllCaps="false"
+                        android:textColor="@color/material_grey_1"
+                        android:textSize="@dimen/text_size_small"/>
+
+                    <View
+                        android:id="@+id/vGas"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        app:layout_constraintTop_toBottomOf="@id/btReadGas"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginHorizontal="12dp"
+                        android:background="@color/material_orange_3"/>
+
+                    <TextView
+                        android:id="@+id/tvTitleLastMeterGas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/vGas"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginTop="16dp"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_size_small"
+                        android:text="@string/main_title_last_read"/>
+
+                    <TextView
+                        android:id="@+id/tvValueLastMeterGas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="@id/tvTitleLastMeterGas"
+                        app:layout_constraintTop_toBottomOf="@id/tvTitleLastMeterGas"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="bold"
+                        tools:text="439 kWh"/>
+
+                    <TextView
+                        android:id="@+id/tvDateLastMeterGas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="@id/tvTitleLastMeterGas"
+                        app:layout_constraintTop_toBottomOf="@id/tvValueLastMeterGas"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/text_size_small"
+                        android:layout_marginBottom="16dp"
+                        tools:text="2022.07.29"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tvTitleLastMeterGas"
+                        app:layout_constraintBottom_toBottomOf="@id/tvDateLastMeterGas"
+                        android:layout_marginStart="24dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvTitleMonthlyConsumptionGas"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_color"
+                            android:textSize="@dimen/text_size_small"
+                            android:text="@string/main_title_monthly_consumption"/>
+
+                        <TextView
+                            android:id="@+id/tvValueMonthlyConsumptionGas"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_color"
+                            android:textSize="@dimen/text_size_very_large"
+                            android:textStyle="bold"
+                            tools:text="231 kWh"/>
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

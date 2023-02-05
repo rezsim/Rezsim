@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -63,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.headerVisbileLiveData.observe(this) { setFragmentVisible(R.id.flHeader, it) }
         viewModel.footerVisbileLiveData.observe(this) { setFragmentVisible(R.id.flFooter, it) }
         viewModel.showProgressLiveData.observe(this) { showProgress(it) }
-        viewModel.fabVisibleLiveData.observe(this) { showFab(it) }
+        viewModel.fabIconLiveData.observe(this) { showFab(it) }
         viewModel.messageLiveData.observe(this) { showMessage(it) }
     }
 
@@ -103,8 +105,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showFab(visible: Boolean) {
-        fab.visibility = if (visible) View.VISIBLE else View.GONE
+    private fun showFab(iconRes: Int?) {
+        fab.visibility = if (iconRes != null) View.VISIBLE else View.GONE
+        iconRes?.let {
+            fab.setImageDrawable(AppCompatResources.getDrawable(this, iconRes))
+        }
     }
 
     private fun showMessage(messageData: MessageData) {

@@ -2,6 +2,7 @@ package com.project.rezsim.ui.screen.activity
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.project.rezsim.R
 import com.project.rezsim.base.RezsimViewModel
 import com.project.rezsim.ui.screen.household.HouseholdFragment
 import com.project.rezsim.ui.screen.login.LoginFragment
@@ -18,7 +19,7 @@ class MainActivityViewModel : RezsimViewModel() {
 
     val headerVisbileLiveData = MutableLiveData<Boolean>()
     val footerVisbileLiveData = MutableLiveData<Boolean>()
-    val fabVisibleLiveData = MutableLiveData<Boolean>()
+    val fabIconLiveData = MutableLiveData<Int?>()
     val loadWorkFragmentLiveData = MutableLiveData<String>()
     val showProgressLiveData = MutableLiveData<Boolean>()
     val messageLiveData: MutableLiveData<MainActivity.MessageData> = MutableLiveData()
@@ -33,6 +34,11 @@ class MainActivityViewModel : RezsimViewModel() {
             field = value
             setWorkFragment(value)
         }
+
+    private val fabImages = HashMap<String, Int>().apply {
+        put(MainFragment.TAG, R.drawable.ic_edit)
+        put(HouseholdFragment.TAG, R.drawable.ic_floppy)
+    }
 
     init {
         Log.d("DEBINFO", "MainActivityViewModel.init")
@@ -61,7 +67,7 @@ class MainActivityViewModel : RezsimViewModel() {
         loadWorkFragmentLiveData.value = fragmentTag
         headerVisbileLiveData.value = needHeader(fragmentTag)
         footerVisbileLiveData.value = needFooter(fragmentTag)
-        fabVisibleLiveData.value = needFab(fragmentTag)
+        fabIconLiveData.value = fabIcon(fragmentTag)
     }
 
     private fun splashFinished() {
@@ -84,8 +90,8 @@ class MainActivityViewModel : RezsimViewModel() {
     private fun needFooter(fragmentId: String) =
         fragmentId in listOf(MainFragment.TAG)
 
-    private fun needFab(fragmentId: String) =
-        fragmentId in listOf(HouseholdFragment.TAG)
+    private fun fabIcon(fragmentId: String) =
+        fabImages[fragmentId]
 
 
 }
