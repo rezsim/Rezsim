@@ -8,6 +8,7 @@ import com.project.rezsim.ui.view.message.MessageSeverity
 import com.project.rezsim.ui.view.message.MessageType
 import com.project.rezsim.server.UserModel
 import com.project.rezsim.server.dto.Household
+import com.project.rezsim.ui.screen.main.MainFragment
 import org.koin.core.component.inject
 
 class HouseholdViewModel : RezsimViewModel() {
@@ -59,7 +60,8 @@ class HouseholdViewModel : RezsimViewModel() {
                 userId = userModel.getUser()?.id ?: error ("No user when save household."),
             )
             data.applyOnHousehold(h)
-            userModel
+            val index = userModel.updateHousehold(h)
+            mainActivityViewModel.switchToFragment(MainFragment.TAG)
         }
     }
 

@@ -16,6 +16,6 @@ data class User(
 
     val lastSignin: String,
 
-    val households: List<Household>
+    val households: MutableList<Household>
 
 )

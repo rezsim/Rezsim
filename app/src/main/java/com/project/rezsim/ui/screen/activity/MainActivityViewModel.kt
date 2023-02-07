@@ -13,6 +13,8 @@ import com.project.rezsim.ui.screen.splash.SplashViewModel
 import com.project.rezsim.ui.view.message.MessageSeverity
 import com.project.rezsim.ui.view.message.MessageType
 import com.project.rezsim.server.UserModel
+import com.project.rezsim.teszt.FragmentA
+import com.project.rezsim.teszt.FragmentB
 import com.project.rezsim.ui.screen.household.HouseholdViewModel
 import com.project.rezsim.ui.screen.main.MainViewModel
 import org.koin.core.component.inject
@@ -46,6 +48,8 @@ class MainActivityViewModel : RezsimViewModel() {
     private val fabImages = HashMap<String, Int>().apply {
         put(MainFragment.TAG, R.drawable.ic_edit)
         put(HouseholdFragment.TAG, R.drawable.ic_floppy)
+        put(FragmentA.TAG, R.drawable.ic_plus)
+        put(FragmentB.TAG, R.drawable.ic_minus)
     }
 
     init {
@@ -72,13 +76,29 @@ class MainActivityViewModel : RezsimViewModel() {
     }
 
     fun fabPressed() {
+/*        if (currentFragmentTag != FragmentA.TAG) {
+            currentFragmentTag = FragmentA.TAG
+        } else {
+            currentFragmentTag = FragmentB.TAG
+        }
+*/
+
+
         when (currentFragmentTag) {
             MainFragment.TAG -> {
                 currentFragmentTag = HouseholdFragment.TAG
                 householdViewModel.houseHold = userModel.getUser()?.households?.get(mainViewModel.getCurrentHousehold())
             }
-            HouseholdFragment.TAG -> fabPressedLiveData.value = true
+            HouseholdFragment.TAG -> {
+                Log.d("DEBINFO-R", "MainActivityModel.fabPressedLiveData set value:true")
+                fabPressedLiveData.value = true
+            }
         }
+
+    }
+
+    fun switchToFragment(fragmentTag: String) {
+        currentFragmentTag = fragmentTag
     }
 
     private fun setWorkFragment(fragmentTag: String) {
@@ -103,10 +123,10 @@ class MainActivityViewModel : RezsimViewModel() {
     private fun startScreen() = if (userModel.hasHousehold()) MainFragment.TAG else HouseholdFragment.TAG
 
     private fun needHeader(fragmentId: String) =
-        fragmentId in listOf(MainFragment.TAG, HouseholdFragment.TAG)
+        fragmentId in listOf(MainFragment.TAG, HouseholdFragment.TAG, FragmentA.TAG, FragmentB.TAG)
 
     private fun needFooter(fragmentId: String) =
-        fragmentId in listOf(MainFragment.TAG)
+        fragmentId in listOf(MainFragment.TAG, FragmentA.TAG, FragmentB.TAG)
 
     private fun fabIcon(fragmentId: String) =
         fabImages[fragmentId]

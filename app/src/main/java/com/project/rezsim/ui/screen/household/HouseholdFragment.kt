@@ -1,7 +1,9 @@
 package com.project.rezsim.ui.screen.household
 
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageButton
@@ -80,7 +82,11 @@ class HouseholdFragment : RezsimFragment() {
 
     override fun subscribeObservers() {
         super.subscribeObservers()
-        activityViewModel.fabPressedLiveData.observe(this) { save() }
+        Log.d("DEBINFO-R", "activityViewModel.fabPressedLiveData start observing")
+        activityViewModel.fabPressedLiveData.observe(this) {
+            Log.d("DEBINFO-R", "activityViewModel.fabPressedLiveData triggered: $it")
+            save()
+        }
         viewModel.childrenValueLiveData.observe(this) { editChildren.setText(it.toString()) }
         viewModel.contentLiveData.observe(this) { setContent(it) }
     }
@@ -109,9 +115,9 @@ class HouseholdFragment : RezsimFragment() {
                 name = it.findViewById<AppCompatEditText>(R.id.etName).text.toString(),
                 electricityMeter = it.findViewById<AppCompatEditText>(R.id.etElectricityMeter).numericValue() ?: -1,
                 gasMeter = it.findViewById<AppCompatEditText>(R.id.etGasMeter).numericValue() ?: -1,
-                electricityUseMode = spinnerUsage.selectedItemPosition,
-                electricityPricingA = spinnerPricingTypeA.selectedItemPosition,
-                electricityPricingB = spinnerPricingTypeB.selectedItemPosition,
+                electricityUseMode = spinnerUsage.selectedItemPosition - 1,
+                electricityPricingA = spinnerPricingTypeA.selectedItemPosition - 1,
+                electricityPricingB = spinnerPricingTypeB.selectedItemPosition - 1,
                 gasChildren = editChildren.numericValue() ?: -1,
                 gasHeating = it.findViewById<AppCompatEditText>(R.id.etHeatingValue).numericValue() ?: -1,
             )

@@ -17,6 +17,11 @@ open class RezsimFragment : Fragment() {
     open fun subscribeObservers() {}
     open fun start() {}
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        subscribeObservers()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,7 +35,6 @@ open class RezsimFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
-        subscribeObservers()
     }
 
     override fun onStart() {

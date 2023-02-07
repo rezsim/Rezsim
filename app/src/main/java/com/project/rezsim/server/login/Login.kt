@@ -40,7 +40,7 @@ class Login : KoinComponent {
         status = true,
         registrationDate = "2022-10-18 21:31:23. 189000",
         lastSignin = "2022-10-18 21:31:37. 000000",
-        households = listOf(
+        households = mutableListOf(
             Household(
                 id = 1,
                 userId = 0,

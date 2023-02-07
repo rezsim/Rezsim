@@ -14,6 +14,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.madhava.keyboard.vario.base.Singletons
 import com.project.rezsim.R
+import com.project.rezsim.teszt.FragmentA
+import com.project.rezsim.teszt.FragmentB
 import com.project.rezsim.ui.screen.footer.FooterFragment
 import com.project.rezsim.ui.screen.header.HeaderFragment
 import com.project.rezsim.ui.screen.household.HouseholdFragment
@@ -71,22 +73,32 @@ class MainActivity : AppCompatActivity() {
 
     private fun setFragment(containerId: Int, fragmentTag: String) {
         Log.d("DEBINFO", "MainActivity.setFragment() fragmentTag:$fragmentTag")
-        findFragment(fragmentTag)?.let { fragment ->
-            supportFragmentManager.beginTransaction()
-                .replace(containerId, fragment, fragmentTag)
-                .commitNow()
+        val fm = supportFragmentManager
+        val tr = fm.beginTransaction()
+        val currentFragment = fm.findFragmentById(containerId)
+        currentFragment?.let {
+            tr.detach(it)
         }
+        val newFragment = fm.findFragmentByTag(fragmentTag)
+        if (newFragment == null) {
+           tr.add(containerId, createFragment(fragmentTag), fragmentTag)
+        } else {
+            tr.attach(newFragment)
+        }
+        tr.commit()
     }
 
-    private fun findFragment(tag: String): Fragment? =  supportFragmentManager.findFragmentByTag(tag)
-            ?: when (tag) {
+    private fun createFragment(tag: String): Fragment =
+            when (tag) {
                 SplashFragment.TAG -> SplashFragment.newInstance()
                 LoginFragment.TAG -> LoginFragment.newInstance()
                 HeaderFragment.TAG -> HeaderFragment.newInstance()
                 FooterFragment.TAG -> FooterFragment.newInstance()
                 MainFragment.TAG -> MainFragment.newInstance()
                 HouseholdFragment.TAG -> HouseholdFragment.newInstance()
-                else -> null
+                FragmentA.TAG -> FragmentA.newInstance()
+                FragmentB.TAG -> FragmentB.newInstance()
+                else -> error("Failed to create fragment $tag")
             }
 
     private fun setFragmentVisible(containerId: Int, visible: Boolean) {

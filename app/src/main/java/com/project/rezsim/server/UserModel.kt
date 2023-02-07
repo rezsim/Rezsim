@@ -48,13 +48,13 @@ class UserModel : KoinComponent, Singleton {
         token = null
     }
 
-    fun updateHousehold(houseHold: Household) {
+    fun updateHousehold(household: Household) {
         getUser()?.let {
-            val source = it.households.find { it.id == houseHold.id }
-            if (source != null) {
-
+            val index = it.households.indexOfFirst { it.id == household.id }
+            if (index == -1) {
+                it.households.add(household)
             } else {
-
+                it.households.set(index, household)
             }
         }
     }
