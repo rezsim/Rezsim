@@ -8,14 +8,22 @@
     <string name="gas_value">%d m3</string>
 
     <string name="login_title">BEJELENTKEZÉS</string>
+    <string name="login_registration_title">REGISZTRÁCIÓ</string>
     <string name="login_description">A folytatáshoz jelentkezzen be:</string>
+    <string name="login_registration_description">A folytatáshoz regisztráljon:</string>
     <string name="login_email_title">E-mail</string>
     <string name="login_email_hint">EMAIL</string>
     <string name="login_password_title">Jelszó</string>
+    <string name="login_password_again_title">Jelszó még egyszer</string>
     <string name="login_password_hint">JELSZÓ</string>
     <string name="login_button">BEJELENTKEZÉS</string>
+    <string name="login_button_registration">REGISZTRÁCIÓ</string>
     <string name="login_login_failed">Ne sikerült a bejelentkezés. Kérem próbálja újra!</string>
     <string name="login_login_invalid_credidental">Érvénytelen email / jelszó. A bejelentkezés sikertelen.</string>
+    <string name="login_mode_login_description">Nincs még fiókja?</string>
+    <string name="login_mode_login_button">Regisztráció</string>
+    <string name="login_mode_registration_description">Már van fiókja?</string>
+    <string name="login_mode_registration_button">Bejelentjezés</string>
 
     <string name="household_title_change">Háztartás szerkesztése</string>
     <string name="household_title_create">Háztartás létrehozása</string>

@@ -48,8 +48,8 @@ class MainActivityViewModel : RezsimViewModel() {
     private val fabImages = HashMap<String, Int>().apply {
         put(MainFragment.TAG, R.drawable.ic_edit)
         put(HouseholdFragment.TAG, R.drawable.ic_floppy)
-        put(FragmentA.TAG, R.drawable.ic_plus)
-        put(FragmentB.TAG, R.drawable.ic_minus)
+//        put(FragmentA.TAG, R.drawable.ic_plus)
+//        put(FragmentB.TAG, R.drawable.ic_minus)
     }
 
     init {

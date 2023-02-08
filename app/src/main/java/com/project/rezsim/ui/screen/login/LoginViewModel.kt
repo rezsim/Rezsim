@@ -17,13 +17,13 @@ class LoginViewModel : RezsimViewModel() {
     val passwordLiveData: MutableLiveData<String> = MutableLiveData()
     val loginButtonEnabledLiveData: MutableLiveData<Boolean> = MutableLiveData()
     val inputEnabledLiveData: MutableLiveData<Boolean> = MutableLiveData()
+    val modeLiveData: MutableLiveData<String> = MutableLiveData()
 
     private val userModel: UserModel by inject()
     private val mainActivityViewModel: MainActivityViewModel by inject()
 
     fun start() {
-        emailLiveData.value = userModel.getEmail() ?: ""
-        passwordLiveData.value = userModel.getPassword() ?: ""
+        switchToLoginMode()
     }
 
     fun inputChanged(email: String, password: String) {
@@ -51,6 +51,26 @@ class LoginViewModel : RezsimViewModel() {
                 finishedLiveData.value = it
             }
         }
+    }
+
+    fun changeMode() {
+        if (modeLiveData.value == LoginFragment.LOGIN_MODE) {
+            switchToRegistrationMode()
+        } else {
+            switchToLoginMode()
+        }
+    }
+
+    fun switchToRegistrationMode() {
+        emailLiveData.value = ""
+        passwordLiveData.value = ""
+        modeLiveData.value = LoginFragment.REGISTRATION_MODE
+    }
+
+    fun switchToLoginMode() {
+        emailLiveData.value = userModel.getEmail() ?: ""
+        passwordLiveData.value = userModel.getPassword() ?: ""
+        modeLiveData.value = LoginFragment.LOGIN_MODE
     }
 
 }
