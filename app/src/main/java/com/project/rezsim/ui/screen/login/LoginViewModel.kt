@@ -35,7 +35,7 @@ class LoginViewModel : RezsimViewModel() {
         loginButtonEnabledLiveData.value = false
         inputEnabledLiveData.value = false
         val login = Login()
-        login.login(email, password).observeForever {
+        login.loginR(email, password).observeForever {
             mainActivityViewModel.hideProgress()
             userModel.setLoginResult(it)
             start()

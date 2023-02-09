@@ -1,6 +1,9 @@
 package com.project.rezsim.server.login
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.project.rezsim.server.api.ApiClient
+import com.project.rezsim.server.api.ApiInterface
 import com.project.rezsim.server.dto.Household
 import com.project.rezsim.server.dto.Measurement
 import com.project.rezsim.server.dto.User
@@ -30,6 +33,30 @@ class Login : KoinComponent {
         return resultLiveData
     }
 
+    fun loginR(email: String, password: String): MutableLiveData<LoginResult> {
+        resultLiveData = MutableLiveData()
+
+        val apiClient = ApiClient.getApiClient()
+        val request = LoginRequest(email = email, password = password)
+        val apiInterface = apiClient.create(ApiInterface::class.java)
+        Executors.newSingleThreadExecutor().execute {
+            try {
+                val response = apiInterface.login(request).execute()
+                if (response.isSuccessful) {
+                    var deb = 0
+                    deb++
+                } else {
+                    var deb = 0
+                    deb++
+                }
+            }catch (Ex:Exception){
+                Log.e("Error",Ex.localizedMessage)
+            }
+        }
+
+
+        return resultLiveData
+    }
 
 
     fun testUser() = User(
