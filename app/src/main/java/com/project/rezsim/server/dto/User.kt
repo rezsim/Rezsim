@@ -1,5 +1,7 @@
 package com.project.rezsim.server.dto
 
+import com.google.gson.annotations.SerializedName
+
 data class User(
 
     val id: Long,
@@ -12,8 +14,10 @@ data class User(
 
     val status: Boolean,
 
+    @SerializedName("registrationdate")
     val registrationDate: String,
 
+    @SerializedName("lastsignin")
     val lastSignin: String,
 
     val households: MutableList<Household>

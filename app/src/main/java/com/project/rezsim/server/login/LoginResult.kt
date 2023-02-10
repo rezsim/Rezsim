@@ -6,7 +6,7 @@ data class LoginResult(
     val response: LoginResponse?,
     val email: String,
     val password: String,
-    val user: User
+    val user: User? = null
 ) {
     fun isSuccessed() = response?.isSuccessed() == true
 }

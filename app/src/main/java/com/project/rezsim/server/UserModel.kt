@@ -29,6 +29,12 @@ class UserModel : KoinComponent, Singleton {
     fun getPassword() = password
     fun getUser() = user
 
+    fun setToken(token: String) {
+        this.token = token
+    }
+
+    fun getToken() = token
+
     fun setLoginResult(loginResult: LoginResult) {
         email = loginResult.email.also {
             settingsRepository.writeUserEmail(it)
@@ -38,7 +44,6 @@ class UserModel : KoinComponent, Singleton {
                 settingsRepository.writeUserPassword(it)
             }
             token = loginResult.response.token
-            user = loginResult.user
         } else {
             logout()
         }
