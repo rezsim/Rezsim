@@ -1,8 +1,8 @@
 package com.project.rezsim.server.api
 
+import com.project.rezsim.server.dto.User
 import com.project.rezsim.server.login.LoginRequest
 import com.project.rezsim.server.login.LoginResponse
-import com.project.rezsim.server.user.UserResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -14,5 +14,5 @@ interface ApiInterface {
     fun login(@Body request: LoginRequest): Call<LoginResponse>
 
     @GET("api/user")
-    fun getUsers(@Header("Authorization") token: String): Call<UserResponse>
+    fun getUsers(@Header("Authorization") token: String): Call<User?>
 }

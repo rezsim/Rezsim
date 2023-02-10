@@ -28,6 +28,6 @@ data class Household(
 
     var gasHeatingValue: Int = -1,
 
-    val measurements: List<Measurement> = listOf()
+    val measurements: Array<Measurement> = arrayOf()
 
 )

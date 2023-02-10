@@ -20,6 +20,6 @@ data class User(
     @SerializedName("lastsignin")
     val lastSignin: String,
 
-    val households: MutableList<Household>
+    val households: Array<Household>
 
 )

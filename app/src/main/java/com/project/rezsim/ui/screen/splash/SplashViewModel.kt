@@ -35,7 +35,7 @@ class SplashViewModel : RezsimViewModel() {
 
         loginResult = null
         if (!userModel.isLoggedIn() && userModel.hasLoginAuthenticationData()) {
-            login.loginR(userModel.getEmail()!!, userModel.getPassword()!!).observeForever {
+            login.login(userModel.getEmail()!!, userModel.getPassword()!!).observeForever {
                 loginResult = it
                 userModel.setLoginResult(it)
                 loginFinished = true

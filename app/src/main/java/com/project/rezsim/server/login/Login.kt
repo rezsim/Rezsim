@@ -22,20 +22,23 @@ class Login : KoinComponent {
 
     private lateinit var resultLiveData: MutableLiveData<LoginResult>
 
-    fun loginR(email: String, password: String): MutableLiveData<LoginResult> {
+    fun login(email: String, password: String): MutableLiveData<LoginResult> {
         resultLiveData = MutableLiveData()
 
         Executors.newSingleThreadExecutor().execute {
             val res = callLogin(email, password)
             if (res.isSuccessed()) {
                 userModel.setToken(res.token!!)
-                com.project.rezsim.server.user.User().getUserSync(userModel.getToken() ?: "")
+                val user = com.project.rezsim.server.user.User().getUserSync(userModel.getToken() ?: "")
+                if (user?.body() != null) {
+                    resultLiveData.postValue(LoginResult(res, email, password, user.body()))
+                } else {
+                    resultLiveData.postValue(LoginResult(LoginResponse(null), email, password, null))
+                }
             } else {
                 resultLiveData.postValue(LoginResult(res, email, password, null))
             }
         }
-
-
         return resultLiveData
     }
 
@@ -52,13 +55,5 @@ class Login : KoinComponent {
     } catch (Ex:Exception){
         LoginResponse(null)
     }
-
-    private fun callGetUser() = try {
-
-    } catch (Ex:Exception){
-        LoginResponse(null)
-    }
-
-
 
 }

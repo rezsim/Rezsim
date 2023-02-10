@@ -6,16 +6,14 @@ import com.project.rezsim.server.api.ApiInterface
 
 class User {
 
-    private lateinit var resultLiveData: MutableLiveData<UserResponse>
+    private lateinit var resultLiveData: MutableLiveData<User>
 
-    fun getUserSync(token: String) {
+    fun getUserSync(token: String) = try {
         val apiClient = ApiClient.getApiClient()
         val apiInterface = apiClient.create(ApiInterface::class.java)
-        val reponse = apiInterface.getUsers("Bearer $token").execute()
-
-        var deb = 0
-        deb++
-
+        apiInterface.getUsers("Bearer $token").execute()
+    } catch (e: Exception) {
+        null
     }
 
 }

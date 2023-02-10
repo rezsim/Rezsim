@@ -30,7 +30,7 @@ class UserModel : KoinComponent, Singleton {
     fun getUser() = user
 
     fun setToken(token: String) {
-        this.token = token
+        this.token = "Bearer $token"
     }
 
     fun getToken() = token
@@ -44,12 +44,14 @@ class UserModel : KoinComponent, Singleton {
                 settingsRepository.writeUserPassword(it)
             }
             token = loginResult.response.token
+            user = loginResult.user
         } else {
             logout()
         }
     }
 
     fun logout() {
+        user = null
         token = null
     }
 
@@ -57,7 +59,7 @@ class UserModel : KoinComponent, Singleton {
         getUser()?.let {
             val index = it.households.indexOfFirst { it.id == household.id }
             if (index == -1) {
-                it.households.add(household)
+//                it.households.add(household)
             } else {
                 it.households.set(index, household)
             }
