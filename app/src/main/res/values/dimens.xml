@@ -9,7 +9,11 @@
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="text_size_large">16sp</dimen>
     <dimen name="text_size_very_large">20sp</dimen>
+    <dimen name="text_size_extra_large">24sp</dimen>
     <dimen name="text_size_edit">16sp</dimen>
+
+    <dimen name="icon_size_header">32dp</dimen>
+    <dimen name="text_size_header">@dimen/text_size_extra_large</dimen>
 
 
 

@@ -18,8 +18,10 @@
     <string name="login_password_hint">JELSZÓ</string>
     <string name="login_button">BEJELENTKEZÉS</string>
     <string name="login_button_registration">REGISZTRÁCIÓ</string>
-    <string name="login_login_failed">Ne sikerült a bejelentkezés. Kérem próbálja újra!</string>
+    <string name="login_login_failed">Ne sikerült a művelet. Kérem próbálja újra!</string>
     <string name="login_login_invalid_credidental">Érvénytelen email / jelszó. A bejelentkezés sikertelen.</string>
+    <string name="login_login_passwords_no_match">A jelszavak nem egyeznek. Próbálja újra!</string>
+    <string name="login_login_email_exists">Ez az email cím már foglalt. Próbálja újra!</string>
     <string name="login_mode_login_description">Nincs még fiókja?</string>
     <string name="login_mode_login_button">Regisztráció</string>
     <string name="login_mode_registration_description">Már van fiókja?</string>

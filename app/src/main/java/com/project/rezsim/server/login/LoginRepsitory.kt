@@ -1,35 +1,38 @@
 package com.project.rezsim.server.login
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.server.UserModel
 import com.project.rezsim.server.api.ApiClient
 import com.project.rezsim.server.api.ApiInterface
-import com.project.rezsim.server.dto.Household
-import com.project.rezsim.server.dto.Measurement
-import com.project.rezsim.server.dto.User
+import com.project.rezsim.server.register.RegisterRepository
+import com.project.rezsim.server.user.UserRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.concurrent.Executors
 
-class Login : KoinComponent {
-
-    private val testEmail = "test@test.com"
-    private val testPassword = "Alma1234"
-    private val testToken = "teszt_token"
+class LoginRepository : KoinComponent {
 
     private val userModel: UserModel by inject()
+    private val userRepository: UserRepository by inject()
+    private val registerRepository: RegisterRepository by inject()
 
     private lateinit var resultLiveData: MutableLiveData<LoginResult>
 
-    fun login(email: String, password: String): MutableLiveData<LoginResult> {
+    fun login(email: String, password: String, registration: Boolean = false): MutableLiveData<LoginResult> {
         resultLiveData = MutableLiveData()
 
         Executors.newSingleThreadExecutor().execute {
+            if (registration) {
+                val em = registerRepository.registerSync(email, password)
+                if (!em.isSuccessed()) {
+                    resultLiveData.postValue(LoginResult(LoginResponse(em.httpResponse), email, password, null))
+                    return@execute
+                }
+            }
             val res = callLogin(email, password)
             if (res.isSuccessed()) {
                 userModel.setToken(res.token!!)
-                val user = com.project.rezsim.server.user.User().getUserSync(userModel.getToken() ?: "")
+                val user = userRepository.getUserSync(userModel.getToken() ?: "")
                 if (user?.body() != null) {
                     resultLiveData.postValue(LoginResult(res, email, password, user.body()))
                 } else {

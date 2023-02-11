@@ -4,6 +4,7 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
@@ -56,29 +57,32 @@ class LoginFragment : RezsimFragment() {
         super.subscribeObservers()
         viewModel.emailLiveData.observe(this) { editEmail.setText(it) }
         viewModel.passwordLiveData.observe(this) { editPassword.setText(it) }
+        viewModel.passwordAgainLiveData.observe(this) { editPasswordAgain.setText(it)}
         viewModel.loginButtonEnabledLiveData.observe(this) { setLoginButtonState(it) }
         viewModel.inputEnabledLiveData.observe(this) { setInputState(it) }
         viewModel.modeLiveData.observeForever { setViewsAsMode(it) }
     }
 
     private fun inputChanged() {
-        viewModel.inputChanged(editEmail.text.toString(), editPassword.text.toString())
+        viewModel.inputChanged(editEmail.text.toString(), editPassword.text.toString(), editPasswordAgain.text.toString())
     }
 
     private fun setLoginButtonState(enabled: Boolean) {
         buttonLogin.apply {
             isEnabled = enabled
-            backgroundTintList = if (enabled) resources.getColorStateList(R.color.material_orange_8) else null
+            backgroundTintList = if (enabled) ContextCompat.getColorStateList(requireContext(), R.color.material_orange_8) else null
         }
     }
 
     private fun setInputState(enabled: Boolean) {
         editEmail.isEnabled = enabled
         editPassword.isEnabled = enabled
+        editPasswordAgain.isEnabled = enabled
+        buttonMode.isEnabled = enabled
     }
 
     private fun loginButtonClicked() {
-        viewModel.loginButtonClicked(editEmail.text.toString(), editPassword.text.toString())
+        viewModel.loginButtonClicked(editEmail.text.toString(), editPassword.text.toString(), editPasswordAgain.text.toString())
     }
 
     private fun modeButtonClicked() {
