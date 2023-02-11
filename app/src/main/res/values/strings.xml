@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Rezsim</string>
 
+    <string name="OK">OK</string>
+
     <string name="fab_save">Mentés</string>
     <string name="fill_all_mandatory">Töltsön ki minden pirossal jelölt kötelező mezőt!</string>
 
@@ -49,6 +51,9 @@
     <string name="main_title_monthly_consumption">Havi fogyasztás</string>
     <string name="main_title_electricity">Áram</string>
     <string name="main_title_gas">Gáz</string>
+
+    <string name="dialog_user_user_title">Bejelentkezve:</string>
+    <string name="dialog_user_logout">Kijelentkezés</string>
 
 
 </resources>

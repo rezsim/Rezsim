@@ -15,6 +15,8 @@ import com.project.rezsim.ui.view.message.MessageType
 import com.project.rezsim.server.UserModel
 import com.project.rezsim.teszt.FragmentA
 import com.project.rezsim.teszt.FragmentB
+import com.project.rezsim.ui.screen.dialog.user.UserDialogFragment
+import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.screen.household.HouseholdViewModel
 import com.project.rezsim.ui.screen.main.MainViewModel
 import org.koin.core.component.inject
@@ -28,12 +30,14 @@ class MainActivityViewModel : RezsimViewModel() {
     val showProgressLiveData = MutableLiveData<Boolean>()
     val messageLiveData: MutableLiveData<MainActivity.MessageData> = MutableLiveData()
     val fabPressedLiveData = MutableLiveData<Boolean>()
+    val dialogLiveData = MutableLiveData<String>()
 
     private val splashViewModel: SplashViewModel by inject()
     private val loginViewModel: LoginViewModel by inject()
     private val mainViewModel: MainViewModel by inject()
     private val householdViewModel: HouseholdViewModel by inject()
     private val userModel: UserModel by inject()
+    private val headerViewModel: HeaderViewModel by inject()
 
     init {
         mainViewModel.addHouseholdLiveData.observeForever { addNewHousehold() }
@@ -57,6 +61,8 @@ class MainActivityViewModel : RezsimViewModel() {
         currentFragmentTag = SplashFragment.TAG
         splashViewModel.finishedLiveData.observeForever { splashFinished() }
         loginViewModel.finishedLiveData.observeForever { loginFinished() }
+        headerViewModel.userLiveData.observeForever { showDialog(UserDialogFragment.TAG) }
+
     }
 
     fun currentFragmentTag() = currentFragmentTag
@@ -99,6 +105,10 @@ class MainActivityViewModel : RezsimViewModel() {
 
     fun switchToFragment(fragmentTag: String) {
         currentFragmentTag = fragmentTag
+    }
+
+    fun showDialog(tag: String) {
+        dialogLiveData.postValue(tag)
     }
 
     private fun setWorkFragment(fragmentTag: String) {

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background_dialog"
+    android:padding="@dimen/dialog_margin"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvUserTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/text_size_normal"
+        android:textStyle="bold"
+        android:text="@string/dialog_user_user_title"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvUserData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/tvUserTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvUserTitle"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/text_color"
+        android:textStyle="normal"
+        android:textSize="@dimen/text_size_normal"
+        tools:text="madhava.srs@gmail.com"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:background="@drawable/statelist_button_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvUserTitle"
+        app:layout_constraintBottom_toBottomOf="@id/tvUserData"
+        android:text="@string/dialog_user_logout"
+        android:textColor="@color/button_text_color"
+        android:paddingHorizontal="8dp"
+        android:textSize="@dimen/text_size_extra_small"
+        android:backgroundTint="@color/material_red_8"
+        android:backgroundTintMode="add"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btOk"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:background="@drawable/statelist_button_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvUserData"
+        android:layout_marginTop="48dp"
+        android:text="@string/OK"
+        android:textSize="@dimen/text_size_normal"
+        android:drawablePadding="8dp"
+        android:textColor="@color/button_text_color"
+        android:paddingHorizontal="16dp"
+        android:backgroundTint="@color/material_indigo_8"
+        android:backgroundTintMode="add"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

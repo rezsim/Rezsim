@@ -30,10 +30,6 @@
         android:textColor="@color/text_color"
         tools:text="Rezsim"/>
 
-
-
-
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivUser"
         android:layout_width="@dimen/icon_size_header"
@@ -44,6 +40,5 @@
         android:layout_marginEnd="8dp"
         android:src="@drawable/ic_user"
         android:tint="@color/material_grey_8"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

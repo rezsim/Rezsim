@@ -9,6 +9,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.widget.ContentLoadingProgressBar
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -16,6 +17,7 @@ import com.madhava.keyboard.vario.base.Singletons
 import com.project.rezsim.R
 import com.project.rezsim.teszt.FragmentA
 import com.project.rezsim.teszt.FragmentB
+import com.project.rezsim.ui.screen.dialog.user.UserDialogFragment
 import com.project.rezsim.ui.screen.footer.FooterFragment
 import com.project.rezsim.ui.screen.header.HeaderFragment
 import com.project.rezsim.ui.screen.household.HouseholdFragment
@@ -69,6 +71,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.showProgressLiveData.observe(this) { showProgress(it) }
         viewModel.fabIconLiveData.observe(this) { showFab(it) }
         viewModel.messageLiveData.observe(this) { showMessage(it) }
+        viewModel.dialogLiveData.observe(this) { showDialog(it) }
     }
 
     private fun setFragment(containerId: Int, fragmentTag: String) {
@@ -101,6 +104,12 @@ class MainActivity : AppCompatActivity() {
                 else -> error("Failed to create fragment $tag")
             }
 
+    private fun createDialogFragment(tag: String): DialogFragment =
+        when (tag) {
+            UserDialogFragment.TAG -> UserDialogFragment.newInstance()
+            else -> error("Failed to create dialog fragment $tag")
+        }
+
     private fun setFragmentVisible(containerId: Int, visible: Boolean) {
         findViewById<FrameLayout>(containerId).visibility = if (visible) {
             View.VISIBLE
@@ -130,6 +139,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun fabPressed() {
         viewModel.fabPressed()
+    }
+
+    private fun showDialog(tag: String) {
+        val fm = supportFragmentManager
+        val dialogFragment = createDialogFragment(tag)
+        dialogFragment.show(fm, tag)
     }
 
     data class MessageData(
