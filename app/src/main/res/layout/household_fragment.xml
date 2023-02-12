@@ -176,6 +176,14 @@
                android:textSize="@dimen/text_size_large"
                android:text="@string/household_electriciy_title"/>
 
+           <androidx.appcompat.widget.SwitchCompat
+               android:id="@+id/swElectricityOn"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintTop_toTopOf="@id/ivTitleElectricity"
+               app:layout_constraintBottom_toBottomOf="@id/ivTitleElectricity"/>
+
            <View
                android:id="@+id/vElectricity"
                android:layout_width="match_parent"
@@ -279,6 +287,14 @@
                android:tint="@color/text_color"
                app:srcCompat="@drawable/ic_gas"/>
 
+           <androidx.appcompat.widget.SwitchCompat
+               android:id="@+id/swGasOn"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintTop_toTopOf="@id/ivTitleGas"
+               app:layout_constraintBottom_toBottomOf="@id/ivTitleGas"/>
+
            <androidx.appcompat.widget.AppCompatTextView
                android:id="@+id/tvTitleGas"
                android:layout_width="wrap_content"
@@ -304,7 +320,7 @@
                android:id="@+id/tvHeatingValue"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               app:layout_constraintStart_toStartOf="@id/etHeatingValue"
+               app:layout_constraintStart_toStartOf="@id/spHeatingValue"
                app:layout_constraintTop_toBottomOf="@id/vGas"
                android:layout_marginTop="16dp"
                android:layout_marginStart="12dp"
