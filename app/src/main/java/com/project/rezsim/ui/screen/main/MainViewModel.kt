@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimViewModel
+import com.project.rezsim.device.StringRepository
 import com.project.rezsim.server.UserModel
 import com.project.rezsim.server.dto.Household
 import com.project.rezsim.server.dto.Measurement
@@ -16,12 +17,13 @@ class MainViewModel : RezsimViewModel() {
     val electricityMeasurementLiveData = MutableLiveData<Measurement>()
     val gasMeasurementLiveData = MutableLiveData<Measurement>()
 
+    private val stringRepository: StringRepository by inject()
     private val userModel: UserModel by inject()
 
     private var currentHousehold = 0
 
     fun householdItems(): List<String> = (userModel.getUser()?.households?.map { it.name }?.toMutableList() ?: mutableListOf()).apply {
-        add(0, context.resources.getString(R.string.main_spinner_household_prompt))
+        add(0, stringRepository.getById(R.string.main_spinner_household_prompt))
     }.toList()
 
     fun householdSelected(householdIndex: Int) {

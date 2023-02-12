@@ -1,6 +1,7 @@
 package com.project.rezsim.ui.screen.dialog.user
 
 import android.view.View
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimDialogFragment
@@ -16,6 +17,7 @@ class UserDialogFragment : RezsimDialogFragment() {
         super.setupViews()
         view?.let {
             it.findViewById<AppCompatTextView>(R.id.tvUserData).text = viewModel.user()
+            it.findViewById<AppCompatButton>(R.id.btOk).setOnClickListener { dismiss() }
         }
     }
 

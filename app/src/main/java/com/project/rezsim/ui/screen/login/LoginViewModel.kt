@@ -58,6 +58,7 @@ class LoginViewModel : RezsimViewModel() {
                     emailLiveData.value = ""
                 } else {
                     mainActivityViewModel.showMessage(messageResId = R.string.login_login_failed, severity = MessageSeverity.ERROR)
+                    loginButtonEnabledLiveData.value = true
                 }
             } else {
                 finishedLiveData.value = it

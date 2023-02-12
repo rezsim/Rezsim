@@ -34,7 +34,7 @@ class HouseholdFragment : RezsimFragment() {
     private lateinit var buttonChildrenMinus: AppCompatImageButton
     private lateinit var buttonChildrenPlus: AppCompatImageButton
     private lateinit var editChildren: AppCompatEditText
-    private lateinit var editGasHeating: AppCompatEditText
+    private lateinit var spinnerGasHeating: AppCompatSpinner
 
 
     private val spinnerItemSelectedListener = TextSpinnerOnItemSelectedListener()
@@ -76,7 +76,10 @@ class HouseholdFragment : RezsimFragment() {
                     }
                 })
             }
-            editGasHeating = it.findViewById(R.id.etHeatingValue)
+            spinnerGasHeating = it.findViewById<AppCompatSpinner?>(R.id.spHeatingValue).apply {
+                adapter = TextSpinnerAdapter(requireContext(), viewModel.heatingValueItems())
+                onItemSelectedListener = spinnerItemSelectedListener
+            }
         }
     }
 
@@ -94,14 +97,12 @@ class HouseholdFragment : RezsimFragment() {
     private fun setContent(content: Content?) {
         textViewTitle.setText(if (content == null) R.string.household_title_create else R.string.household_title_change)
         layoutMeters.visibility = if (content == null) View.VISIBLE else View.GONE
-        content?.let {
-            editName.setText(it.name)
-            spinnerUsage.setSelection(it.electricityUseMode + 1)
-            spinnerPricingTypeA.setSelection(it.electricityPricingA + 1)
-            spinnerPricingTypeB.setSelection(it.electricityPricingB + 1)
-            editGasHeating.setText(it.gasHeating.toString())
-            editChildren.setText(it.gasChildren.toString())
-        }
+        editName.setText(content?.name ?: "")
+        spinnerUsage.setSelection(content?.electricityUseMode ?: -1 + 1)
+        spinnerPricingTypeA.setSelection(content?.electricityPricingA ?: -1 + 1)
+        spinnerPricingTypeB.setSelection(content?.electricityPricingB ?: -1 + 1)
+        spinnerGasHeating.setSelection(content?.gasHeating ?: -1 + 1)
+        editChildren.setText(content?.gasChildren?.toString() ?: "")
     }
 
     private fun save() {
@@ -119,7 +120,7 @@ class HouseholdFragment : RezsimFragment() {
                 electricityPricingA = spinnerPricingTypeA.selectedItemPosition - 1,
                 electricityPricingB = spinnerPricingTypeB.selectedItemPosition - 1,
                 gasChildren = editChildren.numericValue() ?: -1,
-                gasHeating = it.findViewById<AppCompatEditText>(R.id.etHeatingValue).numericValue() ?: -1,
+                gasHeating = spinnerGasHeating.selectedItemPosition - 1
             )
         } ?: error("View is null when collect values")
 

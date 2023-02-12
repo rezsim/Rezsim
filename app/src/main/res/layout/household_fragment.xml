@@ -313,47 +313,26 @@
                android:textColor="@color/text_color"
                android:text="@string/household_heating_value_title"/>
 
-           <androidx.appcompat.widget.AppCompatEditText
-               android:id="@+id/etHeatingValue"
-               android:layout_width="0dp"
+           <androidx.appcompat.widget.AppCompatSpinner
+               android:id="@+id/spHeatingValue"
+               android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               app:layout_constraintStart_toStartOf="parent"
-               app:layout_constraintEnd_toEndOf="parent"
                app:layout_constraintTop_toBottomOf="@id/tvHeatingValue"
                android:layout_marginTop="4dp"
-               android:layout_marginEnd="4dp"
-               android:background="@drawable/statelist_edittext"
+               android:background="@drawable/background_spinner"
+               android:spinnerMode="dropdown"
+               android:prompt="@string/household_meters_title"
+               android:popupBackground="@drawable/background_spinner_popup"
                android:textColor="@color/edit_text_color"
-               android:textColorHint="@color/edit_hint_color"
                android:textSize="@dimen/text_size_edit"
-               android:inputType="number"
-               android:lines="1"
-               android:imeOptions="actionDone"
-               android:maxLength="@integer/meter_digit_count"
-               android:gravity="center"
-               android:paddingStart="40dp"
-               android:paddingEnd="40dp"
-               tools:text="37.2"
-               android:hint="0"/>
-
-           <androidx.appcompat.widget.AppCompatTextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               app:layout_constraintEnd_toEndOf="@id/etHeatingValue"
-               app:layout_constraintTop_toTopOf="@id/etHeatingValue"
-               app:layout_constraintBottom_toBottomOf="@id/etHeatingValue"
-               android:text="MJ"
-               android:textSize="@dimen/text_size_small"
-               android:paddingEnd="16dp"
-               android:textColor="@color/material_grey_6"
-               android:textColorHint="@color/edit_hint_color"/>
+               android:gravity="center" />
 
            <androidx.appcompat.widget.AppCompatTextView
                android:id="@+id/tvChildrenCount"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               app:layout_constraintStart_toStartOf="@id/etHeatingValue"
-               app:layout_constraintTop_toBottomOf="@id/etHeatingValue"
+               app:layout_constraintStart_toStartOf="@id/spHeatingValue"
+               app:layout_constraintTop_toBottomOf="@id/spHeatingValue"
                android:layout_marginTop="32dp"
                android:layout_marginStart="12dp"
                android:textStyle="bold"

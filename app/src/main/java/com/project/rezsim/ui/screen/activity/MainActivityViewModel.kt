@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimViewModel
+import com.project.rezsim.device.StringRepository
 import com.project.rezsim.ui.screen.household.HouseholdFragment
 import com.project.rezsim.ui.screen.login.LoginFragment
 import com.project.rezsim.ui.screen.login.LoginViewModel
@@ -38,6 +39,7 @@ class MainActivityViewModel : RezsimViewModel() {
     private val householdViewModel: HouseholdViewModel by inject()
     private val userModel: UserModel by inject()
     private val headerViewModel: HeaderViewModel by inject()
+    private val stringRepository: StringRepository by inject()
 
     init {
         mainViewModel.addHouseholdLiveData.observeForever { addNewHousehold() }
@@ -73,7 +75,7 @@ class MainActivityViewModel : RezsimViewModel() {
 
 
     fun showMessage(messageResId: Int, type: MessageType = MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, severity: MessageSeverity = MessageSeverity.INFO, runnable: Runnable? = null) {
-        showMessage(context.resources.getString(messageResId), type, severity, runnable)
+        showMessage(stringRepository.getById(messageResId), type, severity, runnable)
     }
 
     fun showMessage(message: String, type: MessageType = MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, severity: MessageSeverity = MessageSeverity.INFO, runnable: Runnable? = null) {

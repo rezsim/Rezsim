@@ -14,6 +14,7 @@ import androidx.core.content.res.ResourcesCompat
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
 import com.project.rezsim.device.ScreenRepository
+import com.project.rezsim.device.StringRepository
 import com.project.rezsim.device.dp
 import com.project.rezsim.server.dto.Household
 import com.project.rezsim.server.dto.Measurement
@@ -27,6 +28,7 @@ class MainFragment : RezsimFragment() {
 
     private val viewModel: MainViewModel by inject()
     private val screenRepository: ScreenRepository by inject()
+    private val stringRepository: StringRepository by inject()
 
     private var spinnerHouseholds: AppCompatSpinner? = null
 
@@ -76,17 +78,17 @@ class MainFragment : RezsimFragment() {
 
     private fun fillElectricityMeasurement(measurement: Measurement) {
         view?.let {
-            it.findViewById<AppCompatTextView>(R.id.tvValueLastMeterElectricity).text = resources.getString(R.string.electricity_value, measurement.position)
+            it.findViewById<AppCompatTextView>(R.id.tvValueLastMeterElectricity).text = stringRepository.getById(R.string.electricity_value, measurement.position)
             it.findViewById<AppCompatTextView>(R.id.tvDateLastMeterElectricity).text = measurement.date.substring(0, 10)
-            it.findViewById<AppCompatTextView>(R.id.tvValueMonthlyConsumptionElectricity).text = resources.getString(R.string.electricity_value, measurement.consumption)
+            it.findViewById<AppCompatTextView>(R.id.tvValueMonthlyConsumptionElectricity).text = stringRepository.getById(R.string.electricity_value, measurement.consumption)
         }
     }
 
     private fun fillGasMeasurement(measurement: Measurement) {
         view?.let {
-            it.findViewById<AppCompatTextView>(R.id.tvValueLastMeterGas).text = resources.getString(R.string.gas_value, measurement.position)
+            it.findViewById<AppCompatTextView>(R.id.tvValueLastMeterGas).text = stringRepository.getById(R.string.gas_value, measurement.position)
             it.findViewById<AppCompatTextView>(R.id.tvDateLastMeterGas).text = measurement.date.substring(0, 10)
-            it.findViewById<AppCompatTextView>(R.id.tvValueMonthlyConsumptionGas).text = resources.getString(R.string.gas_value, measurement.consumption)
+            it.findViewById<AppCompatTextView>(R.id.tvValueMonthlyConsumptionGas).text = stringRepository.getById(R.string.gas_value, measurement.consumption)
         }
     }
 

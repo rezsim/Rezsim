@@ -3,6 +3,7 @@ package com.project.rezsim.ui.screen.household
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimViewModel
+import com.project.rezsim.device.StringRepository
 import com.project.rezsim.ui.screen.activity.MainActivityViewModel
 import com.project.rezsim.ui.view.message.MessageSeverity
 import com.project.rezsim.ui.view.message.MessageType
@@ -18,6 +19,7 @@ class HouseholdViewModel : RezsimViewModel() {
 
     private val userModel: UserModel by inject()
     private val mainActivityViewModel: MainActivityViewModel by inject()
+    private val stringRepository: StringRepository by inject()
 
     var houseHold: Household? = null
     set(value) {
@@ -34,11 +36,13 @@ class HouseholdViewModel : RezsimViewModel() {
 
     fun isCreatingNew() = houseHold == null
 
-    fun usageItems() = listOf("Kérem válasszon!", "Első elem", "Második elem", "Harmadik elem")
+    fun usageItems() = items("household_usage_mode")
 
-    fun pricingTypeAItems() = listOf("Kérem válasszon!", "Első elem", "Második elem", "Harmadik elem")
+    fun pricingTypeAItems() = items("household_pricing_mode_a")
 
-    fun pricingTypeBItems() = listOf("Kérem válasszon!", "Első elem", "Második elem", "Harmadik elem")
+    fun pricingTypeBItems() = items("household_pricing_mode_b")
+
+    fun heatingValueItems() = items("household_gas_heating_b")
 
     fun childrenButtonClicked(oldValue: String?, add: Int) {
         val value = if (oldValue.isNullOrBlank()) -1 else oldValue.toInt()
@@ -65,7 +69,16 @@ class HouseholdViewModel : RezsimViewModel() {
         }
     }
 
-
+    private fun items(baseRresourceName: String): List<String> = mutableListOf(stringRepository.getById(R.string.household_item_select)).apply {
+        for (i in 0..100) {
+            val name = "${baseRresourceName}_$i"
+            if (stringRepository.isExistsByName(name)) {
+                add(stringRepository.getByNameForceNotNull(name))
+            } else {
+                return@apply
+            }
+        }
+    }.toList()
 
 
 }
