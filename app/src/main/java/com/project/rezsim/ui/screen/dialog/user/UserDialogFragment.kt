@@ -18,6 +18,10 @@ class UserDialogFragment : RezsimDialogFragment() {
         view?.let {
             it.findViewById<AppCompatTextView>(R.id.tvUserData).text = viewModel.user()
             it.findViewById<AppCompatButton>(R.id.btOk).setOnClickListener { dismiss() }
+            it.findViewById<AppCompatButton>(R.id.btLogout).setOnClickListener {
+                dismiss()
+                viewModel.logoutClicked()
+            }
         }
     }
 

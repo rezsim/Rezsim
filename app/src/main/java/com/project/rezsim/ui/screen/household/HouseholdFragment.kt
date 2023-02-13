@@ -5,10 +5,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import androidx.appcompat.widget.AppCompatEditText
-import androidx.appcompat.widget.AppCompatImageButton
-import androidx.appcompat.widget.AppCompatSpinner
-import androidx.appcompat.widget.AppCompatTextView
+import android.widget.FrameLayout
+import androidx.appcompat.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
@@ -35,6 +33,14 @@ class HouseholdFragment : RezsimFragment() {
     private lateinit var buttonChildrenPlus: AppCompatImageButton
     private lateinit var editChildren: AppCompatEditText
     private lateinit var spinnerGasHeating: AppCompatSpinner
+    private lateinit var switchElectricity: SwitchCompat
+    private lateinit var switchGas: SwitchCompat
+    private lateinit var editElectricityMeter: AppCompatEditText
+    private lateinit var editGasMeter: AppCompatEditText
+    private lateinit var layoutElectricityMeter: FrameLayout
+    private lateinit var layoutGasMeter: FrameLayout
+    private lateinit var layoutElectricityParameters: ConstraintLayout
+    private lateinit var layoutGasParameters: ConstraintLayout
 
 
     private val spinnerItemSelectedListener = TextSpinnerOnItemSelectedListener()
@@ -45,6 +51,12 @@ class HouseholdFragment : RezsimFragment() {
             textViewTitle = it.findViewById(R.id.tvTitle)
             editName = it.findViewById(R.id.etName)
             layoutMeters = it.findViewById(R.id.clMeters)
+            layoutElectricityMeter = it.findViewById(R.id.flElectricityMeter)
+            layoutGasMeter = it.findViewById(R.id.flGasMeter)
+            layoutElectricityParameters = it.findViewById(R.id.clElectricityParameters)
+            layoutGasParameters = it.findViewById(R.id.clGasParameters)
+            editElectricityMeter = it.findViewById(R.id.etElectricityMeter)
+            editGasMeter = it.findViewById(R.id.etGasMeter)
             spinnerUsage = it.findViewById<AppCompatSpinner?>(R.id.spUsage).apply {
                 adapter = TextSpinnerAdapter(requireContext(), viewModel.usageItems())
                 onItemSelectedListener = spinnerItemSelectedListener
@@ -71,14 +83,21 @@ class HouseholdFragment : RezsimFragment() {
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
                     override fun afterTextChanged(p0: Editable?) {
-                        val value = p0?.toString()?.toInt()
-                        buttonChildrenMinus.isEnabled = value != null && value > 0
+                        val strValue = p0?.toString()
+                        val value = if (strValue.isNullOrEmpty()) 0 else strValue.toInt()
+                        buttonChildrenMinus.isEnabled = value > 0
                     }
                 })
             }
             spinnerGasHeating = it.findViewById<AppCompatSpinner?>(R.id.spHeatingValue).apply {
                 adapter = TextSpinnerAdapter(requireContext(), viewModel.heatingValueItems())
                 onItemSelectedListener = spinnerItemSelectedListener
+            }
+            switchElectricity = it.findViewById<SwitchCompat>(R.id.swElectricityOn).apply {
+                setOnCheckedChangeListener { _, b -> viewModel.electricitySwitchChanged(b) }
+            }
+            switchGas = it.findViewById<SwitchCompat>(R.id.swGasOn).apply {
+                setOnCheckedChangeListener { _, b -> viewModel.gasSwitchChanged(b) }
             }
         }
     }
@@ -92,17 +111,25 @@ class HouseholdFragment : RezsimFragment() {
         }
         viewModel.childrenValueLiveData.observe(this) { editChildren.setText(it.toString()) }
         viewModel.contentLiveData.observe(this) { setContent(it) }
+        viewModel.hasElectricityLiveData.observe(this) { setElectricityState(it) }
+        viewModel.hasGasLiveData.observe(this) { setGasState(it) }
     }
 
     private fun setContent(content: Content?) {
         textViewTitle.setText(if (content == null) R.string.household_title_create else R.string.household_title_change)
         layoutMeters.visibility = if (content == null) View.VISIBLE else View.GONE
         editName.setText(content?.name ?: "")
-        spinnerUsage.setSelection(content?.electricityUseMode ?: -1 + 1)
-        spinnerPricingTypeA.setSelection(content?.electricityPricingA ?: -1 + 1)
-        spinnerPricingTypeB.setSelection(content?.electricityPricingB ?: -1 + 1)
-        spinnerGasHeating.setSelection(content?.gasHeating ?: -1 + 1)
-        editChildren.setText(content?.gasChildren?.toString() ?: "")
+        spinnerUsage.setSelection(content?.electricityUseMode ?: 0 + 1)
+        spinnerPricingTypeA.setSelection(content?.electricityPricingA ?: 0 + 1)
+        spinnerPricingTypeB.setSelection(content?.electricityPricingB ?: 0 + 1)
+        spinnerGasHeating.setSelection(content?.gasHeating ?: 0 + 1)
+        editChildren.setText(content?.gasChildren?.toString())
+        switchElectricity.isChecked = (content?.hasElectricity ?: true).also {
+            viewModel.electricitySwitchChanged(it)
+        }
+        switchGas.isChecked = (content?.hasGas ?: true).also {
+            viewModel.gasSwitchChanged(it)
+        }
     }
 
     private fun save() {
@@ -120,9 +147,25 @@ class HouseholdFragment : RezsimFragment() {
                 electricityPricingA = spinnerPricingTypeA.selectedItemPosition - 1,
                 electricityPricingB = spinnerPricingTypeB.selectedItemPosition - 1,
                 gasChildren = editChildren.numericValue() ?: -1,
-                gasHeating = spinnerGasHeating.selectedItemPosition - 1
+                gasHeating = spinnerGasHeating.selectedItemPosition - 1,
+                hasElectricity = switchElectricity.isChecked,
+                hasGas = switchGas.isChecked
             )
         } ?: error("View is null when collect values")
+
+    private fun setElectricityState(enabled: Boolean) {
+        layoutElectricityMeter.visibility = if (enabled) View.VISIBLE else View.INVISIBLE
+        editElectricityMeter.isEnabled = enabled
+        layoutElectricityParameters.visibility = if (enabled) View.VISIBLE else View.GONE
+        switchGas.isEnabled = enabled
+    }
+
+    private fun setGasState(enabled: Boolean) {
+        layoutGasMeter.visibility = if (enabled) View.VISIBLE else View.INVISIBLE
+        editGasMeter.isEnabled = enabled
+        layoutGasParameters.visibility = if (enabled) View.VISIBLE else View.GONE
+        switchElectricity.isEnabled = enabled
+    }
 
     companion object {
         const val TAG = "HouseholdFragment"

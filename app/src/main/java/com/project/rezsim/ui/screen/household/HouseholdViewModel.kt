@@ -16,6 +16,8 @@ class HouseholdViewModel : RezsimViewModel() {
 
     val contentLiveData = MutableLiveData<Content?>()
     val childrenValueLiveData = MutableLiveData<Int>()
+    val hasElectricityLiveData = MutableLiveData<Boolean>()
+    val hasGasLiveData = MutableLiveData<Boolean>()
 
     private val userModel: UserModel by inject()
     private val mainActivityViewModel: MainActivityViewModel by inject()
@@ -42,30 +44,50 @@ class HouseholdViewModel : RezsimViewModel() {
 
     fun pricingTypeBItems() = items("household_pricing_mode_b")
 
-    fun heatingValueItems() = items("household_gas_heating_b")
+    fun heatingValueItems() = items("household_gas_heating")
 
     fun childrenButtonClicked(oldValue: String?, add: Int) {
         val value = if (oldValue.isNullOrBlank()) -1 else oldValue.toInt()
         childrenValueLiveData.value = value + add
     }
 
+    fun electricitySwitchChanged(selected: Boolean) {
+        hasElectricityLiveData.value = selected
+    }
+
+    fun gasSwitchChanged(selected: Boolean) {
+        hasGasLiveData.value = selected
+    }
+
     fun save(data: Content) {
-        if (data.name.isEmpty()
-            || isCreatingNew() && (data.electricityMeter == -1 || data.gasMeter == -1)
-            || data.electricityUseMode == -1
-            || data.electricityPricingA == -1
-            || data.electricityPricingB == -1
-            || data.gasHeating == -1
-            || data.gasChildren == -1
-        ) {
+        var complet = true
+        if (hasElectricityLiveData.value == true) {
+            if (isCreatingNew() && data.electricityMeter == -1) {
+                complet = false
+            }
+            if (data.electricityUseMode == -1 || data.electricityPricingA == -1 || data.electricityPricingB != -1) {
+                complet = false
+            }
+        }
+        if (hasGasLiveData.value == true) {
+            if (isCreatingNew() && data.gasMeter == -1) {
+                complet = false
+            }
+            if (data.gasHeating == -1 || data.gasChildren == -1) {
+                complet = false
+            }
+        }
+        if (data.name.isEmpty() || !complet) {
             mainActivityViewModel.showMessage(messageResId = R.string.fill_all_mandatory, severity = MessageSeverity.ERROR)
         } else {
+            mainActivityViewModel.showMessage(message = "Háztartás mentése még kidolgozás alatt.", severity = MessageSeverity.ERROR)
+
+/*
             val h = houseHold ?: Household(
                 userId = userModel.getUser()?.id ?: error ("No user when save household."),
             )
             data.applyOnHousehold(h)
-            val index = userModel.updateHousehold(h)
-            mainActivityViewModel.switchToFragment(MainFragment.TAG)
+*/
         }
     }
 

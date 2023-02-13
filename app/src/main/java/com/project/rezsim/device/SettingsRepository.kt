@@ -30,6 +30,10 @@ class SettingsRepository : KoinComponent {
         }
     }
 
+    fun clearPassword() {
+        settings.edit().remove(KEY_USER_PASSWORD).apply()
+    }
+
     fun clear() {
         settings.edit().apply {
             clear()

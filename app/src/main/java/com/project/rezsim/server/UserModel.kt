@@ -1,5 +1,6 @@
 package com.project.rezsim.server
 
+import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.base.singleton.Singleton
 import com.project.rezsim.device.SettingsRepository
 import com.project.rezsim.server.dto.Household
@@ -9,6 +10,8 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class UserModel : KoinComponent, Singleton {
+
+    val logoutLiveData = MutableLiveData<Boolean>()
 
     private val settingsRepository: SettingsRepository by inject()
 
@@ -53,6 +56,9 @@ class UserModel : KoinComponent, Singleton {
     fun logout() {
         user = null
         token = null
+        password = null
+        settingsRepository.clearPassword()
+        logoutLiveData.postValue(true)
     }
 
     fun updateHousehold(household: Household) {

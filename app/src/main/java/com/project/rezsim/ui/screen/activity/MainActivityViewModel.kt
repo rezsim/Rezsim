@@ -20,6 +20,7 @@ import com.project.rezsim.ui.screen.dialog.user.UserDialogFragment
 import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.screen.household.HouseholdViewModel
 import com.project.rezsim.ui.screen.main.MainViewModel
+import com.project.rezsim.ui.view.message.Message
 import org.koin.core.component.inject
 
 class MainActivityViewModel : RezsimViewModel() {
@@ -43,6 +44,7 @@ class MainActivityViewModel : RezsimViewModel() {
 
     init {
         mainViewModel.addHouseholdLiveData.observeForever { addNewHousehold() }
+        userModel.logoutLiveData.observeForever { logout() }
     }
 
     private var currentFragmentTag: String = ""
@@ -50,6 +52,11 @@ class MainActivityViewModel : RezsimViewModel() {
             field = value
             setWorkFragment(value)
         }
+
+    private fun logout() {
+        Message.clear()
+        currentFragmentTag = LoginFragment.TAG
+    }
 
     private val fabImages = HashMap<String, Int>().apply {
         put(MainFragment.TAG, R.drawable.ic_edit)
