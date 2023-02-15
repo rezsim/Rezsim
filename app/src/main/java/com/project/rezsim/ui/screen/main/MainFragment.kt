@@ -1,13 +1,9 @@
 package com.project.rezsim.ui.screen.main
 
-import android.content.DialogInterface
 import android.graphics.PorterDuff
-import android.text.Layout
-import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import androidx.appcompat.widget.*
 import androidx.core.content.res.ResourcesCompat
@@ -16,8 +12,7 @@ import com.project.rezsim.base.RezsimFragment
 import com.project.rezsim.device.ScreenRepository
 import com.project.rezsim.device.StringRepository
 import com.project.rezsim.device.dp
-import com.project.rezsim.server.dto.Household
-import com.project.rezsim.server.dto.Measurement
+import com.project.rezsim.server.dto.measurement.Measurement
 import com.project.rezsim.ui.view.spinner.TextSpinnerAdapter
 import com.project.rezsim.ui.view.spinner.TextSpinnerOnItemSelectedListener
 import org.koin.android.ext.android.inject

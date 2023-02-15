@@ -8,8 +8,8 @@ import com.project.rezsim.ui.screen.activity.MainActivityViewModel
 import com.project.rezsim.ui.view.message.MessageSeverity
 import com.project.rezsim.ui.view.message.MessageType
 import com.project.rezsim.server.UserModel
-import com.project.rezsim.server.dto.Household
-import com.project.rezsim.ui.screen.main.MainFragment
+import com.project.rezsim.server.dto.household.*
+import com.project.rezsim.server.household.HouseholdRepository
 import org.koin.core.component.inject
 
 class HouseholdViewModel : RezsimViewModel() {
@@ -22,6 +22,7 @@ class HouseholdViewModel : RezsimViewModel() {
     private val userModel: UserModel by inject()
     private val mainActivityViewModel: MainActivityViewModel by inject()
     private val stringRepository: StringRepository by inject()
+    private val householdRepository: HouseholdRepository by inject()
 
     var houseHold: Household? = null
     set(value) {
@@ -38,13 +39,13 @@ class HouseholdViewModel : RezsimViewModel() {
 
     fun isCreatingNew() = houseHold == null
 
-    fun usageItems() = items("household_usage_mode")
+    fun usageItems() = ElectricityUsage.values().toList().sortedBy { it.value }.map { stringRepository.getById(it.textResId) }.toList()
 
-    fun pricingTypeAItems() = items("household_pricing_mode_a")
+    fun pricingTypeAItems() = ElectricityPricingTypeA.values().toList().sortedBy { it.value }.map { stringRepository.getById(it.textResId) }.toList()
 
-    fun pricingTypeBItems() = items("household_pricing_mode_b")
+    fun pricingTypeBItems() = ElectricityPricingTypeB.values().toList().sortedBy { it.value }.map { stringRepository.getById(it.textResId) }.toList()
 
-    fun heatingValueItems() = items("household_gas_heating")
+    fun heatingValueItems() = HeatingValue.values().toList().sortedBy { it.value }.map { stringRepository.getById(it.textResId) }.toList()
 
     fun childrenButtonClicked(oldValue: String?, add: Int) {
         val value = if (oldValue.isNullOrBlank()) -1 else oldValue.toInt()
@@ -65,7 +66,7 @@ class HouseholdViewModel : RezsimViewModel() {
             if (isCreatingNew() && data.electricityMeter == -1) {
                 complet = false
             }
-            if (data.electricityUseMode == -1 || data.electricityPricingA == -1 || data.electricityPricingB != -1) {
+            if (data.electricityUseMode == -1 || data.electricityPricingA == -1 || data.electricityPricingB == -1) {
                 complet = false
             }
         }
@@ -80,27 +81,19 @@ class HouseholdViewModel : RezsimViewModel() {
         if (data.name.isEmpty() || !complet) {
             mainActivityViewModel.showMessage(messageResId = R.string.fill_all_mandatory, severity = MessageSeverity.ERROR)
         } else {
-            mainActivityViewModel.showMessage(message = "Háztartás mentése még kidolgozás alatt.", severity = MessageSeverity.ERROR)
+            if (isCreatingNew()) {
+                val h = Household(
+                    userId = userModel.getUser()?.id ?: error ("No user when save household."),
+                )
+                data.applyOnHousehold(h)
+                householdRepository.addNewHousehold(h, userModel.getToken()!!)
 
-/*
-            val h = houseHold ?: Household(
-                userId = userModel.getUser()?.id ?: error ("No user when save household."),
-            )
-            data.applyOnHousehold(h)
-*/
+            } else {
+
+            }
+
         }
     }
-
-    private fun items(baseRresourceName: String): List<String> = mutableListOf(stringRepository.getById(R.string.household_item_select)).apply {
-        for (i in 0..100) {
-            val name = "${baseRresourceName}_$i"
-            if (stringRepository.isExistsByName(name)) {
-                add(stringRepository.getByNameForceNotNull(name))
-            } else {
-                return@apply
-            }
-        }
-    }.toList()
 
 
 }

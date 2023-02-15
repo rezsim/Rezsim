@@ -1,14 +1,12 @@
 package com.project.rezsim.ui.screen.main
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimViewModel
 import com.project.rezsim.device.StringRepository
 import com.project.rezsim.server.UserModel
-import com.project.rezsim.server.dto.Household
-import com.project.rezsim.server.dto.Measurement
+import com.project.rezsim.server.dto.measurement.Measurement
 import org.koin.core.component.inject
 
 class MainViewModel : RezsimViewModel() {

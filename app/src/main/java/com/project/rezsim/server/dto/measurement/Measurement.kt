@@ -1,4 +1,4 @@
-package com.project.rezsim.server.dto
+package com.project.rezsim.server.dto.measurement
 
 data class Measurement(
 

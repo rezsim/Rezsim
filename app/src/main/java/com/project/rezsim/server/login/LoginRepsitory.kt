@@ -55,7 +55,7 @@ class LoginRepository : KoinComponent {
         } else {
             LoginResponse(response.code())
         }
-    } catch (Ex:Exception){
+    } catch (Ex:Exception) {
         LoginResponse(null)
     }
 

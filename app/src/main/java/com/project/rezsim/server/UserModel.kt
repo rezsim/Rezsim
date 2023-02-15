@@ -3,7 +3,7 @@ package com.project.rezsim.server
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.base.singleton.Singleton
 import com.project.rezsim.device.SettingsRepository
-import com.project.rezsim.server.dto.Household
+import com.project.rezsim.server.dto.household.Household
 import com.project.rezsim.server.dto.User
 import com.project.rezsim.server.login.LoginResult
 import org.koin.core.component.KoinComponent

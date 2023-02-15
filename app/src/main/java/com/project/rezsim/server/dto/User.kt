@@ -1,6 +1,7 @@
 package com.project.rezsim.server.dto
 
 import com.google.gson.annotations.SerializedName
+import com.project.rezsim.server.dto.household.Household
 
 data class User(
 

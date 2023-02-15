@@ -46,6 +46,7 @@
     <string name="household_usage_mode_0">Lakossági</string>
     <string name="household_pricing_mode_a_0">A1: Általános, egy zónaidős</string>
     <string name="household_pricing_mode_b_0">B alap: időszakos(vezérelt, különmért)</string>
+    <string name="household_pricing_mode_h_0">H tarifa</string>
     <string name="household_gas_heating_0">34.2 MJ</string>
     <string name="household_gas_heating_1">30 MJ</string>
     <string name="household_gas_heating_2">32 MJ</string>

@@ -1,4 +1,6 @@
-package com.project.rezsim.server.dto
+package com.project.rezsim.server.dto.household
+
+import com.project.rezsim.server.dto.measurement.Measurement
 
 data class Household(
 
