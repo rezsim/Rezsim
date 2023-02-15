@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-const val BASEURL = "http://54.90.165.16:8080/rezsi/"
+const val BASEURL = "http://34.235.167.125:8080/rezsi/"
 class ApiClient {
     companion object {
         private var retrofit: Retrofit? = null
