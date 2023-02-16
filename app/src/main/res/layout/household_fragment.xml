@@ -75,19 +75,21 @@
                    android:textColor="@color/text_color"
                    android:text="@string/household_meters_title"/>
 
-               <androidx.appcompat.widget.LinearLayoutCompat
+               <androidx.constraintlayout.widget.ConstraintLayout
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   android:orientation="horizontal"
                    app:layout_constraintTop_toBottomOf="@id/tvCurrentMeters"
+                   android:animateLayoutChanges="true"
                    android:layout_marginTop="4dp">
 
                    <FrameLayout
                        android:id="@+id/flElectricityMeter"
                        android:layout_width="0dp"
-                       android:layout_weight="1"
                        android:layout_height="wrap_content"
-                       android:layout_marginEnd="4dp">
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintEnd_toStartOf="@id/flGasMeter"
+                       android:layout_marginEnd="4dp"
+                       tools:ignore="MissingConstraints">
 
                        <androidx.appcompat.widget.AppCompatEditText
                            android:id="@+id/etElectricityMeter"
@@ -122,9 +124,11 @@
                    <FrameLayout
                        android:id="@+id/flGasMeter"
                        android:layout_width="0dp"
-                       android:layout_weight="1"
                        android:layout_height="wrap_content"
-                       android:layout_marginStart="4dp">
+                       app:layout_constraintStart_toEndOf="@id/flElectricityMeter"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       android:layout_marginStart="4dp"
+                       tools:ignore="MissingConstraints">
 
                        <androidx.appcompat.widget.AppCompatEditText
                            android:id="@+id/etGasMeter"
@@ -155,7 +159,7 @@
 
                    </FrameLayout>
 
-               </androidx.appcompat.widget.LinearLayoutCompat>
+               </androidx.constraintlayout.widget.ConstraintLayout>
 
            </androidx.constraintlayout.widget.ConstraintLayout>
 
