@@ -154,14 +154,14 @@ class HouseholdFragment : RezsimFragment() {
         } ?: error("View is null when collect values")
 
     private fun setElectricityState(enabled: Boolean) {
-        layoutElectricityMeter.visibility = if (enabled) View.VISIBLE else View.INVISIBLE
+        layoutElectricityMeter.visibility = if (enabled) View.VISIBLE else View.GONE
         editElectricityMeter.isEnabled = enabled
         layoutElectricityParameters.visibility = if (enabled) View.VISIBLE else View.GONE
         switchGas.isEnabled = enabled
     }
 
     private fun setGasState(enabled: Boolean) {
-        layoutGasMeter.visibility = if (enabled) View.VISIBLE else View.INVISIBLE
+        layoutGasMeter.visibility = if (enabled) View.VISIBLE else View.GONE
         editGasMeter.isEnabled = enabled
         layoutGasParameters.visibility = if (enabled) View.VISIBLE else View.GONE
         switchElectricity.isEnabled = enabled
