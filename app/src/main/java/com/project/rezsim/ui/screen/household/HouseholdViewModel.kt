@@ -80,12 +80,16 @@ class HouseholdViewModel : RezsimViewModel() {
                     userId = userModel.getUser()?.id ?: error ("No user when save household."),
                 )
                 data.applyOnHousehold(h)
-//                householdRepository.addNewHousehold(h, userModel.getToken()!!)
-
+                mainActivityViewModel.showProgress()
+                householdRepository.addNewHousehold(h, userModel.getToken()!!).observeForever {
+                    mainActivityViewModel.hideProgress()
+                    if (!it) {
+                        mainActivityViewModel.showMessage("Nem sikerült!", MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR)
+                    }
+                }
             } else {
 
             }
-
         }
     }
 

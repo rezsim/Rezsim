@@ -25,13 +25,13 @@ data class Content(
         household.electricityPricingTypeB = electricityPricingB
         household.gasHeatingValue = gasHeating
         household.gasChildren = gasChildren
-/*        if (electricityMeter != -1) {
+        if (electricityMeter != -1) {
             household.measurements.toMutableList().add(createMeasurement(Utility.ELECTRICITY_A.value, electricityMeter, household))
         }
         if (gasMeter != -1) {
             household.measurements.toMutableList().add(createMeasurement(Utility.GAS.value, gasMeter, household))
         }
-*/    }
+    }
 
     private fun createMeasurement(utility: Int, value: Int, household: Household) = Measurement(
         id = -1,

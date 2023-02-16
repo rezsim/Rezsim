@@ -11,9 +11,9 @@ import java.util.concurrent.Executors
 
 class HouseholdRepository : KoinComponent {
 
-    private lateinit var resultLiveData: MutableLiveData<Any?>
+    private lateinit var resultLiveData: MutableLiveData<Boolean>
 
-    fun addNewHousehold(household: Household, token: String): MutableLiveData<Any?> {
+    fun addNewHousehold(household: Household, token: String): MutableLiveData<Boolean> {
         resultLiveData = MutableLiveData()
 
         Executors.newSingleThreadExecutor().execute {
@@ -21,19 +21,11 @@ class HouseholdRepository : KoinComponent {
             val apiInterface = apiClient.create(ApiInterface::class.java)
             try {
                 val response = apiInterface.addNewHousehold(household, token).execute()
-
-                var b = 0
-                b++
+                resultLiveData.postValue(response.isSuccessful)
             } catch (Ex:Exception) {
-                var d = 0
-                d++
+                resultLiveData.postValue(false)
             }
-
-            var e = 0
-            e++
-
         }
-
         return resultLiveData
     }
 }
