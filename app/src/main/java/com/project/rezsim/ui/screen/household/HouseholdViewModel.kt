@@ -63,17 +63,11 @@ class HouseholdViewModel : RezsimViewModel() {
     fun save(data: Content) {
         var complet = true
         if (hasElectricityLiveData.value == true) {
-            if (isCreatingNew() && data.electricityMeter == -1) {
-                complet = false
-            }
             if (data.electricityUseMode == -1 || data.electricityPricingA == -1 || data.electricityPricingB == -1) {
                 complet = false
             }
         }
         if (hasGasLiveData.value == true) {
-            if (isCreatingNew() && data.gasMeter == -1) {
-                complet = false
-            }
             if (data.gasHeating == -1 || data.gasChildren == -1) {
                 complet = false
             }
@@ -86,7 +80,7 @@ class HouseholdViewModel : RezsimViewModel() {
                     userId = userModel.getUser()?.id ?: error ("No user when save household."),
                 )
                 data.applyOnHousehold(h)
-                householdRepository.addNewHousehold(h, userModel.getToken()!!)
+//                householdRepository.addNewHousehold(h, userModel.getToken()!!)
 
             } else {
 

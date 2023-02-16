@@ -60,18 +60,11 @@
                app:layout_constraintTop_toBottomOf="@id/etName"
                android:layout_marginTop="16dp">
 
-               <androidx.constraintlayout.widget.Guideline
-                   android:id="@+id/glMeterHalf"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:orientation="vertical"
-                   app:layout_constraintGuide_percent="0.5"/>
-
                <androidx.appcompat.widget.AppCompatTextView
                    android:id="@+id/tvCurrentMeters"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   app:layout_constraintStart_toStartOf="@id/flElectricityMeter"
+                   app:layout_constraintStart_toStartOf="parent"
                    app:layout_constraintTop_toTopOf="parent"
                    android:layout_marginTop="16dp"
                    android:layout_marginStart="12dp"
@@ -80,85 +73,87 @@
                    android:textColor="@color/text_color"
                    android:text="@string/household_meters_title"/>
 
-               <FrameLayout
-                   android:id="@+id/flElectricityMeter"
-                   android:layout_width="0dp"
+               <androidx.appcompat.widget.LinearLayoutCompat
+                   android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintEnd_toEndOf="@id/glMeterHalf"
+                   android:orientation="horizontal"
                    app:layout_constraintTop_toBottomOf="@id/tvCurrentMeters"
-                   android:layout_marginTop="4dp"
-                   android:layout_marginEnd="4dp">
+                   android:layout_marginTop="4dp">
 
-                   <androidx.appcompat.widget.AppCompatEditText
-                       android:id="@+id/etElectricityMeter"
-                       android:layout_width="match_parent"
+                   <FrameLayout
+                       android:id="@+id/flElectricityMeter"
+                       android:layout_width="0dp"
+                       android:layout_weight="0.5"
                        android:layout_height="wrap_content"
-                       android:background="@drawable/statelist_edittext"
-                       android:textColor="@color/edit_text_color"
-                       android:textColorHint="@color/edit_hint_color"
-                       android:textSize="@dimen/text_size_edit"
-                       android:inputType="number"
-                       android:lines="1"
-                       android:maxLength="@integer/meter_digit_count"
-                       android:imeOptions="actionDone"
-                       android:gravity="center"
-                       android:drawableStart="@drawable/ic_electricity"
-                       android:drawableTint="@color/material_grey_6"
-                       android:paddingStart="16dp"
-                       android:paddingEnd="40dp"
-                       tools:text="654897"
-                       android:hint="0"/>
+                       android:layout_marginEnd="4dp">
 
-                   <androidx.appcompat.widget.AppCompatTextView
-                       android:layout_width="wrap_content"
+                       <androidx.appcompat.widget.AppCompatEditText
+                           android:id="@+id/etElectricityMeter"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:background="@drawable/statelist_edittext"
+                           android:textColor="@color/edit_text_color"
+                           android:textSize="@dimen/text_size_edit"
+                           android:inputType="number"
+                           android:lines="1"
+                           android:maxLength="@integer/meter_digit_count"
+                           android:imeOptions="actionDone"
+                           android:gravity="center"
+                           android:drawableStart="@drawable/ic_electricity"
+                           android:drawableTint="@color/material_grey_6"
+                           android:paddingStart="16dp"
+                           android:paddingEnd="40dp"
+                           tools:text="654897"
+                           android:hint="0"/>
+
+                       <androidx.appcompat.widget.AppCompatTextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="end|center_vertical"
+                           android:text="kWh"
+                           android:textSize="@dimen/text_size_small"
+                           android:paddingEnd="16dp"
+                           android:textColor="@color/material_grey_6"/>
+
+                   </FrameLayout>
+
+                   <FrameLayout
+                       android:id="@+id/flGasMeter"
+                       android:layout_width="0dp"
+                       android:layout_weight="0.5"
                        android:layout_height="wrap_content"
-                       android:layout_gravity="end|center_vertical"
-                       android:text="kWh"
-                       android:textSize="@dimen/text_size_small"
-                       android:paddingEnd="16dp"
-                       android:textColor="@color/material_grey_6"/>
+                       android:layout_marginStart="4dp">
 
-               </FrameLayout>
+                       <androidx.appcompat.widget.AppCompatEditText
+                           android:id="@+id/etGasMeter"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:background="@drawable/statelist_edittext"
+                           android:textColor="@color/edit_text_color"
+                           android:textSize="@dimen/text_size_edit"
+                           android:inputType="number"
+                           android:lines="1"
+                           android:imeOptions="actionDone"
+                           android:maxLength="@integer/meter_digit_count"
+                           android:gravity="center"
+                           android:drawableStart="@drawable/ic_gas"
+                           android:drawableTint="@color/material_grey_6"
+                           android:paddingStart="16dp"
+                           android:paddingEnd="40dp"
+                           android:hint="0"/>
 
-               <FrameLayout
-                   android:id="@+id/flGasMeter"
-                   android:layout_width="0dp"
-                   android:layout_height="wrap_content"
-                   app:layout_constraintStart_toEndOf="@id/glMeterHalf"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintTop_toTopOf="@id/flElectricityMeter"
-                   android:layout_marginStart="4dp">
+                       <androidx.appcompat.widget.AppCompatTextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="end|center_vertical"
+                           android:text="m3"
+                           android:textSize="@dimen/text_size_small"
+                           android:paddingEnd="16dp"
+                           android:textColor="@color/material_grey_6"/>
 
-                   <androidx.appcompat.widget.AppCompatEditText
-                       android:id="@+id/etGasMeter"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:background="@drawable/statelist_edittext"
-                       android:textColor="@color/edit_text_color"
-                       android:textColorHint="@color/edit_hint_color"
-                       android:textSize="@dimen/text_size_edit"
-                       android:inputType="number"
-                       android:lines="1"
-                       android:imeOptions="actionDone"
-                       android:maxLength="@integer/meter_digit_count"
-                       android:gravity="center"
-                       android:drawableStart="@drawable/ic_gas"
-                       android:drawableTint="@color/material_grey_6"
-                       android:paddingStart="16dp"
-                       android:paddingEnd="40dp"
-                       android:hint="0"/>
+                   </FrameLayout>
 
-                   <androidx.appcompat.widget.AppCompatTextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_gravity="end|center_vertical"
-                       android:text="m3"
-                       android:textSize="@dimen/text_size_small"
-                       android:paddingEnd="16dp"
-                       android:textColor="@color/material_grey_6"/>
-
-               </FrameLayout>
+               </androidx.appcompat.widget.LinearLayoutCompat>
 
            </androidx.constraintlayout.widget.ConstraintLayout>
 
