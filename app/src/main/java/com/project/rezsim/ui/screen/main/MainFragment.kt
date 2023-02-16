@@ -71,19 +71,55 @@ class MainFragment : RezsimFragment() {
         viewModel.gasMeasurementLiveData.observe(this) { fillGasMeasurement(it) }
     }
 
-    private fun fillElectricityMeasurement(measurement: Measurement) {
+    private fun fillElectricityMeasurement(measurement: Measurement?) {
         view?.let {
-            it.findViewById<AppCompatTextView>(R.id.tvValueLastMeterElectricity).text = stringRepository.getById(R.string.electricity_value, measurement.position)
-            it.findViewById<AppCompatTextView>(R.id.tvDateLastMeterElectricity).text = measurement.date.substring(0, 10)
-            it.findViewById<AppCompatTextView>(R.id.tvValueMonthlyConsumptionElectricity).text = stringRepository.getById(R.string.electricity_value, measurement.consumption)
+            it.findViewById<AppCompatTextView>(R.id.tvTitleLastMeterElectricity).visibility = if (measurement != null) View.VISIBLE else View.INVISIBLE
+            it.findViewById<AppCompatTextView>(R.id.tvTitleMonthlyConsumptionElectricity).visibility = if (measurement != null) View.VISIBLE else View.INVISIBLE
+            it.findViewById<AppCompatTextView>(R.id.tvElectricityEmpty).visibility = if (measurement == null) View.VISIBLE else View.INVISIBLE
+            if (measurement != null) {
+                it.findViewById<AppCompatTextView>(R.id.tvValueLastMeterElectricity).apply {
+                    text = stringRepository.getById(R.string.electricity_value, measurement.position)
+                    visibility = View.VISIBLE
+                }
+                it.findViewById<AppCompatTextView>(R.id.tvDateLastMeterElectricity).apply {
+                    text = measurement.date.substring(0, 10)
+                    visibility = View.VISIBLE
+                }
+                it.findViewById<AppCompatTextView>(R.id.tvValueMonthlyConsumptionElectricity).apply {
+                    text = stringRepository.getById(R.string.electricity_value, measurement.consumption)
+                    visibility = View.VISIBLE
+                }
+            } else {
+                it.findViewById<AppCompatTextView>(R.id.tvValueLastMeterElectricity).visibility = View.INVISIBLE
+                it.findViewById<AppCompatTextView>(R.id.tvDateLastMeterElectricity).visibility = View.INVISIBLE
+                it.findViewById<AppCompatTextView>(R.id.tvValueMonthlyConsumptionElectricity).visibility = View.INVISIBLE
+            }
         }
     }
 
-    private fun fillGasMeasurement(measurement: Measurement) {
+    private fun fillGasMeasurement(measurement: Measurement?) {
         view?.let {
-            it.findViewById<AppCompatTextView>(R.id.tvValueLastMeterGas).text = stringRepository.getById(R.string.gas_value, measurement.position)
-            it.findViewById<AppCompatTextView>(R.id.tvDateLastMeterGas).text = measurement.date.substring(0, 10)
-            it.findViewById<AppCompatTextView>(R.id.tvValueMonthlyConsumptionGas).text = stringRepository.getById(R.string.gas_value, measurement.consumption)
+            it.findViewById<AppCompatTextView>(R.id.tvTitleLastMeterGas).visibility = if (measurement != null) View.VISIBLE else View.INVISIBLE
+            it.findViewById<AppCompatTextView>(R.id.tvTitleMonthlyConsumptionGas).visibility = if (measurement != null) View.VISIBLE else View.INVISIBLE
+            it.findViewById<AppCompatTextView>(R.id.tvGasEmpty).visibility = if (measurement == null) View.VISIBLE else View.INVISIBLE
+            if (measurement != null) {
+                it.findViewById<AppCompatTextView>(R.id.tvValueLastMeterGas).apply {
+                    text = stringRepository.getById(R.string.gas_value, measurement.position)
+                    visibility = View.VISIBLE
+                }
+                it.findViewById<AppCompatTextView>(R.id.tvDateLastMeterGas).apply {
+                    text = measurement.date.substring(0, 10)
+                    visibility = View.VISIBLE
+                }
+                it.findViewById<AppCompatTextView>(R.id.tvValueMonthlyConsumptionGas).apply {
+                    text = stringRepository.getById(R.string.gas_value, measurement.consumption)
+                    visibility = View.VISIBLE
+                }
+            } else {
+                it.findViewById<AppCompatTextView>(R.id.tvValueLastMeterGas).visibility = View.INVISIBLE
+                it.findViewById<AppCompatTextView>(R.id.tvDateLastMeterGas).visibility = View.INVISIBLE
+                it.findViewById<AppCompatTextView>(R.id.tvValueMonthlyConsumptionGas).visibility = View.INVISIBLE
+            }
         }
     }
 

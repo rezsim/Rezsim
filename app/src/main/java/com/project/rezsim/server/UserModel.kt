@@ -1,5 +1,6 @@
 package com.project.rezsim.server
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.base.singleton.Singleton
 import com.project.rezsim.device.SettingsRepository
@@ -32,8 +33,8 @@ class UserModel : KoinComponent, Singleton {
     fun getPassword() = password
     fun getUser() = user
 
-    fun setToken(token: String) {
-        this.token = "Bearer $token"
+    fun setToken(token: String?) {
+        this.token = if (token == null) null else "Bearer $token"
     }
 
     fun getToken() = token
@@ -46,7 +47,7 @@ class UserModel : KoinComponent, Singleton {
             password = loginResult.password.also {
                 settingsRepository.writeUserPassword(it)
             }
-            token = loginResult.response.token
+            setToken(loginResult.response.token!!)
             user = loginResult.user
         } else {
             logout()

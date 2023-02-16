@@ -22,6 +22,6 @@ interface ApiInterface {
     fun getUsers(@Header("Authorization") token: String): Call<User?>
 
     @POST("api/household")
-    fun addNewHousehold(@Body household: Household,  @Header("Authorization") token: String): Call<Any?>
+    fun addNewHousehold(@Body household: Household,  @Header("Authorization") token: String): Call<Array<Household?>?>
 
 }

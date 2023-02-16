@@ -1,5 +1,6 @@
 package com.project.rezsim.server.household
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.server.api.ApiClient
 import com.project.rezsim.server.api.ApiInterface

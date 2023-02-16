@@ -55,8 +55,10 @@ data class Content(
             electricityPricingB = household.electricityPricingTypeB,
             gasHeating = household.gasHeatingValue,
             gasChildren = household.gasChildren,
-            hasElectricity = household.electricityStatus == 1,
-            hasGas = household.gasStatus == 1
+            hasElectricity = true,
+            hasGas = true
+//            hasElectricity = household.electricityStatus == 1,
+//            hasGas = household.gasStatus == 1
         )
     }
 }

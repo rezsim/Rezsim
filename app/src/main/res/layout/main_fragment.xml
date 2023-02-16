@@ -137,7 +137,7 @@
                         android:layout_marginHorizontal="12dp"
                         android:background="@color/material_indigo_3"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvTitleLastMeterElectricity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -149,7 +149,7 @@
                         android:textSize="@dimen/text_size_small"
                         android:text="@string/main_title_last_read"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvValueLastMeterElectricity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -160,7 +160,7 @@
                         android:textStyle="bold"
                         tools:text="439 kWh"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvDateLastMeterElectricity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -181,7 +181,7 @@
                         android:layout_marginStart="24dp"
                         android:orientation="vertical">
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvTitleMonthlyConsumptionElectricity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -189,7 +189,7 @@
                             android:textSize="@dimen/text_size_small"
                             android:text="@string/main_title_monthly_consumption"/>
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvValueMonthlyConsumptionElectricity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -199,6 +199,20 @@
                             tools:text="231 kWh"/>
 
                     </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvElectricityEmpty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/vElectricity"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_color"
+                        android:text="@string/main_no_measurement"
+                        tools:visibility="gone"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -267,7 +281,7 @@
                         android:layout_marginHorizontal="12dp"
                         android:background="@color/material_orange_3"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvTitleLastMeterGas"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -279,7 +293,7 @@
                         android:textSize="@dimen/text_size_small"
                         android:text="@string/main_title_last_read"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvValueLastMeterGas"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -290,7 +304,7 @@
                         android:textStyle="bold"
                         tools:text="439 kWh"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvDateLastMeterGas"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -311,7 +325,7 @@
                         android:layout_marginStart="24dp"
                         android:orientation="vertical">
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvTitleMonthlyConsumptionGas"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -319,7 +333,7 @@
                             android:textSize="@dimen/text_size_small"
                             android:text="@string/main_title_monthly_consumption"/>
 
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvValueMonthlyConsumptionGas"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -329,6 +343,20 @@
                             tools:text="231 kWh"/>
 
                     </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvGasEmpty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/vGas"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_color"
+                        android:text="@string/main_no_measurement"
+                        tools:visibility="gone"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

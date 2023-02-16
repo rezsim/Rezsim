@@ -12,27 +12,27 @@ data class Household(
 
     var electricityUsage: Int = -1,
 
-    val electricityService: Int = -1,
+    val electricityService: Int = 0,
 
     var electricityPricingTypeA: Int = -1,
 
     var electricityPricingTypeB: Int = -1,
 
-    val electricityPricingTypeH: Int = -1,
+    val electricityPricingTypeH: Int = 0,
 
-    val electricityConsumptionUnit: Int = -1,
+    val electricityConsumptionUnit: Int = 0,
 
-    val gasService: Int = -1,
+    val gasService: Int = 0,
 
     var gasChildren: Int = -1,
 
-    val gasConsumptionUnit: Int = -1,
+    val gasConsumptionUnit: Int = 0,
 
     var gasHeatingValue: Int = -1,
 
-    var electricityStatus: Int = 1,
+//    var electricityStatus: Int = 1,
 
-    var gasStatus: Int = 1,
+//    var gasStatus: Int = 1,
 
     val measurements: Array<Measurement> = arrayOf()
 
