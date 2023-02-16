@@ -2,6 +2,7 @@ package com.project.rezsim.ui.screen.household
 
 import com.project.rezsim.server.dto.household.Household
 import com.project.rezsim.server.dto.measurement.Measurement
+import com.project.rezsim.server.dto.measurement.Period
 import com.project.rezsim.server.dto.measurement.Utility
 import com.project.rezsim.tool.DateHelper
 
@@ -40,8 +41,8 @@ data class Content(
         userId = household.userId,
         householdId = household.id,
         utility = utility,
-        period = 0,
-        date = DateHelper.calendarToServerString(DateHelper.now()),
+        period = Period.DAILY.value,
+        date = DateHelper.calendarToServerDateString(DateHelper.now()),
         position = value,
         consumption = -1,
         level = -1
