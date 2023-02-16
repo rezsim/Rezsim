@@ -6,7 +6,7 @@ data class Measurement(
 
     val userId: Long,
 
-    val householdId: Long,
+    var householdId: Long,
 
     val utility: Int,
 

@@ -34,6 +34,6 @@ data class Household(
 
 //    var gasStatus: Int = 1,
 
-    val measurements: Array<Measurement> = arrayOf()
+    var measurements: Array<Measurement> = arrayOf()
 
 )

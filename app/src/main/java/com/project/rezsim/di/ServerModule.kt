@@ -5,6 +5,7 @@ import com.project.rezsim.server.register.RegisterRepository
 import com.project.rezsim.server.UserModel
 import com.project.rezsim.server.household.HouseholdRepository
 import com.project.rezsim.server.login.LoginRepository
+import com.project.rezsim.server.measurement.MeasurementRepository
 import com.project.rezsim.server.user.UserRepository
 import org.koin.dsl.module
 
@@ -19,5 +20,7 @@ val serverModule = module {
     factory { UserRepository() }
 
     factory { HouseholdRepository() }
+
+    factory { MeasurementRepository() }
 
 }

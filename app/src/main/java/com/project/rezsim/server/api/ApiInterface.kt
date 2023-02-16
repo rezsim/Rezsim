@@ -2,6 +2,7 @@ package com.project.rezsim.server.api
 
 import com.project.rezsim.server.dto.User
 import com.project.rezsim.server.dto.household.Household
+import com.project.rezsim.server.dto.measurement.Measurement
 import com.project.rezsim.server.login.LoginRequest
 import com.project.rezsim.server.login.LoginResponse
 import com.project.rezsim.server.register.RegisterRequest
@@ -22,6 +23,11 @@ interface ApiInterface {
     fun getUsers(@Header("Authorization") token: String): Call<User?>
 
     @POST("api/household")
-    fun addNewHousehold(@Body household: Household,  @Header("Authorization") token: String): Call<Array<Household?>?>
+    fun addNewHousehold(@Body household: Household,  @Header("Authorization") token: String): Call<Void>
+
+
+
+    @POST("api/measurement")
+    fun addNewMeasurement(@Body measurement: Measurement, @Header("Authorization") token: String): Call<Void>
 
 }

@@ -25,12 +25,14 @@ data class Content(
         household.electricityPricingTypeB = electricityPricingB
         household.gasHeatingValue = gasHeating
         household.gasChildren = gasChildren
+        val measuremenList = household.measurements.toMutableList()
         if (electricityMeter != -1) {
-            household.measurements.toMutableList().add(createMeasurement(Utility.ELECTRICITY_A.value, electricityMeter, household))
+            measuremenList.add(createMeasurement(Utility.ELECTRICITY_A.value, electricityMeter, household))
         }
         if (gasMeter != -1) {
-            household.measurements.toMutableList().add(createMeasurement(Utility.GAS.value, gasMeter, household))
+            measuremenList.add(createMeasurement(Utility.GAS.value, gasMeter, household))
         }
+        household.measurements = measuremenList.toTypedArray()
     }
 
     private fun createMeasurement(utility: Int, value: Int, household: Household) = Measurement(
