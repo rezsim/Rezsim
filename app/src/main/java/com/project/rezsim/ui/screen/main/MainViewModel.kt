@@ -57,7 +57,7 @@ class MainViewModel : RezsimViewModel() {
                 householdSelected(currentHousehold)
                 refreshHouseholdsLiveData.value = true
             } else {
-                MainActivityViewModel.getInstance().showMessage(stringRepository.getById(R.string.main_message_unsuccesfull_refresh), MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR)
+                MainActivityViewModel.getInstance().showMessage(null, stringRepository.getById(R.string.main_message_unsuccesfull_refresh), MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR)
             }
         }
     }

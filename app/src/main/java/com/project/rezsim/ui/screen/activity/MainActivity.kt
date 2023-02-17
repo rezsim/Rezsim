@@ -75,6 +75,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.fabIconLiveData.observe(this) { showFab(it) }
         viewModel.messageLiveData.observe(this) { showMessage(it) }
         viewModel.dialogLiveData.observe(this) { showDialog(it) }
+        viewModel.quitLiveData.observe(this) { finish() }
     }
 
     private fun setFragment(containerId: Int, fragmentTag: String) {
@@ -148,7 +149,9 @@ class MainActivity : AppCompatActivity() {
                 putString(MessageDialogFragment.ARG_MESSAGE, messageParameter.message)
                 putString(MessageDialogFragment.ARG_TYPE, messageParameter.messageType.name)
             }
-            showDialog(MessageDialogFragment.TAG, argument)
+            showDialog(MessageDialogFragment.TAG, argument).observe(this) {
+                messageParameter.runnable?.run()
+            }
         } else {
             Message.show(this, rootView, messageParameter.message, messageParameter.messageType, messageParameter.severity, messageParameter.runnable)
         }

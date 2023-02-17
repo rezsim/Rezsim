@@ -35,6 +35,7 @@ class MainActivityViewModel : RezsimViewModel() {
     val messageLiveData: MutableLiveData<MessageParameter> = MutableLiveData()
     val fabPressedLiveData = MutableLiveData<Boolean>()
     val dialogLiveData = MutableLiveData<String>()
+    val quitLiveData = MutableLiveData<Boolean>()
 
     private val splashViewModel: SplashViewModel by inject()
     private val loginViewModel: LoginViewModel by inject()
@@ -73,14 +74,9 @@ class MainActivityViewModel : RezsimViewModel() {
             HouseholdFragment.TAG -> {
                 currentFragmentTag = MainFragment.TAG
             }
+            MainFragment.TAG -> quit()
         }
     }
-
-    private fun logout() {
-        Message.clear()
-        currentFragmentTag = LoginFragment.TAG
-    }
-
 
     fun currentFragmentTag() = currentFragmentTag
 
@@ -89,12 +85,12 @@ class MainActivityViewModel : RezsimViewModel() {
     fun hideProgress() = showProgressLiveData.postValue(false)
 
 
-    fun showMessage(messageResId: Int, type: MessageType = MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, severity: MessageSeverity = MessageSeverity.INFO, runnable: Runnable? = null) {
-        showMessage(stringRepository.getById(messageResId), type, severity, runnable)
+    fun showMessage(titleResId: Int? = null, messageResId: Int, type: MessageType = MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, severity: MessageSeverity = MessageSeverity.INFO, runnable: Runnable? = null) {
+        showMessage(titleResId?.let { stringRepository.getById(titleResId) },  stringRepository.getById(messageResId), type, severity, runnable)
     }
 
-    fun showMessage(message: String, type: MessageType = MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, severity: MessageSeverity = MessageSeverity.INFO, runnable: Runnable? = null) {
-        val messageData = MessageParameter(message, type, severity, runnable)
+    fun showMessage(title: String?, message: String, type: MessageType = MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, severity: MessageSeverity = MessageSeverity.INFO, runnable: Runnable? = null) {
+        val messageData = MessageParameter(title, message, type, severity, runnable)
         messageLiveData.postValue(messageData)
     }
 
@@ -155,6 +151,20 @@ class MainActivityViewModel : RezsimViewModel() {
             currentFragmentTag = HouseholdFragment.TAG
             householdViewModel.household = null
         }
+    }
+
+    private fun logout() {
+        Message.clear()
+        currentFragmentTag = LoginFragment.TAG
+    }
+
+    private fun quit() {
+        showMessage(
+            titleResId = R.string.main_message_title_exit,
+            messageResId = R.string.main_message_exit,
+            type = MessageType.DIALOG_YES_CANCEL,
+            runnable = { quitLiveData.value = true }
+        )
     }
 
     companion object {

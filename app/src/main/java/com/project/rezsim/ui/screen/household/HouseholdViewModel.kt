@@ -88,7 +88,7 @@ class HouseholdViewModel : RezsimViewModel() {
                 householdRepository.addNewHousehold(h, userModel.getToken()!!).observe(fragment) {
                     mainActivityViewModel.hideProgress()
                     if (!it) {
-                        mainActivityViewModel.showMessage(stringRepository.getById(R.string.household_message_unsuccesfull_save), MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR)
+                        mainActivityViewModel.showMessage(null, stringRepository.getById(R.string.household_message_unsuccesfull_save), MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR)
                     } else {
 //                        mainViewModel.setCurrentHousehold((userModel.getUser()?.households?.size ?: 1) - 1)
                         mainActivityViewModel.switchToFragment(MainFragment.TAG)
@@ -102,7 +102,7 @@ class HouseholdViewModel : RezsimViewModel() {
                     householdRepository.updateHousehold(it.id, it, userModel.getToken()!!).observe(fragment) {
                         mainActivityViewModel.hideProgress()
                         if (!it) {
-                            mainActivityViewModel.showMessage(stringRepository.getById(R.string.household_message_unsuccesfull_save), MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR)
+                            mainActivityViewModel.showMessage(null, stringRepository.getById(R.string.household_message_unsuccesfull_save), MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR)
                         } else {
                             mainActivityViewModel.switchToFragment(MainFragment.TAG)
                             mainViewModel.refresh()
