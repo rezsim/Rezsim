@@ -1,5 +1,6 @@
 package com.project.rezsim.ui.screen.household
 
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimViewModel
@@ -10,6 +11,8 @@ import com.project.rezsim.ui.view.message.MessageType
 import com.project.rezsim.server.UserModel
 import com.project.rezsim.server.dto.household.*
 import com.project.rezsim.server.household.HouseholdRepository
+import com.project.rezsim.ui.screen.main.MainFragment
+import com.project.rezsim.ui.screen.main.MainViewModel
 import org.koin.core.component.inject
 
 class HouseholdViewModel : RezsimViewModel() {
@@ -21,10 +24,11 @@ class HouseholdViewModel : RezsimViewModel() {
 
     private val userModel: UserModel by inject()
     private val mainActivityViewModel: MainActivityViewModel by inject()
+    private val mainViewModel: MainViewModel by inject()
     private val stringRepository: StringRepository by inject()
     private val householdRepository: HouseholdRepository by inject()
 
-    var houseHold: Household? = null
+    var household: Household? = null
     set(value) {
         field = value
         contentLiveData.postValue(value?.let { Content.fromHousehold(value) } )
@@ -33,11 +37,11 @@ class HouseholdViewModel : RezsimViewModel() {
     init {
         if (!userModel.hasHousehold()) {
             mainActivityViewModel.showMessage(messageResId = R.string.household_no_household_yet, type = MessageType.SNACKBAR_MANUALCLOSE)
-            houseHold = null
+            household = null
         }
     }
 
-    fun isCreatingNew() = houseHold == null
+    fun isCreatingNew() = household == null
 
     fun usageItems() = ElectricityUsage.values().toList().sortedBy { it.value }.map { stringRepository.getById(it.textResId) }.toList()
 
@@ -60,7 +64,7 @@ class HouseholdViewModel : RezsimViewModel() {
         hasGasLiveData.value = selected
     }
 
-    fun save(data: Content) {
+    fun save(data: Content, fragment: Fragment) {
         var complet = true
         if (hasElectricityLiveData.value == true) {
             if (data.electricityUseMode == -1 || data.electricityPricingA == -1 || data.electricityPricingB == -1) {
@@ -81,14 +85,30 @@ class HouseholdViewModel : RezsimViewModel() {
                 )
                 data.applyOnHousehold(h)
                 mainActivityViewModel.showProgress()
-                householdRepository.addNewHousehold(h, userModel.getToken()!!).observeForever {
+                householdRepository.addNewHousehold(h, userModel.getToken()!!).observe(fragment) {
                     mainActivityViewModel.hideProgress()
                     if (!it) {
-                        mainActivityViewModel.showMessage("Nem sikerült!", MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR)
+                        mainActivityViewModel.showMessage(stringRepository.getById(R.string.household_message_unsuccesfull_save), MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR)
+                    } else {
+//                        mainViewModel.setCurrentHousehold((userModel.getUser()?.households?.size ?: 1) - 1)
+                        mainActivityViewModel.switchToFragment(MainFragment.TAG)
+                        mainViewModel.refresh()
                     }
                 }
             } else {
-
+                household?.let {
+                    data.applyOnHousehold(it)
+                    mainActivityViewModel.showProgress()
+                    householdRepository.updateHousehold(it.id, it, userModel.getToken()!!).observe(fragment) {
+                        mainActivityViewModel.hideProgress()
+                        if (!it) {
+                            mainActivityViewModel.showMessage(stringRepository.getById(R.string.household_message_unsuccesfull_save), MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR)
+                        } else {
+                            mainActivityViewModel.switchToFragment(MainFragment.TAG)
+                            mainViewModel.refresh()
+                        }
+                    }
+                }
             }
         }
     }

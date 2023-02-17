@@ -62,17 +62,8 @@ class UserModel : KoinComponent, Singleton {
         logoutLiveData.postValue(true)
     }
 
-    fun updateHousehold(household: Household) {
-        getUser()?.let {
-            val index = it.households.indexOfFirst { it.id == household.id }
-            if (index == -1) {
-//                it.households.add(household)
-            } else {
-                it.households.set(index, household)
-            }
-        }
+    fun updateUser(user: User) {
+        this.user = user
     }
-
-
 
 }

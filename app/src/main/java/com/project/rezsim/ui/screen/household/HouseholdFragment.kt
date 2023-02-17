@@ -119,10 +119,12 @@ class HouseholdFragment : RezsimFragment() {
         textViewTitle.setText(if (content == null) R.string.household_title_create else R.string.household_title_change)
         layoutMeters.visibility = if (content == null) View.VISIBLE else View.GONE
         editName.setText(content?.name ?: "")
-        spinnerUsage.setSelection(content?.electricityUseMode ?: 0 + 1)
-        spinnerPricingTypeA.setSelection(content?.electricityPricingA ?: 0 + 1)
-        spinnerPricingTypeB.setSelection(content?.electricityPricingB ?: 0 + 1)
-        spinnerGasHeating.setSelection(content?.gasHeating ?: 0 + 1)
+        editElectricityMeter.setText(null)
+        editGasMeter.setText(null)
+        spinnerUsage.setSelection((content?.electricityUseMode ?: 0) + 1)
+        spinnerPricingTypeA.setSelection((content?.electricityPricingA ?: 0) + 1)
+        spinnerPricingTypeB.setSelection((content?.electricityPricingB ?: 0) + 1)
+        spinnerGasHeating.setSelection((content?.gasHeating ?: 0) + 1)
         editChildren.setText(content?.gasChildren?.toString())
         switchElectricity.isChecked = (content?.hasElectricity ?: true).also {
             viewModel.electricitySwitchChanged(it)
@@ -134,7 +136,7 @@ class HouseholdFragment : RezsimFragment() {
 
     private fun save() {
         val content = collectValues()
-        viewModel.save(content)
+        viewModel.save(content, this)
     }
 
     private fun collectValues(): Content =

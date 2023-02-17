@@ -7,10 +7,7 @@ import com.project.rezsim.server.login.LoginRequest
 import com.project.rezsim.server.login.LoginResponse
 import com.project.rezsim.server.register.RegisterRequest
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ApiInterface {
     @POST("register")
@@ -25,6 +22,8 @@ interface ApiInterface {
     @POST("api/household")
     fun addNewHousehold(@Body household: Household,  @Header("Authorization") token: String): Call<Void>
 
+    @PUT("api/household/{id}")
+    fun updateHousehold(@Path("id") id: Long, @Body household: Household, @Header("Authorization") token: String): Call<Void>
 
 
     @POST("api/measurement")

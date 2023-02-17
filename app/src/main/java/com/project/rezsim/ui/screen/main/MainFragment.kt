@@ -12,6 +12,7 @@ import com.project.rezsim.base.RezsimFragment
 import com.project.rezsim.device.ScreenRepository
 import com.project.rezsim.device.StringRepository
 import com.project.rezsim.device.dp
+import com.project.rezsim.server.UserModel
 import com.project.rezsim.server.dto.measurement.Measurement
 import com.project.rezsim.ui.view.spinner.TextSpinnerAdapter
 import com.project.rezsim.ui.view.spinner.TextSpinnerOnItemSelectedListener
@@ -22,6 +23,7 @@ class MainFragment : RezsimFragment() {
     override val contentId = R.layout.main_fragment
 
     private val viewModel: MainViewModel by inject()
+    private val userModel: UserModel by inject()
     private val screenRepository: ScreenRepository by inject()
     private val stringRepository: StringRepository by inject()
 
@@ -37,10 +39,25 @@ class MainFragment : RezsimFragment() {
 
     override fun setupViews() {
         super.setupViews()
+        view?.findViewById<AppCompatButton>(R.id.btAddHousehold)?.setOnClickListener { viewModel.addHouseholdLiveData.value = true }
+        if (userModel.hasHousehold()) {
+            refreshHouseholds()
+        }
+    }
+
+    override fun subscribeObservers() {
+        super.subscribeObservers()
+        viewModel.electricityMeasurementLiveData.observe(this) { fillElectricityMeasurement(it) }
+        viewModel.gasMeasurementLiveData.observe(this) { fillGasMeasurement(it) }
+        viewModel.refreshHouseholdsLiveData.observe(this) { refreshHouseholds() }
+    }
+
+    private fun refreshHouseholds() {
         view?.let {
-            it.findViewById<AppCompatButton>(R.id.btAddHousehold).setOnClickListener { viewModel.addHouseholdLiveData.value = true }
             if (screenRepository.isTablet()) {
                 val layout: LinearLayout = it.findViewById(R.id.llHouseholds)
+                layout.removeAllViews()
+                householdsButtons.clear()
                 viewModel.householdItems().forEachIndexed { index, s ->
                     if (index > 0) {
                         val button = createHouseholdButton(index, s)
@@ -48,7 +65,7 @@ class MainFragment : RezsimFragment() {
                         layout.addView(button)
                     }
                 }
-                householdsButtons[0].performClick()
+                householdsButtons[viewModel.getCurrentHousehold()].performClick()
             } else {
                 spinnerHouseholds = it.findViewById<AppCompatSpinner?>(R.id.spHousehold).apply {
                     adapter = TextSpinnerAdapter(requireContext(), viewModel.householdItems())
@@ -59,16 +76,10 @@ class MainFragment : RezsimFragment() {
 
                         override fun onNothingSelected(p0: AdapterView<*>?) {}
                     })
-                    setSelection(1)
+                    setSelection(viewModel.getCurrentHousehold() + 1)
                 }
             }
         }
-    }
-
-    override fun subscribeObservers() {
-        super.subscribeObservers()
-        viewModel.electricityMeasurementLiveData.observe(this) { fillElectricityMeasurement(it) }
-        viewModel.gasMeasurementLiveData.observe(this) { fillGasMeasurement(it) }
     }
 
     private fun fillElectricityMeasurement(measurement: Measurement?) {
@@ -132,7 +143,7 @@ class MainFragment : RezsimFragment() {
         setText(text)
         setTextColor(resources.getColor(R.color.button_text_color_dark))
         textAlignment = View.TEXT_ALIGNMENT_CENTER
-        setPadding(0, 0, 0, 0)
+        setPadding(8.dp, 0, 8.dp, 0)
         backgroundTintList = resources.getColorStateList(R.color.material_grey_5, null)
         backgroundTintMode = PorterDuff.Mode.ADD
         isAllCaps = false

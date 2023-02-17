@@ -32,9 +32,9 @@ class LoginRepository : KoinComponent {
             val res = callLogin(email, password)
             if (res.isSuccessed()) {
                 userModel.setToken(res.token!!)
-                val user = userRepository.getUserSync(userModel.getToken() ?: "")
-                if (user?.body() != null) {
-                    resultLiveData.postValue(LoginResult(res, email, password, user.body()))
+                val userResponse = userRepository.getUserSync(userModel.getToken() ?: "")
+                if (userResponse?.user != null) {
+                    resultLiveData.postValue(LoginResult(res, email, password, userResponse.user))
                 } else {
                     resultLiveData.postValue(LoginResult(LoginResponse(null), email, password, null))
                 }

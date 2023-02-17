@@ -30,9 +30,9 @@ data class Household(
 
     var gasHeatingValue: Int = -1,
 
-//    var electricityStatus: Int = 1,
+    var electricityStatus: Int = 1,
 
-//    var gasStatus: Int = 1,
+    var gasStatus: Int = 1,
 
     var measurements: Array<Measurement> = arrayOf()
 

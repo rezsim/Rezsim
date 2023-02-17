@@ -41,11 +41,11 @@ class HouseholdRepository : KoinComponent {
                 }
 
                 val userResponse = userRepository.getUserSync(token)
-                if (userResponse?.isSuccessful != true || userResponse.body() == null ) {
+                if (userResponse?.isSuccessed() != true || userResponse.user == null ) {
                     resultLiveData.postValue(false)
                     return@execute
                 }
-                val addedHouseholdId = userResponse.body()!!.households.last().id
+                val addedHouseholdId = userResponse.user.households.last().id
                 var success = true
                 measurements.forEach {
                     it.householdId = addedHouseholdId
@@ -53,6 +53,22 @@ class HouseholdRepository : KoinComponent {
                 }
                 resultLiveData.postValue(success)
             } catch (Ex:Exception) {
+                resultLiveData.postValue(false)
+            }
+        }
+        return resultLiveData
+    }
+
+    fun updateHousehold(id: Long, household: Household, token: String): MutableLiveData<Boolean> {
+        resultLiveData = MutableLiveData()
+
+        Executors.newSingleThreadExecutor().execute {
+            val apiClient = ApiClient.getApiClient()
+            val apiInterface = apiClient.create(ApiInterface::class.java)
+            try {
+                val response = apiInterface.updateHousehold(id, household, token).execute()
+                resultLiveData.postValue(response.isSuccessful)
+            } catch (e: Exception) {
                 resultLiveData.postValue(false)
             }
         }

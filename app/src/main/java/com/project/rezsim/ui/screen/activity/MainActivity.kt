@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var rootView: View
     private lateinit var progress: ContentLoadingProgressBar
     private lateinit var fab: FloatingActionButton
+    private lateinit var disableView: View
 
 
 
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViews() {
+        disableView = findViewById(R.id.vDisable)
         rootView = findViewById(R.id.clRoot)
         progress = findViewById(R.id.pbProgress)
         fab = findViewById<FloatingActionButton>(R.id.fabFab).apply {
@@ -120,8 +122,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun showProgress(visible: Boolean) {
         if (visible) {
+            disableView.visibility = View.VISIBLE
+            fab.isEnabled = false
             progress.show()
         } else {
+            disableView.visibility = View.GONE
+            fab.isEnabled = true
             progress.hide()
         }
     }

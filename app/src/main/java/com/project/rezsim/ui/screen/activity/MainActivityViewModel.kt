@@ -2,6 +2,7 @@ package com.project.rezsim.ui.screen.activity
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.madhava.keyboard.vario.base.Singletons
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimViewModel
 import com.project.rezsim.device.StringRepository
@@ -42,28 +43,17 @@ class MainActivityViewModel : RezsimViewModel() {
     private val headerViewModel: HeaderViewModel by inject()
     private val stringRepository: StringRepository by inject()
 
-    init {
-        mainViewModel.addHouseholdLiveData.observeForever { addNewHousehold() }
-        userModel.logoutLiveData.observeForever { logout() }
-    }
-
     private var currentFragmentTag: String = ""
         set(value) {
             field = value
             setWorkFragment(value)
         }
 
-    private fun logout() {
-        Message.clear()
-        currentFragmentTag = LoginFragment.TAG
-    }
-
     private val fabImages = HashMap<String, Int>().apply {
         put(MainFragment.TAG, R.drawable.ic_edit)
         put(HouseholdFragment.TAG, R.drawable.ic_floppy)
-//        put(FragmentA.TAG, R.drawable.ic_plus)
-//        put(FragmentB.TAG, R.drawable.ic_minus)
     }
+
 
     init {
         Log.d("DEBINFO", "MainActivityViewModel.init")
@@ -71,8 +61,25 @@ class MainActivityViewModel : RezsimViewModel() {
         splashViewModel.finishedLiveData.observeForever { splashFinished() }
         loginViewModel.finishedLiveData.observeForever { loginFinished() }
         headerViewModel.userLiveData.observeForever { showDialog(UserDialogFragment.TAG) }
+        headerViewModel.backLiveData.observeForever { goBack() }
+        mainViewModel.addHouseholdLiveData.observeForever { addNewHousehold() }
+        userModel.logoutLiveData.observeForever { logout() }
 
     }
+
+    private fun goBack() {
+        when (currentFragmentTag) {
+            HouseholdFragment.TAG -> {
+                currentFragmentTag = MainFragment.TAG
+            }
+        }
+    }
+
+    private fun logout() {
+        Message.clear()
+        currentFragmentTag = LoginFragment.TAG
+    }
+
 
     fun currentFragmentTag() = currentFragmentTag
 
@@ -91,18 +98,10 @@ class MainActivityViewModel : RezsimViewModel() {
     }
 
     fun fabPressed() {
-/*        if (currentFragmentTag != FragmentA.TAG) {
-            currentFragmentTag = FragmentA.TAG
-        } else {
-            currentFragmentTag = FragmentB.TAG
-        }
-*/
-
-
         when (currentFragmentTag) {
             MainFragment.TAG -> {
                 currentFragmentTag = HouseholdFragment.TAG
-                householdViewModel.houseHold = userModel.getUser()?.households?.get(mainViewModel.getCurrentHousehold())
+                householdViewModel.household = userModel.getUser()?.households?.get(mainViewModel.getCurrentHousehold())
             }
             HouseholdFragment.TAG -> {
                 Log.d("DEBINFO-R", "MainActivityModel.fabPressedLiveData set value:true")
@@ -153,9 +152,12 @@ class MainActivityViewModel : RezsimViewModel() {
     private fun addNewHousehold() {
         if (currentFragmentTag == MainFragment.TAG) {
             currentFragmentTag = HouseholdFragment.TAG
-            householdViewModel.houseHold = null
+            householdViewModel.household = null
         }
     }
 
+    companion object {
+        fun getInstance() = Singletons.instance(MainActivityViewModel::class) as MainActivityViewModel
+    }
 
 }

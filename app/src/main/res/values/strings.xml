@@ -53,6 +53,7 @@
     <string name="household_gas_heating_3">35 MJ</string>
     <string name="household_gas_heating_4">38 MJ</string>
     <string name="household_gas_heating_5">40 MJ</string>
+    <string name="household_message_unsuccesfull_save">Nem sikerült az adatok mentése.</string>
 
     <string name="main_title">Háztartások</string>
     <string name="main_new_household">Új háztartás</string>
@@ -63,6 +64,7 @@
     <string name="main_title_electricity">Áram</string>
     <string name="main_title_gas">Gáz</string>
     <string name="main_no_measurement">Még nem történt leolvasás</string>
+    <string name="main_message_unsuccesfull_refresh">Nem sikerült frissíteni az adatokat.</string>
 
     <string name="dialog_user_user_title">Bejelentkezve:</string>
     <string name="dialog_user_logout">Kijelentkezés</string>
