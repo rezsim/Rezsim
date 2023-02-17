@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
 import android.widget.FrameLayout
 import androidx.appcompat.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -12,6 +13,9 @@ import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
 import com.project.rezsim.tool.numericValue
 import com.project.rezsim.ui.screen.activity.MainActivityViewModel
+import com.project.rezsim.ui.screen.header.HeaderViewModel
+import com.project.rezsim.ui.screen.main.MainFragment
+import com.project.rezsim.ui.view.message.MessageType
 import com.project.rezsim.ui.view.spinner.TextSpinnerAdapter
 import com.project.rezsim.ui.view.spinner.TextSpinnerOnItemSelectedListener
 import org.koin.android.ext.android.inject
@@ -22,6 +26,7 @@ class HouseholdFragment : RezsimFragment() {
 
     private val viewModel: HouseholdViewModel by inject()
     private val activityViewModel: MainActivityViewModel by inject()
+    private val headerViewModel: HeaderViewModel by inject()
 
     private lateinit var textViewTitle: AppCompatTextView
     private lateinit var editName: AppCompatEditText
@@ -41,6 +46,8 @@ class HouseholdFragment : RezsimFragment() {
     private lateinit var layoutGasMeter: FrameLayout
     private lateinit var layoutElectricityParameters: ConstraintLayout
     private lateinit var layoutGasParameters: ConstraintLayout
+
+    private var content: Content? = null
 
 
     private val spinnerItemSelectedListener = TextSpinnerOnItemSelectedListener()
@@ -113,6 +120,9 @@ class HouseholdFragment : RezsimFragment() {
         viewModel.contentLiveData.observe(this) { setContent(it) }
         viewModel.hasElectricityLiveData.observe(this) { setElectricityState(it) }
         viewModel.hasGasLiveData.observe(this) { setGasState(it) }
+        headerViewModel.backLiveData.observeForever {
+            goBack(it)
+        }
     }
 
     private fun setContent(content: Content?) {
@@ -132,6 +142,7 @@ class HouseholdFragment : RezsimFragment() {
         switchGas.isChecked = (content?.hasGas ?: true).also {
             viewModel.gasSwitchChanged(it)
         }
+        this.content = collectValues()
     }
 
     private fun save() {
@@ -167,6 +178,26 @@ class HouseholdFragment : RezsimFragment() {
         editGasMeter.isEnabled = enabled
         layoutGasParameters.visibility = if (enabled) View.VISIBLE else View.GONE
         switchElectricity.isEnabled = enabled
+    }
+
+    private fun goBack(value: Boolean) {
+        if (value) {
+            headerViewModel.clearBackLveData()
+            if (content != collectValues()) {
+                activityViewModel.showMessage(
+                    titleResId = R.string.household_message_go_back_title,
+                    messageResId = R.string.household_message_go_back,
+                    type = MessageType.DIALOG_YES_CANCEL,
+                    runnable = { exit() }
+                )
+            } else {
+                exit()
+            }
+        }
+    }
+
+    private fun exit() {
+        activityViewModel.switchToFragment(MainFragment.TAG)
     }
 
     companion object {

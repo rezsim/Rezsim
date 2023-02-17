@@ -56,6 +56,8 @@
     <string name="household_gas_heating_4">38 MJ</string>
     <string name="household_gas_heating_5">40 MJ</string>
     <string name="household_message_unsuccesfull_save">Nem sikerült az adatok mentése.</string>
+    <string name="household_message_go_back_title">Visszalépés</string>
+    <string name="household_message_go_back">Biztosan vissza akar lépni? A nem mentett változtatások el fognak veszni.</string>
 
     <string name="main_title">Háztartások</string>
     <string name="main_new_household">Új háztartás</string>

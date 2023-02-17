@@ -90,7 +90,6 @@ class HouseholdViewModel : RezsimViewModel() {
                     if (!it) {
                         mainActivityViewModel.showMessage(null, stringRepository.getById(R.string.household_message_unsuccesfull_save), MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR)
                     } else {
-//                        mainViewModel.setCurrentHousehold((userModel.getUser()?.households?.size ?: 1) - 1)
                         mainActivityViewModel.switchToFragment(MainFragment.TAG)
                         mainViewModel.refresh()
                     }

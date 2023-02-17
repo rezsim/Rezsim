@@ -16,6 +16,9 @@ class HeaderViewModel : RezsimViewModel() {
         userLiveData.value = true
     }
 
+    fun clearBackLveData() {
+        backLiveData.value = false
+    }
 
 
 }

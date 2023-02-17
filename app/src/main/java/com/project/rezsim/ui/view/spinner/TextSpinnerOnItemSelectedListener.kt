@@ -1,5 +1,6 @@
 package com.project.rezsim.ui.view.spinner
 
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView

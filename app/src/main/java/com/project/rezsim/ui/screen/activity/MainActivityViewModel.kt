@@ -63,19 +63,10 @@ class MainActivityViewModel : RezsimViewModel() {
         splashViewModel.finishedLiveData.observeForever { splashFinished() }
         loginViewModel.finishedLiveData.observeForever { loginFinished() }
         headerViewModel.userLiveData.observeForever { showDialog(UserDialogFragment.TAG) }
-        headerViewModel.backLiveData.observeForever { goBack() }
+        headerViewModel.backLiveData.observeForever { goBack(it) }
         mainViewModel.addHouseholdLiveData.observeForever { addNewHousehold() }
         userModel.logoutLiveData.observeForever { logout() }
 
-    }
-
-    private fun goBack() {
-        when (currentFragmentTag) {
-            HouseholdFragment.TAG -> {
-                currentFragmentTag = MainFragment.TAG
-            }
-            MainFragment.TAG -> quit()
-        }
     }
 
     fun currentFragmentTag() = currentFragmentTag
@@ -158,13 +149,16 @@ class MainActivityViewModel : RezsimViewModel() {
         currentFragmentTag = LoginFragment.TAG
     }
 
-    private fun quit() {
-        showMessage(
-            titleResId = R.string.main_message_title_exit,
-            messageResId = R.string.main_message_exit,
-            type = MessageType.DIALOG_YES_CANCEL,
-            runnable = { quitLiveData.value = true }
-        )
+    private fun goBack(value: Boolean) {
+        if (value && currentFragmentTag == MainFragment.TAG) {
+            headerViewModel.clearBackLveData()
+            showMessage(
+                titleResId = R.string.main_message_title_exit,
+                messageResId = R.string.main_message_exit,
+                type = MessageType.DIALOG_YES_CANCEL,
+                runnable = { quitLiveData.value = true }
+            )
+        }
     }
 
     companion object {
