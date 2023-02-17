@@ -3,6 +3,7 @@ package com.project.rezsim.di
 import com.madhava.keyboard.vario.base.Singletons
 import com.project.rezsim.ui.screen.dialog.user.UserDialogViewModel
 import com.project.rezsim.ui.screen.activity.MainActivityViewModel
+import com.project.rezsim.ui.screen.dialog.message.MessageDialogViewModel
 import com.project.rezsim.ui.screen.footer.FooterViewModel
 import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.screen.household.HouseholdViewModel
@@ -29,6 +30,8 @@ val viewModelModule = module {
     single { Singletons.instance(MainViewModel::class) as MainViewModel }
 
     factory { UserDialogViewModel() }
+
+    factory { MessageDialogViewModel() }
 
 }
 

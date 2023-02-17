@@ -1,5 +1,6 @@
 package com.project.rezsim.ui.screen.dialog.user
 
+import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView

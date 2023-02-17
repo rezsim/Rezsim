@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.R
 import com.project.rezsim.device.ScreenRepository
 import com.project.rezsim.device.dp
@@ -19,6 +20,8 @@ import kotlin.math.min
 open class RezsimDialogFragment : DialogFragment(), KoinComponent {
 
     protected open val contentId: Int = 0
+
+    var resultLiveData: MutableLiveData<Boolean>? = null
 
     open fun setupViews() {}
     open fun subscribeObservers() {}
@@ -65,6 +68,7 @@ open class RezsimDialogFragment : DialogFragment(), KoinComponent {
             setAttributes(attributes)
         }
     }
+
 
 
 

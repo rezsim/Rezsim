@@ -11,12 +11,15 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.madhava.keyboard.vario.base.Singletons
 import com.project.rezsim.R
+import com.project.rezsim.base.RezsimDialogFragment
 import com.project.rezsim.teszt.FragmentA
 import com.project.rezsim.teszt.FragmentB
+import com.project.rezsim.ui.screen.dialog.message.MessageDialogFragment
 import com.project.rezsim.ui.screen.dialog.user.UserDialogFragment
 import com.project.rezsim.ui.screen.footer.FooterFragment
 import com.project.rezsim.ui.screen.header.HeaderFragment
@@ -24,9 +27,7 @@ import com.project.rezsim.ui.screen.household.HouseholdFragment
 import com.project.rezsim.ui.screen.login.LoginFragment
 import com.project.rezsim.ui.screen.main.MainFragment
 import com.project.rezsim.ui.screen.splash.SplashFragment
-import com.project.rezsim.ui.view.message.Message
-import com.project.rezsim.ui.view.message.MessageSeverity
-import com.project.rezsim.ui.view.message.MessageType
+import com.project.rezsim.ui.view.message.*
 import org.koin.android.ext.android.inject
 import kotlin.system.exitProcess
 
@@ -106,9 +107,10 @@ class MainActivity : AppCompatActivity() {
                 else -> error("Failed to create fragment $tag")
             }
 
-    private fun createDialogFragment(tag: String): DialogFragment =
+    private fun createDialogFragment(tag: String, argument: Bundle? = null): RezsimDialogFragment =
         when (tag) {
             UserDialogFragment.TAG -> UserDialogFragment.newInstance()
+            MessageDialogFragment.TAG -> MessageDialogFragment.newInstance(argument)
             else -> error("Failed to create dialog fragment $tag")
         }
 
@@ -139,25 +141,31 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showMessage(messageData: MessageData) {
-        Message.show(this, rootView, messageData.message, messageData.messageType, messageData.severity, messageData.runnable)
+    private fun showMessage(messageParameter: MessageParameter) {
+        if (messageParameter.messageType.isDialog()) {
+            val argument = Bundle().apply {
+                putString(MessageDialogFragment.ARG_TITLE, messageParameter.title)
+                putString(MessageDialogFragment.ARG_MESSAGE, messageParameter.message)
+                putString(MessageDialogFragment.ARG_TYPE, messageParameter.messageType.name)
+            }
+            showDialog(MessageDialogFragment.TAG, argument)
+        } else {
+            Message.show(this, rootView, messageParameter.message, messageParameter.messageType, messageParameter.severity, messageParameter.runnable)
+        }
     }
 
     private fun fabPressed() {
         viewModel.fabPressed()
     }
 
-    private fun showDialog(tag: String) {
+    private fun showDialog(tag: String, argument: Bundle? = null): MutableLiveData<Boolean> {
         val fm = supportFragmentManager
-        val dialogFragment = createDialogFragment(tag)
+        val dialogFragment = createDialogFragment(tag, argument)
         dialogFragment.show(fm, tag)
+        val retLiveData = MutableLiveData<Boolean>()
+        dialogFragment.resultLiveData = retLiveData
+        return retLiveData
     }
 
-    data class MessageData(
-        val message: String,
-        val messageType: MessageType,
-        val severity: MessageSeverity,
-        val runnable: Runnable? = null
-    )
 
 }
