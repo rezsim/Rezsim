@@ -23,6 +23,7 @@ import com.project.rezsim.ui.screen.dialog.message.MessageDialogFragment
 import com.project.rezsim.ui.screen.dialog.user.UserDialogFragment
 import com.project.rezsim.ui.screen.footer.FooterFragment
 import com.project.rezsim.ui.screen.header.HeaderFragment
+import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.screen.household.HouseholdFragment
 import com.project.rezsim.ui.screen.login.LoginFragment
 import com.project.rezsim.ui.screen.main.MainFragment
@@ -34,6 +35,7 @@ import kotlin.system.exitProcess
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainActivityViewModel by inject()
+    private val headerViewModel: HeaderViewModel by inject()
 
     private lateinit var rootView: View
     private lateinit var progress: ContentLoadingProgressBar
@@ -48,6 +50,10 @@ class MainActivity : AppCompatActivity() {
 
         setupViews()
         subscribeObservers()
+    }
+
+    override fun onBackPressed() {
+        headerViewModel.backLiveData.value = true
     }
 
     override fun onDestroy() {
