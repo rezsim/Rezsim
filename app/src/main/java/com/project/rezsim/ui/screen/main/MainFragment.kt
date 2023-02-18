@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.LinearLayout
 import androidx.appcompat.widget.*
+import androidx.cardview.widget.CardView
 import androidx.core.content.res.ResourcesCompat
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
@@ -40,6 +41,7 @@ class MainFragment : RezsimFragment() {
     override fun setupViews() {
         super.setupViews()
         view?.findViewById<AppCompatButton>(R.id.btAddHousehold)?.setOnClickListener { viewModel.addHouseholdLiveData.value = true }
+
         if (userModel.hasHousehold()) {
             refreshHouseholds()
         }
@@ -82,8 +84,11 @@ class MainFragment : RezsimFragment() {
         }
     }
 
-    private fun fillElectricityMeasurement(measurement: Measurement?) {
+    private fun fillElectricityMeasurement(data: Pair<Boolean, Measurement?>) {
         view?.let {
+            val visible = data.first
+            val measurement = data.second
+            it.findViewById<CardView>(R.id.cwElectricity).visibility = if (visible) View.VISIBLE else View.GONE
             it.findViewById<AppCompatTextView>(R.id.tvTitleLastMeterElectricity).visibility = if (measurement != null) View.VISIBLE else View.INVISIBLE
             it.findViewById<AppCompatTextView>(R.id.tvTitleMonthlyConsumptionElectricity).visibility = if (measurement != null) View.VISIBLE else View.INVISIBLE
             it.findViewById<AppCompatTextView>(R.id.tvElectricityEmpty).visibility = if (measurement == null) View.VISIBLE else View.INVISIBLE
@@ -108,8 +113,11 @@ class MainFragment : RezsimFragment() {
         }
     }
 
-    private fun fillGasMeasurement(measurement: Measurement?) {
+    private fun fillGasMeasurement(data: Pair<Boolean, Measurement?>) {
         view?.let {
+            val visible = data.first
+            val measurement = data.second
+            it.findViewById<CardView>(R.id.cwGas).visibility = if (visible) View.VISIBLE else View.GONE
             it.findViewById<AppCompatTextView>(R.id.tvTitleLastMeterGas).visibility = if (measurement != null) View.VISIBLE else View.INVISIBLE
             it.findViewById<AppCompatTextView>(R.id.tvTitleMonthlyConsumptionGas).visibility = if (measurement != null) View.VISIBLE else View.INVISIBLE
             it.findViewById<AppCompatTextView>(R.id.tvGasEmpty).visibility = if (measurement == null) View.VISIBLE else View.INVISIBLE

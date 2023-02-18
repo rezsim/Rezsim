@@ -25,10 +25,6 @@ class UserRepository : KoinComponent {
         val apiClient = ApiClient.getApiClient()
         val apiInterface = apiClient.create(ApiInterface::class.java)
         val res = apiInterface.getUsers(token).execute()
-        res.body()?.households?.forEach {
-            it.electricityStatus = 1
-            it.gasStatus = 1
-        }
         UserResponse(res.code(), res.body())
     } catch (e: Exception) {
         null

@@ -19,8 +19,8 @@ import org.koin.core.component.inject
 class MainViewModel : RezsimViewModel() {
 
     val addHouseholdLiveData = MutableLiveData<Boolean>()
-    val electricityMeasurementLiveData = MutableLiveData<Measurement?>()
-    val gasMeasurementLiveData = MutableLiveData<Measurement?>()
+    val electricityMeasurementLiveData = MutableLiveData<Pair<Boolean, Measurement?>>()
+    val gasMeasurementLiveData = MutableLiveData<Pair<Boolean, Measurement?>>()
     val refreshHouseholdsLiveData = MutableLiveData<Boolean>()
 
     private val stringRepository: StringRepository by inject()
@@ -37,8 +37,8 @@ class MainViewModel : RezsimViewModel() {
         Log.d("DEBINFO-R", "householdIndex:$householdIndex")
         currentHousehold = householdIndex
         userModel.getUser()?.households?.get(currentHousehold)?.let {
-            electricityMeasurementLiveData.value = it.measurements.lastOrNull { it.utility == Utility.ELECTRICITY_A.value }
-            gasMeasurementLiveData.value = it.measurements.lastOrNull { it.utility == Utility.GAS.value }
+            electricityMeasurementLiveData.value = Pair(it.electricityStatus == 1, it.measurements.lastOrNull { it.utility == Utility.ELECTRICITY_A.value })
+            gasMeasurementLiveData.value = Pair(it.gasStatus == 1, it.measurements.lastOrNull { it.utility == Utility.GAS.value })
         }
     }
 
