@@ -59,6 +59,7 @@
     <string name="household_message_go_back_title">Visszalépés</string>
     <string name="household_message_go_back">Biztosan vissza akar lépni? A nem mentett változtatások el fognak veszni.</string>
 
+    <string name="main_header_title">Rezsim</string>
     <string name="main_title">Háztartások</string>
     <string name="main_new_household">Új háztartás</string>
     <string name="main_spinner_household_prompt">Válasszon háztartást</string>

@@ -15,6 +15,7 @@ import com.project.rezsim.device.StringRepository
 import com.project.rezsim.device.dp
 import com.project.rezsim.server.UserModel
 import com.project.rezsim.server.dto.measurement.Measurement
+import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.view.spinner.TextSpinnerAdapter
 import com.project.rezsim.ui.view.spinner.TextSpinnerOnItemSelectedListener
 import org.koin.android.ext.android.inject
@@ -27,6 +28,7 @@ class MainFragment : RezsimFragment() {
     private val userModel: UserModel by inject()
     private val screenRepository: ScreenRepository by inject()
     private val stringRepository: StringRepository by inject()
+    private val headerViewModel: HeaderViewModel by inject()
 
     private var spinnerHouseholds: AppCompatSpinner? = null
 
@@ -40,6 +42,7 @@ class MainFragment : RezsimFragment() {
 
     override fun setupViews() {
         super.setupViews()
+        headerViewModel.setTitle(R.string.main_header_title)
         view?.findViewById<AppCompatButton>(R.id.btAddHousehold)?.setOnClickListener { viewModel.addHouseholdLiveData.value = true }
 
         if (userModel.hasHousehold()) {

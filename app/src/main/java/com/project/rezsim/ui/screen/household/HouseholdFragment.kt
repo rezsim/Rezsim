@@ -1,11 +1,9 @@
 package com.project.rezsim.ui.screen.household
 
-import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
 import android.widget.FrameLayout
 import androidx.appcompat.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -182,7 +180,7 @@ class HouseholdFragment : RezsimFragment() {
 
     private fun goBack(value: Boolean) {
         if (value) {
-            headerViewModel.clearBackLveData()
+            headerViewModel.clearBackLiveData()
             if (content != collectValues()) {
                 activityViewModel.showMessage(
                     titleResId = R.string.household_message_go_back_title,

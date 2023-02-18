@@ -19,6 +19,7 @@ class HeaderFragment : RezsimFragment() {
     override fun setupViews() {
         super.setupViews()
         view?.let {
+            textTitle = it.findViewById(R.id.tvTitle)
             imageBack = it.findViewById<AppCompatImageView>(R.id.ivBack).apply {
                 setOnClickListener { viewModel.onBackPressed() }
             }
@@ -26,6 +27,11 @@ class HeaderFragment : RezsimFragment() {
                 setOnClickListener { viewModel.onUserPressed() }
             }
         }
+    }
+
+    override fun subscribeObservers() {
+        super.subscribeObservers()
+        viewModel.titleLiveData.observe(this) { textTitle.text = it }
     }
 
 

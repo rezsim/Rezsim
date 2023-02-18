@@ -12,6 +12,7 @@ import com.project.rezsim.server.dto.measurement.Measurement
 import com.project.rezsim.server.dto.measurement.Utility
 import com.project.rezsim.server.user.UserRepository
 import com.project.rezsim.ui.screen.activity.MainActivityViewModel
+import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.view.message.MessageSeverity
 import com.project.rezsim.ui.view.message.MessageType
 import org.koin.core.component.inject

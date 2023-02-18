@@ -151,7 +151,7 @@ class MainActivityViewModel : RezsimViewModel() {
 
     private fun goBack(value: Boolean) {
         if (value && currentFragmentTag == MainFragment.TAG) {
-            headerViewModel.clearBackLveData()
+            headerViewModel.clearBackLiveData()
             showMessage(
                 titleResId = R.string.main_message_title_exit,
                 messageResId = R.string.main_message_exit,
