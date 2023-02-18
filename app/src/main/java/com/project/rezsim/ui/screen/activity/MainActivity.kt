@@ -55,7 +55,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        headerViewModel.backLiveData.value = true
+        val currFrag = viewModel.currentFragmentTag()
+        if (currFrag == SplashFragment.TAG || currFrag == LoginFragment.TAG) {
+            super.onBackPressed()
+        } else {
+            headerViewModel.backLiveData.value = true
+        }
     }
 
     override fun onDestroy() {

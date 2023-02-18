@@ -33,6 +33,8 @@ data class Content(
         if (gasMeter != -1) {
             measuremenList.add(createMeasurement(Utility.GAS.value, gasMeter, household))
         }
+        household.electricityStatus = if (hasElectricity) 1 else 0
+        household.gasStatus = if (hasGas) 1 else 0
         household.measurements = measuremenList.toTypedArray()
     }
 
