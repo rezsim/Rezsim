@@ -2,6 +2,7 @@ package com.project.rezsim.server.household
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.project.rezsim.base.ServerRepository
 import com.project.rezsim.server.api.ApiClient
 import com.project.rezsim.server.api.ApiInterface
 import com.project.rezsim.server.dto.household.Household
@@ -13,14 +14,14 @@ import org.koin.core.component.inject
 import retrofit2.Call
 import java.util.concurrent.Executors
 
-class HouseholdRepository : KoinComponent {
+class HouseholdRepository : ServerRepository() {
 
     private lateinit var resultLiveData: MutableLiveData<Boolean>
 
     private val userRepository: UserRepository by inject()
     private val measurementRepository: MeasurementRepository by inject()
 
-    fun addNewHousehold(household: Household, token: String): MutableLiveData<Boolean> {
+    fun addNewHousehold(household: Household): MutableLiveData<Boolean> {
         resultLiveData = MutableLiveData()
 
         val measurements = mutableListOf<Measurement>().apply {
@@ -40,7 +41,7 @@ class HouseholdRepository : KoinComponent {
                     return@execute
                 }
 
-                val userResponse = userRepository.getUserSync(token)
+                val userResponse = userRepository.getUserSync()
                 if (userResponse?.isSuccessed() != true || userResponse.user == null ) {
                     resultLiveData.postValue(false)
                     return@execute
@@ -49,7 +50,7 @@ class HouseholdRepository : KoinComponent {
                 var success = true
                 measurements.forEach {
                     it.householdId = addedHouseholdId
-                    success = measurementRepository.addNewMeasurementSync(it, token) && success
+                    success = measurementRepository.addNewMeasurementSync(it) && success
                 }
                 resultLiveData.postValue(success)
             } catch (Ex:Exception) {
@@ -59,7 +60,7 @@ class HouseholdRepository : KoinComponent {
         return resultLiveData
     }
 
-    fun updateHousehold(id: Long, household: Household, token: String): MutableLiveData<Boolean> {
+    fun updateHousehold(id: Long, household: Household): MutableLiveData<Boolean> {
         resultLiveData = MutableLiveData()
 
         Executors.newSingleThreadExecutor().execute {

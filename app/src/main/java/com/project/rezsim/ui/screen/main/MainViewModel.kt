@@ -26,7 +26,6 @@ class MainViewModel : RezsimViewModel() {
 
     private val stringRepository: StringRepository by inject()
     private val userModel: UserModel by inject()
-    private val userRepository: UserRepository by inject()
 
     private var currentHousehold = 0
 
@@ -45,22 +44,12 @@ class MainViewModel : RezsimViewModel() {
 
     fun getCurrentHousehold() = currentHousehold
 
-    fun setCurrentHousehold(household: Int) {
-        currentHousehold = household
+    fun switchToLastHousehold() {
+        currentHousehold = userModel.getUser()?.households?.lastIndex ?: error("No household at switchToLastHousehold")
     }
 
     fun refresh() {
-        MainActivityViewModel.getInstance().showProgress()
-        userRepository.getUser(userModel.getToken()!!).observeForever {
-            MainActivityViewModel.getInstance().hideProgress()
-            if (it.isSuccessed()) {
-                userModel.updateUser(it.user!!)
-                householdSelected(currentHousehold)
-                refreshHouseholdsLiveData.value = true
-            } else {
-                MainActivityViewModel.getInstance().showMessage(null, stringRepository.getById(R.string.main_message_unsuccesfull_refresh), MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR)
-            }
-        }
+        refreshHouseholdsLiveData.value = true
     }
 
 }

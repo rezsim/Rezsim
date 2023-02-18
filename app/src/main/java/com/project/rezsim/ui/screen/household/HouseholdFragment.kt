@@ -26,7 +26,6 @@ class HouseholdFragment : RezsimFragment() {
     private val activityViewModel: MainActivityViewModel by inject()
     private val headerViewModel: HeaderViewModel by inject()
 
-    private lateinit var textViewTitle: AppCompatTextView
     private lateinit var editName: AppCompatEditText
     private lateinit var layoutMeters: ConstraintLayout
     private lateinit var spinnerUsage: AppCompatSpinner
@@ -53,7 +52,6 @@ class HouseholdFragment : RezsimFragment() {
     override fun setupViews() {
         super.setupViews()
         view?.let {
-            textViewTitle = it.findViewById(R.id.tvTitle)
             editName = it.findViewById(R.id.etName)
             layoutMeters = it.findViewById(R.id.clMeters)
             layoutElectricityMeter = it.findViewById(R.id.flElectricityMeter)
@@ -124,7 +122,7 @@ class HouseholdFragment : RezsimFragment() {
     }
 
     private fun setContent(content: Content?) {
-        textViewTitle.setText(if (content == null) R.string.household_title_create else R.string.household_title_change)
+        headerViewModel.setTitle(if (content == null) R.string.household_title_create else R.string.household_title_change)
         layoutMeters.visibility = if (content == null) View.VISIBLE else View.GONE
         editName.setText(content?.name ?: "")
         editElectricityMeter.setText(null)
@@ -145,7 +143,7 @@ class HouseholdFragment : RezsimFragment() {
 
     private fun save() {
         val content = collectValues()
-        viewModel.save(content, this)
+        viewModel.save(content)
     }
 
     private fun collectValues(): Content =

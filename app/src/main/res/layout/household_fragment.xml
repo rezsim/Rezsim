@@ -15,23 +15,12 @@
            android:animateLayoutChanges="true"
            android:padding="@dimen/page_margin">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:textSize="@dimen/text_size_very_large"
-                android:textColor="@color/text_color"
-                android:textStyle="bold"
-                tools:text="Háztartás létrehozása"/>
-
            <androidx.appcompat.widget.AppCompatTextView
                android:id="@+id/tvName"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                app:layout_constraintStart_toStartOf="@id/etName"
-               app:layout_constraintTop_toBottomOf="@id/tvTitle"
+               app:layout_constraintTop_toTopOf="parent"
                android:layout_marginTop="16dp"
                android:layout_marginStart="12dp"
                android:textStyle="bold"
@@ -108,7 +97,7 @@
                            android:paddingStart="16dp"
                            android:paddingEnd="40dp"
                            tools:text="654897"
-                           android:hint="0"/>
+                           android:hint="---"/>
 
                        <androidx.appcompat.widget.AppCompatTextView
                            android:layout_width="wrap_content"
@@ -146,7 +135,7 @@
                            android:drawableTint="@color/material_grey_6"
                            android:paddingStart="16dp"
                            android:paddingEnd="40dp"
-                           android:hint="0"/>
+                           android:hint="---"/>
 
                        <androidx.appcompat.widget.AppCompatTextView
                            android:layout_width="wrap_content"

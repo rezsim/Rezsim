@@ -1,6 +1,7 @@
 package com.project.rezsim.server.login
 
 import androidx.lifecycle.MutableLiveData
+import com.project.rezsim.base.ServerRepository
 import com.project.rezsim.server.UserModel
 import com.project.rezsim.server.api.ApiClient
 import com.project.rezsim.server.api.ApiInterface
@@ -10,9 +11,8 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.concurrent.Executors
 
-class LoginRepository : KoinComponent {
+class LoginRepository : ServerRepository() {
 
-    private val userModel: UserModel by inject()
     private val userRepository: UserRepository by inject()
     private val registerRepository: RegisterRepository by inject()
 
@@ -32,7 +32,7 @@ class LoginRepository : KoinComponent {
             val res = callLogin(email, password)
             if (res.isSuccessed()) {
                 userModel.setToken(res.token!!)
-                val userResponse = userRepository.getUserSync(userModel.getToken() ?: "")
+                val userResponse = userRepository.getUserSync()
                 if (userResponse?.user != null) {
                     resultLiveData.postValue(LoginResult(res, email, password, userResponse.user))
                 } else {

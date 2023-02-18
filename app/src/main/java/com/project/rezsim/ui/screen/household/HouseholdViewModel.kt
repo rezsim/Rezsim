@@ -1,6 +1,5 @@
 package com.project.rezsim.ui.screen.household
 
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimViewModel
@@ -11,6 +10,7 @@ import com.project.rezsim.ui.view.message.MessageType
 import com.project.rezsim.server.UserModel
 import com.project.rezsim.server.dto.household.*
 import com.project.rezsim.server.household.HouseholdRepository
+import com.project.rezsim.server.user.UserRepository
 import com.project.rezsim.ui.screen.main.MainFragment
 import com.project.rezsim.ui.screen.main.MainViewModel
 import org.koin.core.component.inject
@@ -27,6 +27,7 @@ class HouseholdViewModel : RezsimViewModel() {
     private val mainViewModel: MainViewModel by inject()
     private val stringRepository: StringRepository by inject()
     private val householdRepository: HouseholdRepository by inject()
+    private val userRepository: UserRepository by inject()
 
     var household: Household? = null
     set(value) {
@@ -64,7 +65,7 @@ class HouseholdViewModel : RezsimViewModel() {
         hasGasLiveData.value = selected
     }
 
-    fun save(data: Content, fragment: Fragment) {
+    fun save(data: Content) {
         var complet = true
         if (hasElectricityLiveData.value == true) {
             if (data.electricityUseMode == -1 || data.electricityPricingA == -1 || data.electricityPricingB == -1) {
@@ -85,29 +86,33 @@ class HouseholdViewModel : RezsimViewModel() {
                 )
                 data.applyOnHousehold(h)
                 mainActivityViewModel.showProgress()
-                householdRepository.addNewHousehold(h, userModel.getToken()!!).observe(fragment) {
-                    mainActivityViewModel.hideProgress()
-                    if (!it) {
-                        mainActivityViewModel.showMessage(null, stringRepository.getById(R.string.household_message_unsuccesfull_save), MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR)
-                    } else {
-                        mainActivityViewModel.switchToFragment(MainFragment.TAG)
-                        mainViewModel.refresh()
-                    }
+                householdRepository.addNewHousehold(h).observeForever {
+                    refreshUserAndGoBack(true)
                 }
             } else {
                 household?.let {
                     data.applyOnHousehold(it)
                     mainActivityViewModel.showProgress()
-                    householdRepository.updateHousehold(it.id, it, userModel.getToken()!!).observe(fragment) {
-                        mainActivityViewModel.hideProgress()
-                        if (!it) {
-                            mainActivityViewModel.showMessage(null, stringRepository.getById(R.string.household_message_unsuccesfull_save), MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR)
-                        } else {
-                            mainActivityViewModel.switchToFragment(MainFragment.TAG)
-                            mainViewModel.refresh()
-                        }
+                    householdRepository.updateHousehold(it.id, it).observeForever {
+                        refreshUserAndGoBack(false)
                     }
                 }
+            }
+        }
+    }
+
+    private fun refreshUserAndGoBack(switchToLast: Boolean) {
+        userRepository.getUser().observeForever {
+            mainActivityViewModel.hideProgress()
+            if (!it.isSuccessed()) {
+                mainActivityViewModel.showMessage(null, stringRepository.getById(R.string.household_message_unsuccesfull_refresh), MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR)
+            } else {
+                userModel.updateUser(it.user!!)
+                mainActivityViewModel.switchToFragment(MainFragment.TAG)
+                if (switchToLast) {
+                    mainViewModel.switchToLastHousehold()
+                }
+                mainViewModel.refresh()
             }
         }
     }
