@@ -76,5 +76,9 @@
     <string name="dialog_user_user_title">Bejelentkezve:</string>
     <string name="dialog_user_logout">Kijelentkezés</string>
 
+    <string name="dialog_meter_read_title">Óraállás rögzítés</string>
+    <string name="dialog_meter_read_sub_message">Csak az egész értéket írja be!</string>
+    <string name="dialog_meter_date">Dátum:</string>
+
 
 </resources>
