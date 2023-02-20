@@ -40,7 +40,7 @@ class MeterDialogFragment : RezsimDialogFragment() {
             it.findViewById<AppCompatTextView>(R.id.tvLastValue).apply {
                 viewModel.lastValue().let {
                     it?.let {
-                        text = stringRepository.getById(R.string.dialog_meter_read_last_value, viewModel.lastValue())
+                        text = stringRepository.getById(R.string.dialog_meter_read_last_value, viewModel.lastValue().toString())
                     }
                     visibility = if (it != null) View.VISIBLE else View.GONE
                 }

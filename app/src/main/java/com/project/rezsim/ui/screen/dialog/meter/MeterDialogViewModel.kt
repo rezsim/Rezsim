@@ -6,7 +6,9 @@ import com.project.rezsim.base.RezsimViewModel
 import com.project.rezsim.device.StringRepository
 import com.project.rezsim.server.UserModel
 import com.project.rezsim.server.dto.measurement.Utility
-import com.project.rezsim.ui.screen.dialog.message.MessageDialogFragment
+import com.project.rezsim.server.measurement.MeasurementRepository
+import com.project.rezsim.ui.screen.activity.MainActivityViewModel
+import com.project.rezsim.ui.view.message.MessageSeverity
 import com.project.rezsim.ui.view.message.MessageType
 import org.koin.core.component.inject
 import java.util.*
@@ -19,6 +21,8 @@ class MeterDialogViewModel : RezsimViewModel() {
 
     private val stringRepository: StringRepository by inject()
     private val userModel: UserModel by inject()
+    private val measurementRepository: MeasurementRepository by inject()
+    private val activityViewModel: MainActivityViewModel by inject()
 
     fun parseArguments(arg: Bundle?) {
         arg?.let {
@@ -37,10 +41,13 @@ class MeterDialogViewModel : RezsimViewModel() {
     fun lastValue() = userModel.getUser()
         ?.households?.find { it.id == householdId }
         ?.measurements?.findLast { it.utility == utility.value }
-        ?.position?.toString()
+        ?.position
 
     fun save(position: Int) {
-
+        if (position < lastValue() ?: 0) {
+            activityViewModel.showMessage(null, R.string.dialog_meter_small_value_error, MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR)
+            return
+        }
     }
 
 

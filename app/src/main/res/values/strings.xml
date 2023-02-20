@@ -85,6 +85,7 @@
     <string name="dialog_meter_value">Óraállás:</string>
     <string name="dialog_meter_read_last_value">Utolsó óraállás: %s</string>
     <string name="dialog_meter_save">Mentés</string>
+    <string name="dialog_meter_small_value_error">A megadott érték kisebb, mint az utóló óraállás!</string>
 
 
 </resources>
