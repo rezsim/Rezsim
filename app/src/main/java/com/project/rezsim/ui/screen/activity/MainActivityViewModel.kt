@@ -17,6 +17,7 @@ import com.project.rezsim.ui.view.message.MessageType
 import com.project.rezsim.server.UserModel
 import com.project.rezsim.teszt.FragmentA
 import com.project.rezsim.teszt.FragmentB
+import com.project.rezsim.ui.screen.dialog.DialogParameter
 import com.project.rezsim.ui.screen.dialog.user.UserDialogFragment
 import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.screen.household.HouseholdViewModel
@@ -34,7 +35,7 @@ class MainActivityViewModel : RezsimViewModel() {
     val showProgressLiveData = MutableLiveData<Boolean>()
     val messageLiveData: MutableLiveData<MessageParameter> = MutableLiveData()
     val fabPressedLiveData = MutableLiveData<Boolean>()
-    val dialogLiveData = MutableLiveData<String>()
+    val dialogLiveData = MutableLiveData<DialogParameter>()
     val quitLiveData = MutableLiveData<Boolean>()
 
     private val splashViewModel: SplashViewModel by inject()
@@ -62,7 +63,7 @@ class MainActivityViewModel : RezsimViewModel() {
         currentFragmentTag = SplashFragment.TAG
         splashViewModel.finishedLiveData.observeForever { splashFinished() }
         loginViewModel.finishedLiveData.observeForever { loginFinished() }
-        headerViewModel.userLiveData.observeForever { showDialog(UserDialogFragment.TAG) }
+        headerViewModel.userLiveData.observeForever { showDialog(DialogParameter(UserDialogFragment.TAG)) }
         headerViewModel.backLiveData.observeForever { goBack(it) }
         mainViewModel.addHouseholdLiveData.observeForever { addNewHousehold() }
         userModel.logoutLiveData.observeForever { logout() }
@@ -103,8 +104,8 @@ class MainActivityViewModel : RezsimViewModel() {
         currentFragmentTag = fragmentTag
     }
 
-    fun showDialog(tag: String) {
-        dialogLiveData.postValue(tag)
+    fun showDialog(parameter: DialogParameter) {
+        dialogLiveData.postValue(parameter)
     }
 
     private fun setWorkFragment(fragmentTag: String) {

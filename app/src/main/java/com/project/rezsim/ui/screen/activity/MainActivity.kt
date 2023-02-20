@@ -18,9 +18,12 @@ import com.google.android.material.snackbar.Snackbar
 import com.madhava.keyboard.vario.base.Singletons
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimDialogFragment
+import com.project.rezsim.device.DrawableRepository
 import com.project.rezsim.teszt.FragmentA
 import com.project.rezsim.teszt.FragmentB
+import com.project.rezsim.ui.screen.dialog.DialogParameter
 import com.project.rezsim.ui.screen.dialog.message.MessageDialogFragment
+import com.project.rezsim.ui.screen.dialog.meter.MeterDialogFragment
 import com.project.rezsim.ui.screen.dialog.user.UserDialogFragment
 import com.project.rezsim.ui.screen.footer.FooterFragment
 import com.project.rezsim.ui.screen.header.HeaderFragment
@@ -37,6 +40,7 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainActivityViewModel by inject()
     private val headerViewModel: HeaderViewModel by inject()
+    private val drawableRepository: DrawableRepository by inject()
 
     private lateinit var rootView: View
     private lateinit var progress: ContentLoadingProgressBar
@@ -125,6 +129,7 @@ class MainActivity : AppCompatActivity() {
         when (tag) {
             UserDialogFragment.TAG -> UserDialogFragment.newInstance()
             MessageDialogFragment.TAG -> MessageDialogFragment.newInstance(argument)
+            MeterDialogFragment.TAG -> MeterDialogFragment.newInstance(argument)
             else -> error("Failed to create dialog fragment $tag")
         }
 
@@ -151,7 +156,7 @@ class MainActivity : AppCompatActivity() {
     private fun showFab(iconRes: Int?) {
         fab.visibility = if (iconRes != null) View.VISIBLE else View.GONE
         iconRes?.let {
-            fab.setImageDrawable(AppCompatResources.getDrawable(this, iconRes))
+            fab.setImageDrawable(drawableRepository.getById(it))
         }
     }
 
@@ -162,7 +167,7 @@ class MainActivity : AppCompatActivity() {
                 putString(MessageDialogFragment.ARG_MESSAGE, messageParameter.message)
                 putString(MessageDialogFragment.ARG_TYPE, messageParameter.messageType.name)
             }
-            showDialog(MessageDialogFragment.TAG, argument).observe(this) {
+            showDialog(DialogParameter(MessageDialogFragment.TAG, argument)).observe(this) {
                 messageParameter.runnable?.run()
             }
         } else {
@@ -174,10 +179,10 @@ class MainActivity : AppCompatActivity() {
         viewModel.fabPressed()
     }
 
-    private fun showDialog(tag: String, argument: Bundle? = null): MutableLiveData<Boolean> {
+    private fun showDialog(parameter: DialogParameter): MutableLiveData<Boolean> {
         val fm = supportFragmentManager
-        val dialogFragment = createDialogFragment(tag, argument)
-        dialogFragment.show(fm, tag)
+        val dialogFragment = createDialogFragment(parameter.tag, parameter.argument)
+        dialogFragment.show(fm, parameter.tag)
         val retLiveData = MutableLiveData<Boolean>()
         dialogFragment.resultLiveData = retLiveData
         return retLiveData

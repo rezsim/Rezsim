@@ -1,5 +1,6 @@
 package com.project.rezsim.di
 
+import com.project.rezsim.device.DrawableRepository
 import com.project.rezsim.device.ScreenRepository
 import com.project.rezsim.device.SettingsRepository
 import com.project.rezsim.device.StringRepository
@@ -12,5 +13,7 @@ val deviceModule = module {
     factory { ScreenRepository() }
 
     factory { StringRepository() }
+
+    factory { DrawableRepository() }
 
 }

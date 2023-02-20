@@ -1,9 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background_dialog"
+    android:padding="@dimen/dialog_margin"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_electricity"/>
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/ivIcon"
+        app:layout_constraintTop_toTopOf="@id/ivIcon"
+        app:layout_constraintBottom_toBottomOf="@id/ivIcon"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/text_size_large"
+        android:textStyle="bold"
+        android:text="@string/dialog_meter_read_title"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/text_color"
+        android:textStyle="normal"
+        android:textSize="@dimen/text_size_normal"
+        tools:text="Adja meg a villanyóráról leolvasott értéket."/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSubMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvMessage"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/text_color"
+        android:textStyle="normal"
+        android:textSize="@dimen/text_size_small"
+        android:text="@string/dialog_meter_read_sub_message"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clFields"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSubMessage"
+        android:layout_marginTop="32dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/etDate"
+            app:layout_constraintTop_toTopOf="@id/etDate"
+            app:layout_constraintBottom_toBottomOf="@id/etDate"
+            android:layout_marginEnd="24dp"
+            android:textColor="@color/text_color"
+            android:textStyle="normal"
+            android:textSize="@dimen/text_size_normal"
+            android:text="@string/dialog_meter_date"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/statelist_edittext"
+            android:backgroundTint="@color/material_grey_3"
+            android:textColor="@color/edit_text_color"
+            android:textSize="@dimen/text_size_edit"
+            android:paddingHorizontal="8dp"
+            android:enabled="false"
+            tools:text="2022. Dec 9."/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/tvValue"
+            app:layout_constraintEnd_toStartOf="@id/etValue"
+            app:layout_constraintTop_toTopOf="@id/etValue"
+            app:layout_constraintBottom_toBottomOf="@id/etValue"
+            android:layout_marginEnd="24dp"
+            android:textColor="@color/text_color"
+            android:textStyle="normal"
+            android:textSize="@dimen/text_size_normal"
+            android:text="@string/dialog_meter_value"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/etDate"
+            app:layout_constraintTop_toBottomOf="@id/etDate"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/statelist_edittext"
+            android:backgroundTint="@color/material_grey_3"
+            android:textColor="@color/edit_text_color"
+            android:textSize="@dimen/text_size_edit"
+            android:paddingHorizontal="8dp"
+            android:inputType="number"
+            android:gravity="center"
+            tools:text="165101"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvLastValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/clFields"
+        app:layout_constraintTop_toBottomOf="@id/clFields"
+        android:layout_marginTop="24dp"
+        android:textSize="@dimen/text_size_normal"
+        android:textColor="@color/material_indigo_8"
+        tools:text="Utolsó óraállás:165066"/>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLastValue"
+        android:layout_marginTop="48dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btNegative"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:background="@drawable/statelist_button_background"
+            android:layout_marginEnd="16dp"
+            android:text="@string/cancel"
+            android:textSize="@dimen/text_size_normal"
+            android:drawablePadding="8dp"
+            android:textColor="@color/button_text_color"
+            android:paddingHorizontal="16dp"
+            android:backgroundTint="@color/material_grey_8"
+            android:backgroundTintMode="add"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btPositive"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:background="@drawable/statelist_button_background"
+            android:enabled="false"
+            android:text="@string/dialog_meter_save"
+            android:textSize="@dimen/text_size_normal"
+            android:textColor="@color/button_text_color"
+            android:paddingHorizontal="16dp"
+            android:backgroundTint="@color/material_indigo_9"
+            android:backgroundTintMode="add"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

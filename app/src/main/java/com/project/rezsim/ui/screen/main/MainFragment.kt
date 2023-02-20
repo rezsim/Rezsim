@@ -10,11 +10,13 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.res.ResourcesCompat
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
+import com.project.rezsim.device.DrawableRepository
 import com.project.rezsim.device.ScreenRepository
 import com.project.rezsim.device.StringRepository
 import com.project.rezsim.device.dp
 import com.project.rezsim.server.UserModel
 import com.project.rezsim.server.dto.measurement.Measurement
+import com.project.rezsim.server.dto.measurement.Utility
 import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.view.spinner.TextSpinnerAdapter
 import com.project.rezsim.ui.view.spinner.TextSpinnerOnItemSelectedListener
@@ -28,6 +30,7 @@ class MainFragment : RezsimFragment() {
     private val userModel: UserModel by inject()
     private val screenRepository: ScreenRepository by inject()
     private val stringRepository: StringRepository by inject()
+    private val drawableRepository: DrawableRepository by inject()
     private val headerViewModel: HeaderViewModel by inject()
 
     private var spinnerHouseholds: AppCompatSpinner? = null
@@ -43,7 +46,11 @@ class MainFragment : RezsimFragment() {
     override fun setupViews() {
         super.setupViews()
         headerViewModel.setTitle(R.string.main_header_title)
-        view?.findViewById<AppCompatButton>(R.id.btAddHousehold)?.setOnClickListener { viewModel.addHouseholdLiveData.value = true }
+        view?.let {
+            it.findViewById<AppCompatButton>(R.id.btAddHousehold).setOnClickListener { viewModel.addHouseholdLiveData.value = true }
+            it.findViewById<AppCompatButton>(R.id.btReadElectricity).setOnClickListener { viewModel.readMeter(Utility.ELECTRICITY_A) }
+            it.findViewById<AppCompatButton>(R.id.btReadGas).setOnClickListener { viewModel.readMeter(Utility.GAS) }
+        }
 
         if (userModel.hasHousehold()) {
             refreshHouseholds()
@@ -150,7 +157,7 @@ class MainFragment : RezsimFragment() {
         layoutParams =  ViewGroup.MarginLayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT).apply {
             setMargins(0, 0, 8.dp, 0)
         }
-        background = ResourcesCompat.getDrawable(resources, R.drawable.statelist_button_background, null)
+        background = drawableRepository.getById(R.drawable.statelist_button_background)
         setText(text)
         setTextColor(resources.getColor(R.color.button_text_color_dark))
         textAlignment = View.TEXT_ALIGNMENT_CENTER

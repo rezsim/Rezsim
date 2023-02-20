@@ -1,5 +1,6 @@
 package com.project.rezsim.ui.screen.main
 
+import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
@@ -12,6 +13,8 @@ import com.project.rezsim.server.dto.measurement.Measurement
 import com.project.rezsim.server.dto.measurement.Utility
 import com.project.rezsim.server.user.UserRepository
 import com.project.rezsim.ui.screen.activity.MainActivityViewModel
+import com.project.rezsim.ui.screen.dialog.DialogParameter
+import com.project.rezsim.ui.screen.dialog.meter.MeterDialogFragment
 import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.view.message.MessageSeverity
 import com.project.rezsim.ui.view.message.MessageType
@@ -50,6 +53,14 @@ class MainViewModel : RezsimViewModel() {
 
     fun refresh() {
         refreshHouseholdsLiveData.value = true
+    }
+
+    fun readMeter(utility: Utility) {
+        val meterDialogParam = Bundle().apply {
+            putString(MeterDialogFragment.ARG_UTILITY, utility.name)
+            putLong(MeterDialogFragment.ARG_HOUSEHOLD, userModel.getUser()?.households?.get(currentHousehold)?.id ?: error("No household for read meter."))
+        }
+        (Singletons.instance(MainActivityViewModel::class) as MainActivityViewModel).dialogLiveData.value = DialogParameter(MeterDialogFragment.TAG, meterDialogParam)
     }
 
 }
