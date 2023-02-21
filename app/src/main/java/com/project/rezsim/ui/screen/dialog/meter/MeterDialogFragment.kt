@@ -13,6 +13,7 @@ import com.project.rezsim.base.RezsimDialogFragment
 import com.project.rezsim.device.DrawableRepository
 import com.project.rezsim.device.StringRepository
 import com.project.rezsim.tool.DateHelper
+import com.project.rezsim.ui.screen.activity.MainActivityViewModel
 import org.koin.core.component.inject
 
 class MeterDialogFragment : RezsimDialogFragment() {
@@ -20,9 +21,11 @@ class MeterDialogFragment : RezsimDialogFragment() {
     override val contentId = R.layout.meter_dialog
 
     private val viewModel: MeterDialogViewModel by inject()
+    private val activityViewModel: MainActivityViewModel by inject()
     private val drawableRepository: DrawableRepository by inject()
     private val stringRepository: StringRepository by inject()
 
+    private lateinit var rootView: View
     private lateinit var editValue: AppCompatEditText
     private lateinit var buttonSave: AppCompatButton
 
@@ -31,9 +34,15 @@ class MeterDialogFragment : RezsimDialogFragment() {
         viewModel.parseArguments(arguments)
     }
 
+    override fun setupDialog() {
+        super.setupDialog()
+        requireDialog().setCanceledOnTouchOutside(false)
+    }
+
     override fun setupViews() {
         super.setupViews()
         view?.let {
+            rootView = it.findViewById(R.id.clRoot)
             it.findViewById<AppCompatImageView>(R.id.ivIcon).setImageDrawable(drawableRepository.getById(viewModel.iconRes()))
             it.findViewById<AppCompatTextView>(R.id.tvMessage).text = viewModel.message()
             it.findViewById<AppCompatEditText>(R.id.etDate).setText(DateHelper.calendarToDisplayDateString(viewModel.date))
@@ -47,7 +56,7 @@ class MeterDialogFragment : RezsimDialogFragment() {
             }
             it.findViewById<AppCompatButton>(R.id.btNegative).setOnClickListener { dismiss() }
             buttonSave = it.findViewById<AppCompatButton>(R.id.btPositive).apply {
-                setOnClickListener { viewModel.save(editValue.text.toString().toInt()) }
+                setOnClickListener { save() }
             }
             editValue = it.findViewById<AppCompatEditText>(R.id.etValue).apply {
                 doAfterTextChanged { s ->
@@ -57,7 +66,15 @@ class MeterDialogFragment : RezsimDialogFragment() {
         }
     }
 
+    override fun subscribeObservers() {
+        super.subscribeObservers()
+        viewModel.progressLiveData.observe(this) { setProgress(it) }
+    }
 
+    fun save() {
+        activityViewModel.hideKeyboard(editValue.windowToken)
+        viewModel.save(editValue.text.toString().toInt(), rootView)
+    }
 
     companion object {
         const val TAG = "MeterDialogFragment"

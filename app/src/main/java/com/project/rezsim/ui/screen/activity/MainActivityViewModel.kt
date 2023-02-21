@@ -1,6 +1,9 @@
 package com.project.rezsim.ui.screen.activity
 
+import android.app.Activity
+import android.os.IBinder
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.madhava.keyboard.vario.base.Singletons
 import com.project.rezsim.R
@@ -37,6 +40,7 @@ class MainActivityViewModel : RezsimViewModel() {
     val fabPressedLiveData = MutableLiveData<Boolean>()
     val dialogLiveData = MutableLiveData<DialogParameter>()
     val quitLiveData = MutableLiveData<Boolean>()
+    val hideKeyboardLiveData = MutableLiveData<IBinder?>()
 
     private val splashViewModel: SplashViewModel by inject()
     private val loginViewModel: LoginViewModel by inject()
@@ -77,12 +81,12 @@ class MainActivityViewModel : RezsimViewModel() {
     fun hideProgress() = showProgressLiveData.postValue(false)
 
 
-    fun showMessage(titleResId: Int? = null, messageResId: Int, type: MessageType = MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, severity: MessageSeverity = MessageSeverity.INFO, runnable: Runnable? = null) {
-        showMessage(titleResId?.let { stringRepository.getById(titleResId) },  stringRepository.getById(messageResId), type, severity, runnable)
+    fun showMessage(titleResId: Int? = null, messageResId: Int, type: MessageType = MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, severity: MessageSeverity = MessageSeverity.INFO, rootView: View? = null, runnable: Runnable? = null) {
+        showMessage(titleResId?.let { stringRepository.getById(titleResId) },  stringRepository.getById(messageResId), type, severity, rootView, runnable)
     }
 
-    fun showMessage(title: String?, message: String, type: MessageType = MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, severity: MessageSeverity = MessageSeverity.INFO, runnable: Runnable? = null) {
-        val messageData = MessageParameter(title, message, type, severity, runnable)
+    fun showMessage(title: String?, message: String, type: MessageType = MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, severity: MessageSeverity = MessageSeverity.INFO, rootView: View? = null, runnable: Runnable? = null) {
+        val messageData = MessageParameter(title, message, type, severity, rootView, runnable)
         messageLiveData.postValue(messageData)
     }
 
@@ -106,6 +110,10 @@ class MainActivityViewModel : RezsimViewModel() {
 
     fun showDialog(parameter: DialogParameter) {
         dialogLiveData.postValue(parameter)
+    }
+
+    fun hideKeyboard(focusedViewToken: IBinder? = null) {
+        hideKeyboardLiveData.value = focusedViewToken
     }
 
     private fun setWorkFragment(fragmentTag: String) {

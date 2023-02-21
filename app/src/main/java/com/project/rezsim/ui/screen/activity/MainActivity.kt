@@ -1,9 +1,12 @@
 package com.project.rezsim.ui.screen.activity
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.IBinder
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.content.res.AppCompatResources
@@ -93,6 +96,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.messageLiveData.observe(this) { showMessage(it) }
         viewModel.dialogLiveData.observe(this) { showDialog(it) }
         viewModel.quitLiveData.observe(this) { finish() }
+        viewModel.hideKeyboardLiveData.observe(this) { hideKeyboard(it) }
     }
 
     private fun setFragment(containerId: Int, fragmentTag: String) {
@@ -171,7 +175,7 @@ class MainActivity : AppCompatActivity() {
                 messageParameter.runnable?.run()
             }
         } else {
-            Message.show(this, rootView, messageParameter.message, messageParameter.messageType, messageParameter.severity, messageParameter.runnable)
+            Message.show(this, messageParameter.rootView ?: rootView, messageParameter.message, messageParameter.messageType, messageParameter.severity, messageParameter.runnable)
         }
     }
 
@@ -186,6 +190,18 @@ class MainActivity : AppCompatActivity() {
         val retLiveData = MutableLiveData<Boolean>()
         dialogFragment.resultLiveData = retLiveData
         return retLiveData
+    }
+
+    private fun hideKeyboard(token: IBinder?) {
+        val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val v = currentFocus ?: rootView
+        val t = token ?: v.windowToken
+        v.postDelayed(
+            {
+                imm.hideSoftInputFromWindow(t, 0)
+            },
+            50
+        )
     }
 
 
