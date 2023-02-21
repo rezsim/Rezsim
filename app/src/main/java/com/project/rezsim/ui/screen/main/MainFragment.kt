@@ -4,6 +4,7 @@ import android.graphics.PorterDuff
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import androidx.appcompat.widget.*
 import androidx.cardview.widget.CardView
@@ -77,7 +78,10 @@ class MainFragment : RezsimFragment() {
                         layout.addView(button)
                     }
                 }
-                householdsButtons[viewModel.getCurrentHousehold()].performClick()
+                val scroll = it.findViewById<HorizontalScrollView>(R.id.swHouseholds)
+                val button = householdsButtons[viewModel.getCurrentHousehold()]
+                scroll.post { scroll.scrollTo(button.left, 0) }
+                button.performClick()
             } else {
                 spinnerHouseholds = it.findViewById<AppCompatSpinner?>(R.id.spHousehold).apply {
                     adapter = TextSpinnerAdapter(requireContext(), viewModel.householdItems())

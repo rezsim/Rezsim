@@ -95,7 +95,7 @@ class MainActivityViewModel : RezsimViewModel() {
         when (currentFragmentTag) {
             MainFragment.TAG -> {
                 currentFragmentTag = HouseholdFragment.TAG
-                householdViewModel.household = userModel.getUser()?.households?.get(mainViewModel.getCurrentHousehold())
+                householdViewModel.household = userModel.getUser()?.householdList()?.get(mainViewModel.getCurrentHousehold())
             }
             HouseholdFragment.TAG -> {
                 Log.d("DEBINFO-R", "MainActivityModel.fabPressedLiveData set value:true")

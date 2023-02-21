@@ -23,4 +23,6 @@ data class User(
 
     val households: Array<Household>
 
-)
+) {
+    fun householdList() = households.sortedBy { it.id }
+}

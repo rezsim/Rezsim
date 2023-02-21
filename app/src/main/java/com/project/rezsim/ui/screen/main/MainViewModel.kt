@@ -32,14 +32,15 @@ class MainViewModel : RezsimViewModel() {
 
     private var currentHousehold = 0
 
-    fun householdItems(): List<String> = (userModel.getUser()?.households?.map { it.name }?.toMutableList() ?: mutableListOf()).apply {
+    fun householdItems(): List<String> = (userModel.getUser()?.householdList()
+        ?.map { it.name }?.toMutableList() ?: mutableListOf()).apply {
         add(0, stringRepository.getById(R.string.main_spinner_household_prompt))
     }.toList()
 
     fun householdSelected(householdIndex: Int) {
         Log.d("DEBINFO-R", "householdIndex:$householdIndex")
         currentHousehold = householdIndex
-        userModel.getUser()?.households?.get(currentHousehold)?.let {
+        userModel.getUser()?.householdList()?.get(currentHousehold)?.let {
             electricityMeasurementLiveData.value = Pair(it.electricityStatus == 1, it.lastMeasurement(Utility.ELECTRICITY_A))
             gasMeasurementLiveData.value = Pair(it.gasStatus == 1, it.lastMeasurement(Utility.GAS))
         }
@@ -48,7 +49,7 @@ class MainViewModel : RezsimViewModel() {
     fun getCurrentHousehold() = currentHousehold
 
     fun switchToLastHousehold() {
-        currentHousehold = userModel.getUser()?.households?.lastIndex ?: error("No household at switchToLastHousehold")
+        currentHousehold = userModel.getUser()?.householdList()?.lastIndex ?: error("No household at switchToLastHousehold")
     }
 
     fun refresh() {
