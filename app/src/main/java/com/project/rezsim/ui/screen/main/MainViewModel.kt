@@ -40,8 +40,8 @@ class MainViewModel : RezsimViewModel() {
         Log.d("DEBINFO-R", "householdIndex:$householdIndex")
         currentHousehold = householdIndex
         userModel.getUser()?.households?.get(currentHousehold)?.let {
-            electricityMeasurementLiveData.value = Pair(it.electricityStatus == 1, it.measurements.lastOrNull { it.utility == Utility.ELECTRICITY_A.value })
-            gasMeasurementLiveData.value = Pair(it.gasStatus == 1, it.measurements.lastOrNull { it.utility == Utility.GAS.value })
+            electricityMeasurementLiveData.value = Pair(it.electricityStatus == 1, it.lastMeasurement(Utility.ELECTRICITY_A))
+            gasMeasurementLiveData.value = Pair(it.gasStatus == 1, it.lastMeasurement(Utility.GAS))
         }
     }
 

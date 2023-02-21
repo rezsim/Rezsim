@@ -1,6 +1,7 @@
 package com.project.rezsim.server.dto.household
 
 import com.project.rezsim.server.dto.measurement.Measurement
+import com.project.rezsim.server.dto.measurement.Utility
 
 data class Household(
 
@@ -36,4 +37,9 @@ data class Household(
 
     var measurements: Array<Measurement> = arrayOf()
 
-)
+) {
+    fun lastMeasurement(utility: Utility) = measurements
+        .filter { it.utility == utility.value }
+        .maxByOrNull { it.id }
+
+}

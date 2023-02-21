@@ -54,7 +54,7 @@ class MeterDialogViewModel : RezsimViewModel() {
 
     fun lastValue() = userModel.getUser()
         ?.households?.find { it.id == householdId }
-        ?.measurements?.findLast { it.utility == utility.value }
+        ?.lastMeasurement(utility)
         ?.position
 
     fun save(position: Int, rootView: View) {
