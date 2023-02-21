@@ -5,8 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/background_dialog"
-    android:padding="@dimen/dialog_margin"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -120,6 +118,7 @@
             android:paddingHorizontal="8dp"
             android:inputType="number"
             android:gravity="center"
+            android:hint="0"
             tools:text="165101"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

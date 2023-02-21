@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import com.project.rezsim.R
@@ -21,7 +22,6 @@ class MeterDialogFragment : RezsimDialogFragment() {
     override val contentId = R.layout.meter_dialog
 
     private val viewModel: MeterDialogViewModel by inject()
-    private val activityViewModel: MainActivityViewModel by inject()
     private val drawableRepository: DrawableRepository by inject()
     private val stringRepository: StringRepository by inject()
 
@@ -41,7 +41,7 @@ class MeterDialogFragment : RezsimDialogFragment() {
 
     override fun setupViews() {
         super.setupViews()
-        view?.let {
+        view?.findViewById<ConstraintLayout>(R.id.cContainer)?.let {
             rootView = it.findViewById(R.id.clRoot)
             it.findViewById<AppCompatImageView>(R.id.ivIcon).setImageDrawable(drawableRepository.getById(viewModel.iconRes()))
             it.findViewById<AppCompatTextView>(R.id.tvMessage).text = viewModel.message()
@@ -62,6 +62,8 @@ class MeterDialogFragment : RezsimDialogFragment() {
                 doAfterTextChanged { s ->
                     buttonSave.isEnabled = !s.toString().isEmpty()
                 }
+                requestFocus()
+                activityViewModel.showKeyboard(requireActivity())
             }
         }
     }
@@ -69,9 +71,11 @@ class MeterDialogFragment : RezsimDialogFragment() {
     override fun subscribeObservers() {
         super.subscribeObservers()
         viewModel.progressLiveData.observe(this) { setProgress(it) }
+        viewModel.finishLiveData.observe(this) { dismiss() }
     }
 
     fun save() {
+        editValue.clearFocus()
         activityViewModel.hideKeyboard(editValue.windowToken)
         viewModel.save(editValue.text.toString().toInt(), rootView)
     }

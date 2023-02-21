@@ -56,9 +56,9 @@
     <string name="household_gas_heating_4">38 MJ</string>
     <string name="household_gas_heating_5">40 MJ</string>
     <string name="household_message_unsuccesfull_save">Nem sikerült az adatok mentése.</string>
+    <string name="household_message_unsuccesfull_refresh">Nem sikerült frissíteni az adatokat.</string>
     <string name="household_message_go_back_title">Visszalépés</string>
     <string name="household_message_go_back">Biztosan vissza akar lépni? A nem mentett változtatások el fognak veszni.</string>
-    <string name="household_message_unsuccesfull_refresh">Nem sikerült frissíteni az adatokat.</string>
 
     <string name="main_header_title">Rezsim</string>
     <string name="main_title">Háztartások</string>
@@ -86,6 +86,8 @@
     <string name="dialog_meter_read_last_value">Utolsó óraállás: %s</string>
     <string name="dialog_meter_save">Mentés</string>
     <string name="dialog_meter_small_value_error">A megadott érték kisebb, mint az utóló óraállás!</string>
+    <string name="dialog_meter_message_unsuccesfull_save">Nem sikerült az adatok mentése.</string>
+    <string name="dialog_meter_message_unsuccesfull_refresh">Nem sikerült frissíteni az adatokat.</string>
 
 
 </resources>

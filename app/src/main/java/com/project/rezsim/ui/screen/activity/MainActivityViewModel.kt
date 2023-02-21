@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.IBinder
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.MutableLiveData
 import com.madhava.keyboard.vario.base.Singletons
 import com.project.rezsim.R
@@ -114,6 +115,11 @@ class MainActivityViewModel : RezsimViewModel() {
 
     fun hideKeyboard(focusedViewToken: IBinder? = null) {
         hideKeyboardLiveData.value = focusedViewToken
+    }
+
+    fun showKeyboard(activity: Activity) {
+        val imm = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
     }
 
     private fun setWorkFragment(fragmentTag: String) {

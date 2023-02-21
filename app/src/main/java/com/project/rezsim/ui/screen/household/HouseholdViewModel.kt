@@ -87,14 +87,22 @@ class HouseholdViewModel : RezsimViewModel() {
                 data.applyOnHousehold(h)
                 mainActivityViewModel.showProgress()
                 householdRepository.addNewHousehold(h).observeForever {
-                    refreshUserAndGoBack(true)
+                    if (it) {
+                        refreshUserAndGoBack(true)
+                    } else {
+                        showUnsuccesfullError()
+                    }
                 }
             } else {
                 household?.let {
                     data.applyOnHousehold(it)
                     mainActivityViewModel.showProgress()
                     householdRepository.updateHousehold(it.id, it).observeForever {
-                        refreshUserAndGoBack(false)
+                        if (it) {
+                            refreshUserAndGoBack(false)
+                        } else {
+                            showUnsuccesfullError()
+                        }
                     }
                 }
             }
@@ -115,6 +123,11 @@ class HouseholdViewModel : RezsimViewModel() {
                 mainViewModel.refresh()
             }
         }
+    }
+
+    private fun showUnsuccesfullError() {
+        mainActivityViewModel.hideProgress()
+        mainActivityViewModel.showMessage(null, stringRepository.getById(R.string.household_message_unsuccesfull_save), MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR)
     }
 
 

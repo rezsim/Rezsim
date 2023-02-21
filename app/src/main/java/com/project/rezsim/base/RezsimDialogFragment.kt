@@ -3,6 +3,7 @@ package com.project.rezsim.base
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.R
 import com.project.rezsim.device.ScreenRepository
 import com.project.rezsim.device.dp
+import com.project.rezsim.ui.screen.activity.MainActivityViewModel
 import org.koin.android.ext.android.inject
 import org.koin.core.component.KoinComponent
 import kotlin.math.max
@@ -31,7 +33,9 @@ open class RezsimDialogFragment : DialogFragment(), KoinComponent {
     open fun start() {}
 
     protected val screenRepository: ScreenRepository by inject()
+    protected val activityViewModel: MainActivityViewModel by inject()
 
+    private var root: FrameLayout? = null
     private var cover: FrameLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +51,12 @@ open class RezsimDialogFragment : DialogFragment(), KoinComponent {
         requireDialog().window?.requestFeature(Window.FEATURE_NO_TITLE)
 
         return if (contentId != 0) {
-            inflater.inflate(contentId, container, false)
+            inflater.inflate(R.layout.dialog, container, false).apply {
+                root = findViewById(R.id.clRootR)
+                val cont = findViewById<ConstraintLayout>(R.id.cContainer)
+                inflater.inflate(contentId, cont, true)
+                cover = findViewById(R.id.clCover)
+            }
         } else {
             error("contentId not defined in ${this.javaClass.name}")
         }
@@ -68,33 +77,25 @@ open class RezsimDialogFragment : DialogFragment(), KoinComponent {
         super.onResume()
         val minWidth = requireContext().resources.getDimension(R.dimen.dialog_min_width)
         val width = min((screenRepository.screenSize().width * 0.8f), minWidth).toInt()
+        val margin = resources.getDimension(R.dimen.dialog_margin).toInt().dp
+        root?.layoutParams?.width = width - 2 * margin
         requireDialog().window?.apply {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             attributes.width = width
             setAttributes(attributes)
         }
+        root?.requestLayout()
+    }
+
+    override fun dismiss() {
+        super.dismiss()
+        activityViewModel.hideKeyboard()
     }
 
     fun setProgress(show: Boolean) {
-        view?.let {
-            if (it is ConstraintLayout) {
-                if (show) {
-                    if (cover == null) cover = createCover()
-                    it.addView(cover)
-                } else {
-                    it.removeView(cover)
-                }
-            }
-        }
+        cover?.visibility = if (show) View.VISIBLE else View.GONE
     }
 
-    private fun createCover() = FrameLayout(requireContext()).apply {
-//        layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT)
-        val a = dialog?.window?.attributes
-//        layoutParams = ConstraintLayout.LayoutParams(100, )
-        background = ColorDrawable(Color.RED)
-        isClickable = true
-    }
 
 
 }

@@ -11,8 +11,12 @@ import com.project.rezsim.server.dto.measurement.Measurement
 import com.project.rezsim.server.dto.measurement.Period
 import com.project.rezsim.server.dto.measurement.Utility
 import com.project.rezsim.server.measurement.MeasurementRepository
+import com.project.rezsim.server.user.UserRepository
 import com.project.rezsim.tool.DateHelper
 import com.project.rezsim.ui.screen.activity.MainActivityViewModel
+import com.project.rezsim.ui.screen.household.HouseholdFragment
+import com.project.rezsim.ui.screen.main.MainFragment
+import com.project.rezsim.ui.screen.main.MainViewModel
 import com.project.rezsim.ui.view.message.MessageSeverity
 import com.project.rezsim.ui.view.message.MessageType
 import org.koin.core.component.inject
@@ -21,6 +25,7 @@ import java.util.*
 class MeterDialogViewModel : RezsimViewModel() {
 
     val progressLiveData = MutableLiveData<Boolean>()
+    val finishLiveData = MutableLiveData<Boolean>()
 
     lateinit var date: Calendar
     lateinit var utility: Utility
@@ -29,7 +34,9 @@ class MeterDialogViewModel : RezsimViewModel() {
     private val stringRepository: StringRepository by inject()
     private val userModel: UserModel by inject()
     private val measurementRepository: MeasurementRepository by inject()
+    private val userRepository: UserRepository by inject()
     private val activityViewModel: MainActivityViewModel by inject()
+    private val mainViewModel: MainViewModel by inject()
 
     fun parseArguments(arg: Bundle?) {
         arg?.let {
@@ -56,11 +63,15 @@ class MeterDialogViewModel : RezsimViewModel() {
             return
         }
         progressLiveData.value = true
-//        activityViewModel.showProgress()
-/*        measurementRepository.addNewMeasurement(createMeasurement(position)).observeForever {
-
+        measurementRepository.addNewMeasurement(createMeasurement(position)).observeForever {
+            if (it) {
+                refreshUserAndGoBack()
+            } else {
+                progressLiveData.postValue(false)
+                activityViewModel.showMessage(null, R.string.dialog_meter_message_unsuccesfull_save, MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR, rootView)
+            }
         }
-*/    }
+    }
 
     private fun createMeasurement(position: Int) = Measurement(
         id = -1,
@@ -68,11 +79,25 @@ class MeterDialogViewModel : RezsimViewModel() {
         householdId = householdId,
         utility = utility.value,
         period = Period.DAILY.value,
-        date = DateHelper.calendarToDisplayDateString(date),
+        date = DateHelper.calendarToServerDateString(date),
         position = position,
         consumption = -1,
         level = -1
     )
+
+    private fun refreshUserAndGoBack() {
+        userRepository.getUser().observeForever {
+            progressLiveData.postValue(false)
+            if (!it.isSuccessed()) {
+                activityViewModel.showMessage(null, stringRepository.getById(R.string.dialog_meter_message_unsuccesfull_refresh), MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR)
+            } else {
+                userModel.updateUser(it.user!!)
+                finishLiveData.postValue(true)
+                activityViewModel.switchToFragment(MainFragment.TAG)
+                mainViewModel.refresh()
+            }
+        }
+    }
 
 
 }
