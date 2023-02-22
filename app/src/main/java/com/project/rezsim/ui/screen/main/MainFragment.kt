@@ -8,7 +8,6 @@ import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import androidx.appcompat.widget.*
 import androidx.cardview.widget.CardView
-import androidx.core.content.res.ResourcesCompat
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
 import com.project.rezsim.device.DrawableRepository
@@ -79,7 +78,7 @@ class MainFragment : RezsimFragment() {
                     }
                 }
                 val scroll = it.findViewById<HorizontalScrollView>(R.id.swHouseholds)
-                val button = householdsButtons[viewModel.getCurrentHousehold()]
+                val button = householdsButtons[viewModel.currentHousehold()]
                 scroll.post { scroll.scrollTo(button.left, 0) }
                 button.performClick()
             } else {
@@ -92,7 +91,7 @@ class MainFragment : RezsimFragment() {
 
                         override fun onNothingSelected(p0: AdapterView<*>?) {}
                     })
-                    setSelection(viewModel.getCurrentHousehold() + 1)
+                    setSelection(viewModel.currentHousehold() + 1)
                 }
             }
         }

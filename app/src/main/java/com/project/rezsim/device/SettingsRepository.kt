@@ -22,6 +22,12 @@ class SettingsRepository : KoinComponent {
         apply()
     }
 
+    fun readLastHouseholdId() = settings.getLong(KEY_LAST_HOUSEHOLD_ID, 0)
+    fun writeLastHouseholdId(lastHouseholdId: Long) = settings.edit().apply {
+        putLong(KEY_LAST_HOUSEHOLD_ID, lastHouseholdId)
+        apply()
+    }
+
     fun clearUser() {
         settings.edit().apply {
             remove(KEY_USER_EMAIL)
@@ -46,6 +52,7 @@ class SettingsRepository : KoinComponent {
 
         private const val KEY_USER_EMAIL = "UserEmail"
         private const val KEY_USER_PASSWORD = "UserPassword"
+        private const val KEY_LAST_HOUSEHOLD_ID = "LastHouseholdId"
 
     }
 }

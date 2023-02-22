@@ -26,6 +26,7 @@ import com.project.rezsim.ui.screen.dialog.user.UserDialogFragment
 import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.screen.household.HouseholdViewModel
 import com.project.rezsim.ui.screen.main.MainViewModel
+import com.project.rezsim.ui.screen.overview.OverviewFragment
 import com.project.rezsim.ui.view.message.Message
 import com.project.rezsim.ui.view.message.MessageParameter
 import org.koin.core.component.inject
@@ -95,7 +96,7 @@ class MainActivityViewModel : RezsimViewModel() {
         when (currentFragmentTag) {
             MainFragment.TAG -> {
                 currentFragmentTag = HouseholdFragment.TAG
-                householdViewModel.household = userModel.getUser()?.householdList()?.get(mainViewModel.getCurrentHousehold())
+                householdViewModel.household = userModel.getUser()?.householdList()?.get(mainViewModel.currentHousehold())
             }
             HouseholdFragment.TAG -> {
                 Log.d("DEBINFO-R", "MainActivityModel.fabPressedLiveData set value:true")
@@ -144,10 +145,10 @@ class MainActivityViewModel : RezsimViewModel() {
     private fun startScreen() = if (userModel.hasHousehold()) MainFragment.TAG else HouseholdFragment.TAG
 
     private fun needHeader(fragmentId: String) =
-        fragmentId in listOf(MainFragment.TAG, HouseholdFragment.TAG, FragmentA.TAG, FragmentB.TAG)
+        fragmentId in listOf(MainFragment.TAG, HouseholdFragment.TAG, OverviewFragment.TAG, FragmentA.TAG, FragmentB.TAG)
 
     private fun needFooter(fragmentId: String) =
-        fragmentId in listOf(MainFragment.TAG, FragmentA.TAG, FragmentB.TAG)
+        fragmentId in listOf(MainFragment.TAG, OverviewFragment.TAG, FragmentA.TAG, FragmentB.TAG)
 
     private fun fabIcon(fragmentId: String) =
         fabImages[fragmentId]

@@ -10,6 +10,7 @@ import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.screen.household.HouseholdViewModel
 import com.project.rezsim.ui.screen.login.LoginViewModel
 import com.project.rezsim.ui.screen.main.MainViewModel
+import com.project.rezsim.ui.screen.overview.OverviewViewModel
 import com.project.rezsim.ui.screen.splash.SplashViewModel
 import org.koin.dsl.module
 
@@ -35,6 +36,8 @@ val viewModelModule = module {
     factory { MessageDialogViewModel() }
 
     factory { MeterDialogViewModel() }
+
+    factory { OverviewViewModel() }
 
 }
 

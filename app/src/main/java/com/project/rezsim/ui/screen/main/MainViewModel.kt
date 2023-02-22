@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.madhava.keyboard.vario.base.Singletons
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimViewModel
+import com.project.rezsim.device.SettingsRepository
 import com.project.rezsim.device.StringRepository
 import com.project.rezsim.server.UserModel
 import com.project.rezsim.server.dto.measurement.Measurement
@@ -28,9 +29,15 @@ class MainViewModel : RezsimViewModel() {
     val refreshHouseholdsLiveData = MutableLiveData<Boolean>()
 
     private val stringRepository: StringRepository by inject()
+    private val settingsRepository: SettingsRepository by inject()
     private val userModel: UserModel by inject()
 
-    private var currentHousehold = 0
+    private var currentHousehold: Int? = null
+    get() = field ?: settingsRepository.readLastHouseholdId().let { currentId ->
+        (userModel.getUser()?.householdList()?.indexOfFirst { it.id == currentId } ?: 0).also {
+            currentHousehold = it
+        }
+    }
 
     fun householdItems(): List<String> = (userModel.getUser()?.householdList()
         ?.map { it.name }?.toMutableList() ?: mutableListOf()).apply {
@@ -40,13 +47,14 @@ class MainViewModel : RezsimViewModel() {
     fun householdSelected(householdIndex: Int) {
         Log.d("DEBINFO-R", "householdIndex:$householdIndex")
         currentHousehold = householdIndex
-        userModel.getUser()?.householdList()?.get(currentHousehold)?.let {
+        userModel.getUser()?.householdList()?.get(currentHousehold!!)?.let {
+            settingsRepository.writeLastHouseholdId(it.id)
             electricityMeasurementLiveData.value = Pair(it.electricityStatus == 1, it.lastMeasurement(Utility.ELECTRICITY_A))
             gasMeasurementLiveData.value = Pair(it.gasStatus == 1, it.lastMeasurement(Utility.GAS))
         }
     }
 
-    fun getCurrentHousehold() = currentHousehold
+    fun currentHousehold(): Int = currentHousehold!!
 
     fun switchToLastHousehold() {
         currentHousehold = userModel.getUser()?.householdList()?.lastIndex ?: error("No household at switchToLastHousehold")
@@ -59,7 +67,7 @@ class MainViewModel : RezsimViewModel() {
     fun readMeter(utility: Utility) {
         val meterDialogParam = Bundle().apply {
             putString(MeterDialogFragment.ARG_UTILITY, utility.name)
-            putLong(MeterDialogFragment.ARG_HOUSEHOLD, userModel.getUser()?.households?.get(currentHousehold)?.id ?: error("No household for read meter."))
+            putLong(MeterDialogFragment.ARG_HOUSEHOLD, userModel.getUser()?.households?.get(currentHousehold!!)?.id ?: error("No household for read meter."))
         }
         (Singletons.instance(MainActivityViewModel::class) as MainActivityViewModel).dialogLiveData.value = DialogParameter(MeterDialogFragment.TAG, meterDialogParam)
     }

@@ -34,6 +34,7 @@ import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.screen.household.HouseholdFragment
 import com.project.rezsim.ui.screen.login.LoginFragment
 import com.project.rezsim.ui.screen.main.MainFragment
+import com.project.rezsim.ui.screen.overview.OverviewFragment
 import com.project.rezsim.ui.screen.splash.SplashFragment
 import com.project.rezsim.ui.view.message.*
 import org.koin.android.ext.android.inject
@@ -124,6 +125,7 @@ class MainActivity : AppCompatActivity() {
                 FooterFragment.TAG -> FooterFragment.newInstance()
                 MainFragment.TAG -> MainFragment.newInstance()
                 HouseholdFragment.TAG -> HouseholdFragment.newInstance()
+                OverviewFragment.TAG -> OverviewFragment.newinstance()
                 FragmentA.TAG -> FragmentA.newInstance()
                 FragmentB.TAG -> FragmentB.newInstance()
                 else -> error("Failed to create fragment $tag")
