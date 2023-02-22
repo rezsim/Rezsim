@@ -9,6 +9,7 @@ import com.project.rezsim.ui.screen.splash.SplashViewModel
 import com.project.rezsim.server.UserModel
 import com.project.rezsim.ui.screen.dialog.user.UserDialogViewModel
 import com.project.rezsim.ui.screen.main.MainViewModel
+import com.project.rezsim.ui.screen.overview.OverviewViewModel
 import kotlin.reflect.KClass
 
 object SingletonFactory {
@@ -26,6 +27,8 @@ object SingletonFactory {
         LoginViewModel::class -> LoginViewModel()
 
         HouseholdViewModel::class -> HouseholdViewModel()
+
+        OverviewViewModel::class -> OverviewViewModel()
 
         MainViewModel::class -> MainViewModel()
 

@@ -19,6 +19,7 @@ import com.project.rezsim.ui.screen.splash.SplashViewModel
 import com.project.rezsim.ui.view.message.MessageSeverity
 import com.project.rezsim.ui.view.message.MessageType
 import com.project.rezsim.server.UserModel
+import com.project.rezsim.server.dto.measurement.Utility
 import com.project.rezsim.teszt.FragmentA
 import com.project.rezsim.teszt.FragmentB
 import com.project.rezsim.ui.screen.dialog.DialogParameter
@@ -27,6 +28,7 @@ import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.screen.household.HouseholdViewModel
 import com.project.rezsim.ui.screen.main.MainViewModel
 import com.project.rezsim.ui.screen.overview.OverviewFragment
+import com.project.rezsim.ui.screen.overview.OverviewViewModel
 import com.project.rezsim.ui.view.message.Message
 import com.project.rezsim.ui.view.message.MessageParameter
 import org.koin.core.component.inject
@@ -51,6 +53,7 @@ class MainActivityViewModel : RezsimViewModel() {
     private val userModel: UserModel by inject()
     private val headerViewModel: HeaderViewModel by inject()
     private val stringRepository: StringRepository by inject()
+    private val overviewViewModel: OverviewViewModel by inject()
 
     private var currentFragmentTag: String = ""
         set(value) {
@@ -175,6 +178,11 @@ class MainActivityViewModel : RezsimViewModel() {
                 runnable = { quitLiveData.value = true }
             )
         }
+    }
+
+    fun goOverviewScreen(utility: Utility) {
+        overviewViewModel.utility = utility
+        currentFragmentTag = OverviewFragment.TAG
     }
 
     companion object {

@@ -17,6 +17,7 @@ import com.project.rezsim.device.dp
 import com.project.rezsim.server.UserModel
 import com.project.rezsim.server.dto.measurement.Measurement
 import com.project.rezsim.server.dto.measurement.Utility
+import com.project.rezsim.ui.screen.activity.MainActivityViewModel
 import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.view.spinner.TextSpinnerAdapter
 import com.project.rezsim.ui.view.spinner.TextSpinnerOnItemSelectedListener
@@ -27,6 +28,7 @@ class MainFragment : RezsimFragment() {
     override val contentId = R.layout.main_fragment
 
     private val viewModel: MainViewModel by inject()
+    private val activityViewModel: MainActivityViewModel by inject()
     private val userModel: UserModel by inject()
     private val screenRepository: ScreenRepository by inject()
     private val stringRepository: StringRepository by inject()
@@ -50,6 +52,8 @@ class MainFragment : RezsimFragment() {
             it.findViewById<AppCompatButton>(R.id.btAddHousehold).setOnClickListener { viewModel.addHouseholdLiveData.value = true }
             it.findViewById<AppCompatButton>(R.id.btReadElectricity).setOnClickListener { viewModel.readMeter(Utility.ELECTRICITY_A) }
             it.findViewById<AppCompatButton>(R.id.btReadGas).setOnClickListener { viewModel.readMeter(Utility.GAS) }
+            it.findViewById<CardView>(R.id.cwElectricity).setOnClickListener { activityViewModel.goOverviewScreen(Utility.ELECTRICITY_A) }
+            it.findViewById<CardView>(R.id.cwGas).setOnClickListener { activityViewModel.goOverviewScreen(Utility.GAS) }
         }
 
         if (userModel.hasHousehold()) {

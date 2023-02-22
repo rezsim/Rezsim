@@ -31,13 +31,13 @@ val viewModelModule = module {
 
     single { Singletons.instance(MainViewModel::class) as MainViewModel }
 
+    single { Singletons.instance(OverviewViewModel::class) as OverviewViewModel }
+
     factory { UserDialogViewModel() }
 
     factory { MessageDialogViewModel() }
 
     factory { MeterDialogViewModel() }
-
-    factory { OverviewViewModel() }
 
 }
 

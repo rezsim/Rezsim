@@ -89,5 +89,8 @@
     <string name="dialog_meter_message_unsuccesfull_save">Nem sikerült az adatok mentése.</string>
     <string name="dialog_meter_message_unsuccesfull_refresh">Nem sikerült frissíteni az adatokat.</string>
 
+    <string name="overview_header_title_electricity">Áram áttekintés</string>
+    <string name="overview_header_title_gas">Gáz áttekintés</string>
+
 
 </resources>

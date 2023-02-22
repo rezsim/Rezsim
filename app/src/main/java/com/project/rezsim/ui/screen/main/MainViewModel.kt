@@ -34,9 +34,10 @@ class MainViewModel : RezsimViewModel() {
 
     private var currentHousehold: Int? = null
     get() = field ?: settingsRepository.readLastHouseholdId().let { currentId ->
-        (userModel.getUser()?.householdList()?.indexOfFirst { it.id == currentId } ?: 0).also {
-            currentHousehold = it
-        }
+        var index = userModel.getUser()?.householdList()?.indexOfFirst { it.id == currentId } ?: 0
+        if (index < 0) index = 0
+        currentHousehold = index
+        index
     }
 
     fun householdItems(): List<String> = (userModel.getUser()?.householdList()
