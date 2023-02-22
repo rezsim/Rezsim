@@ -53,17 +53,17 @@ class MeterDialogViewModel : RezsimViewModel() {
     fun iconRes() = if (utility == Utility.GAS) R.drawable.ic_gas else R.drawable.ic_electricity
 
     fun lastValue() = userModel.getUser()
-        ?.households?.find { it.id == householdId }
+        ?.householdList()?.find { it.id == householdId }
         ?.lastMeasurement(utility)
         ?.position
 
-    fun save(position: Int, rootView: View) {
+    fun save(position: Int, comment: String?, rootView: View) {
         if (position < lastValue() ?: 0) {
             activityViewModel.showMessage(null, R.string.dialog_meter_small_value_error, MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR, rootView)
             return
         }
         progressLiveData.value = true
-        measurementRepository.addNewMeasurement(createMeasurement(position)).observeForever {
+        measurementRepository.addNewMeasurement(createMeasurement(position, comment)).observeForever {
             if (it) {
                 refreshUserAndGoBack()
             } else {
@@ -73,7 +73,7 @@ class MeterDialogViewModel : RezsimViewModel() {
         }
     }
 
-    private fun createMeasurement(position: Int) = Measurement(
+    private fun createMeasurement(position: Int, comment: String?) = Measurement(
         id = -1,
         userId = userModel.getUser()!!.id,
         householdId = householdId,
@@ -82,7 +82,8 @@ class MeterDialogViewModel : RezsimViewModel() {
         date = DateHelper.calendarToServerDateString(date),
         position = position,
         consumption = -1,
-        level = -1
+        level = -1,
+        comment = comment
     )
 
     private fun refreshUserAndGoBack() {

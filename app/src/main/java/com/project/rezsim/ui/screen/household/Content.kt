@@ -47,7 +47,8 @@ data class Content(
         date = DateHelper.calendarToServerDateString(DateHelper.now()),
         position = value,
         consumption = -1,
-        level = -1
+        level = -1,
+        comment = null
     )
 
     companion object {

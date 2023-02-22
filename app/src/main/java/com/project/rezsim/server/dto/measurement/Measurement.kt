@@ -18,6 +18,8 @@ data class Measurement(
 
     val consumption: Int,
 
-    val level: Int
+    val level: Int,
+
+    val comment: String?
 
 )

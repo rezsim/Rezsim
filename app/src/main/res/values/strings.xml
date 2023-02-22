@@ -80,10 +80,11 @@
     <string name="dialog_meter_read_utility_electricity">villanyóráról</string>
     <string name="dialog_meter_read_utility_gas">gázóráról</string>
     <string name="dialog_meter_read_message">Adja meg a %s leolvasott értéket.</string>
-    <string name="dialog_meter_read_sub_message">Csak az egész értéket írja be!</string>
+    <string name="dialog_meter_read_int_message">Csak az egész értéket írja be!</string>
     <string name="dialog_meter_date">Dátum:</string>
     <string name="dialog_meter_value">Óraállás:</string>
     <string name="dialog_meter_read_last_value">Utolsó óraállás: %s</string>
+    <string name="dialog_meter_read_comment_hint">Megjegyzés</string>
     <string name="dialog_meter_save">Mentés</string>
     <string name="dialog_meter_small_value_error">A megadott érték kisebb, mint az utóló óraállás!</string>
     <string name="dialog_meter_message_unsuccesfull_save">Nem sikerült az adatok mentése.</string>

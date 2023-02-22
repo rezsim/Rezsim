@@ -18,4 +18,8 @@ object DateHelper {
 
     fun calendarToDisplayDateString(calendar: Calendar) = displayDateFormatter.format(calendar.time)
 
+    fun displayDateStringToCalendar(dateString: String) = Calendar.getInstance(Locale.getDefault()).apply {
+        time = displayDateFormatter.parse(dateString) ?: error("Invalid date string: $dateString")
+    }
+
 }

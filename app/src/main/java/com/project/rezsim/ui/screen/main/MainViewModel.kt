@@ -68,7 +68,7 @@ class MainViewModel : RezsimViewModel() {
     fun readMeter(utility: Utility) {
         val meterDialogParam = Bundle().apply {
             putString(MeterDialogFragment.ARG_UTILITY, utility.name)
-            putLong(MeterDialogFragment.ARG_HOUSEHOLD, userModel.getUser()?.households?.get(currentHousehold!!)?.id ?: error("No household for read meter."))
+            putLong(MeterDialogFragment.ARG_HOUSEHOLD, userModel.getUser()?.householdList()?.get(currentHousehold!!)?.id ?: error("No household for read meter."))
         }
         (Singletons.instance(MainActivityViewModel::class) as MainActivityViewModel).dialogLiveData.value = DialogParameter(MeterDialogFragment.TAG, meterDialogParam)
     }

@@ -27,7 +27,7 @@ class UserModel : KoinComponent, Singleton {
 
     fun isLoggedIn() = token != null
 
-    fun hasHousehold() = user?.households?.isNotEmpty() ?: false
+    fun hasHousehold() = user?.householdList()?.isNotEmpty() ?: false
 
     fun getEmail() = email
     fun getPassword() = password
