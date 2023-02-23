@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -12,11 +14,31 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/page_margin">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clDateSelector"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="OVERVIEW"
-                android:gravity="center"/>
+                android:layout_height="80dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_date_selectror"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btYear"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                app:layout_constraintStart_toStartOf="@id/clDateSelector"
+                app:layout_constraintEnd_toEndOf="@id/clDateSelector"
+                app:layout_constraintTop_toTopOf="@id/clDateSelector"
+                app:layout_constraintBottom_toTopOf="@id/clDateSelector"
+                android:background="@drawable/statelist_button_background"
+                android:textColor="@color/material_grey_1"
+                android:textSize="@dimen/text_size_small"
+                tools:text="2023"/>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
