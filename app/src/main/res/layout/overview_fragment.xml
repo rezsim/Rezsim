@@ -22,7 +22,23 @@
                 android:background="@drawable/background_date_selectror"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <HorizontalScrollView
+                    android:id="@+id/swHouseholds"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none">
 
+                    <LinearLayout
+                        android:id="@+id/llMonths"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
