@@ -104,6 +104,8 @@
     <string name="overview_month_9">Okt</string>
     <string name="overview_month_10">Nov</string>
     <string name="overview_month_11">Dec</string>
+    <string name="overview_consumption">Fogyasztás</string>
+    <string name="overview_meter">Leolvasás</string>
 
 
 </resources>

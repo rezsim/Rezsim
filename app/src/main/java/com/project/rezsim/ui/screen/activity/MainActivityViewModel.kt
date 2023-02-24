@@ -180,7 +180,8 @@ class MainActivityViewModel : RezsimViewModel() {
         }
     }
 
-    fun goOverviewScreen(utility: Utility) {
+    fun goOverviewScreen(householdIndex: Int, utility: Utility) {
+        overviewViewModel.householdIndex = householdIndex
         overviewViewModel.utility = utility
         currentFragmentTag = OverviewFragment.TAG
     }

@@ -22,4 +22,8 @@ object DateHelper {
         time = displayDateFormatter.parse(dateString) ?: error("Invalid date string: $dateString")
     }
 
+    fun serverDateStringToCalendar(dateString: String) = Calendar.getInstance(Locale.getDefault()).apply {
+        time = serverDateFormatter.parse(dateString) ?: error("Invalid date string: $dateString")
+    }
+
 }

@@ -38,8 +38,13 @@ data class Household(
     var measurements: Array<Measurement> = arrayOf()
 
 ) {
-    fun lastMeasurement(utility: Utility) = measurements
+
+    fun measurementList(utility: Utility) = measurements
         .filter { it.utility == utility.value }
-        .maxByOrNull { it.id }
+        .sortedBy { it.date }
+
+
+    fun lastMeasurement(utility: Utility) = measurementList(utility).lastOrNull()
+
 
 }

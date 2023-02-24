@@ -38,7 +38,7 @@ class OverviewFragment : RezsimFragment() {
             }
         }
         refreshMonthSelector()
-
+        monthSelectorButtons.last().performClick()
     }
 
     override fun subscribeObservers() {
@@ -54,8 +54,8 @@ class OverviewFragment : RezsimFragment() {
             val layout: LinearLayout = it.findViewById(R.id.llMonths)
             monthSelectorButtons.clear()
             layout.removeAllViews()
-            repeat(12) {
-                val button = createMonthButton(it)
+            viewModel.months().forEachIndexed { index, month ->
+                val button = createMonthButton(index, month)
                 monthSelectorButtons.add(button)
                 layout.addView(button)
             }
@@ -63,13 +63,13 @@ class OverviewFragment : RezsimFragment() {
         }
     }
 
-    private fun createMonthButton(id: Int) = AppCompatButton(requireContext()).apply {
+    private fun createMonthButton(id: Int, month: Month) = AppCompatButton(requireContext()).apply {
         setId(id)
         layoutParams =  ViewGroup.MarginLayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT).apply {
             setMargins(4.dp, 0, 4.dp, 0)
         }
         background = drawableRepository.getById(R.drawable.statelist_button_background)
-        text = stringRepository.getByName("overview_month_$id")
+        text = stringRepository.getByName("overview_month_${month.month}")
         setTextColor(resources.getColor(R.color.button_text_color_dark))
         textAlignment = View.TEXT_ALIGNMENT_CENTER
         setPadding(8.dp, 0, 8.dp, 0)
@@ -80,6 +80,8 @@ class OverviewFragment : RezsimFragment() {
             monthSelectorButtons.forEach {
                 it.isSelected = it.id == v.id
             }
+            yearButton.text = viewModel.months()[v.id].year.toString()
+
         }
     }
 
