@@ -26,11 +26,17 @@ class OverviewFragment : RezsimFragment() {
     private val drawableRepository: DrawableRepository by inject()
     private val stringRepository: StringRepository by inject()
 
+    private lateinit var yearButton: AppCompatButton
     private val monthSelectorButtons = mutableListOf<AppCompatButton>()
 
     override fun setupViews() {
         super.setupViews()
         headerViewModel.setTitle(viewModel.title())
+        view?.let {
+            yearButton = it.findViewById<AppCompatButton>(R.id.btYear).apply {
+                isSelected = true
+            }
+        }
         refreshMonthSelector()
 
     }

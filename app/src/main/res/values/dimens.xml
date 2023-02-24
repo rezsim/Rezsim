@@ -5,7 +5,9 @@
     <dimen name="dialog_min_width">375dp</dimen>
 
     <dimen name="page_margin">16dp</dimen>
+    <dimen name="page_margin_inverse">-16dp</dimen>
     <dimen name="dialog_margin">16dp</dimen>
+
 
 
     <dimen name="text_size_extra_small">10sp</dimen>

@@ -5,61 +5,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btYear"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/statelist_button_background"
+        android:backgroundTint="@color/material_grey_5"
+        android:backgroundTintMode="add"
+        android:textColor="@color/button_text_color_dark"
+        android:textSize="@dimen/text_size_small"
+        tools:text="2023"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clDateSelector"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="32dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/btYear">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <HorizontalScrollView
+            android:id="@+id/swHouseholds"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/page_margin">
+            android:layout_height="match_parent"
+            android:scrollbars="none">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clDateSelector"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/background_date_selectror"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <HorizontalScrollView
-                    android:id="@+id/swHouseholds"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scrollbars="none">
-
-                    <LinearLayout
-                        android:id="@+id/llMonths"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:paddingTop="16dp"
-                        android:paddingBottom="8dp">
-
-
-
-                    </LinearLayout>
-
-                </HorizontalScrollView>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btYear"
+            <LinearLayout
+                android:id="@+id/llMonths"
                 android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                app:layout_constraintStart_toStartOf="@id/clDateSelector"
-                app:layout_constraintEnd_toEndOf="@id/clDateSelector"
-                app:layout_constraintTop_toTopOf="@id/clDateSelector"
-                app:layout_constraintBottom_toTopOf="@id/clDateSelector"
-                android:background="@drawable/statelist_button_background"
-                android:textColor="@color/material_grey_1"
-                android:textSize="@dimen/text_size_small"
-                tools:text="2023"/>
+                android:layout_height="match_parent"
+                android:orientation="horizontal"/>
+        </HorizontalScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="@dimen/page_margin">
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
