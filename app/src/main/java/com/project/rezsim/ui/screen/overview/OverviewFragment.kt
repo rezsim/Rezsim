@@ -8,6 +8,7 @@ import androidx.appcompat.widget.AppCompatButton
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
 import com.project.rezsim.device.DrawableRepository
+import com.project.rezsim.device.StringRepository
 import com.project.rezsim.device.dp
 import com.project.rezsim.ui.screen.activity.MainActivityViewModel
 import com.project.rezsim.ui.screen.header.HeaderViewModel
@@ -23,11 +24,14 @@ class OverviewFragment : RezsimFragment() {
     private val activityViewModel: MainActivityViewModel by inject()
     private val headerViewModel: HeaderViewModel by inject()
     private val drawableRepository: DrawableRepository by inject()
+    private val stringRepository: StringRepository by inject()
 
+    private val monthSelectorButtons = mutableListOf<AppCompatButton>()
 
     override fun setupViews() {
         super.setupViews()
         headerViewModel.setTitle(viewModel.title())
+        refreshMonthSelector()
 
     }
 
@@ -42,9 +46,12 @@ class OverviewFragment : RezsimFragment() {
     private fun refreshMonthSelector() {
         view?.let {
             val layout: LinearLayout = it.findViewById(R.id.llMonths)
+            monthSelectorButtons.clear()
             layout.removeAllViews()
             repeat(12) {
-
+                val button = createMonthButton(it)
+                monthSelectorButtons.add(button)
+                layout.addView(button)
             }
 
         }
@@ -53,17 +60,21 @@ class OverviewFragment : RezsimFragment() {
     private fun createMonthButton(id: Int) = AppCompatButton(requireContext()).apply {
         setId(id)
         layoutParams =  ViewGroup.MarginLayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT).apply {
-            setMargins(0, 0, 8.dp, 0)
+            setMargins(4.dp, 0, 4.dp, 0)
         }
         background = drawableRepository.getById(R.drawable.statelist_button_background)
-        setText(text)
+        text = stringRepository.getByName("overview_month_$id")
         setTextColor(resources.getColor(R.color.button_text_color_dark))
         textAlignment = View.TEXT_ALIGNMENT_CENTER
         setPadding(8.dp, 0, 8.dp, 0)
         backgroundTintList = resources.getColorStateList(R.color.material_grey_5, null)
         backgroundTintMode = PorterDuff.Mode.ADD
         isAllCaps = false
-        setOnClickListener(householdsButtonClickListener)
+        setOnClickListener { v ->
+            monthSelectorButtons.forEach {
+                it.isSelected = it.id == v.id
+            }
+        }
     }
 
     private fun goBack(value: Boolean) {

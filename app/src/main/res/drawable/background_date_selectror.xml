@@ -3,17 +3,12 @@
 
     android:shape="rectangle">
 
-    <size
-        android:height="80dp"/>
-
     <corners
         android:radius="8dp"/>
 
     <padding
-        android:left="8dp"
-        android:top="8dp"
-        android:right="8dp"
-        android:bottom="8dp"/>
+        android:left="2dp"
+        android:right="2dp"/>
 
     <stroke
         android:width="2dp"

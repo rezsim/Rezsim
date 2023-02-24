@@ -92,6 +92,18 @@
 
     <string name="overview_header_title_electricity">Áram áttekintés</string>
     <string name="overview_header_title_gas">Gáz áttekintés</string>
+    <string name="overview_month_0">Jan</string>
+    <string name="overview_month_1">Febr</string>
+    <string name="overview_month_2">Márc</string>
+    <string name="overview_month_3">Ápr</string>
+    <string name="overview_month_4">Máj</string>
+    <string name="overview_month_5">Jún</string>
+    <string name="overview_month_6">Júl</string>
+    <string name="overview_month_7">Aug</string>
+    <string name="overview_month_8">Szept</string>
+    <string name="overview_month_9">Okt</string>
+    <string name="overview_month_10">Nov</string>
+    <string name="overview_month_11">Dec</string>
 
 
 </resources>

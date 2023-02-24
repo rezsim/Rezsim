@@ -177,7 +177,7 @@ class MainFragment : RezsimFragment() {
 
     private fun onClickHouseholdsButton(button: AppCompatButton) {
         householdsButtons.forEach {
-            it.isEnabled = it.id != button.id
+            it.isSelected = it.id == button.id
         }
         viewModel.householdSelected(householdsButtons.indexOf(button))
     }
