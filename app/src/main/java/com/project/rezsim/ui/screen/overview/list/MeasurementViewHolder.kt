@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.project.rezsim.R
@@ -15,7 +16,6 @@ import com.project.rezsim.device.StringRepository
 import com.project.rezsim.server.dto.measurement.Level
 import com.project.rezsim.server.dto.measurement.Measurement
 import com.project.rezsim.server.dto.measurement.Utility
-import com.project.rezsim.tool.DateHelper
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -46,10 +46,11 @@ class MeasurementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         }
         consumptionTextView.apply {
             text = stringRepository.getById(valueResId, measurement.consumption)
-            setTextColor(limitColor)
+            setTextColor(ContextCompat.getColorStateList(context, limitColor))
         }
         commentTextView.apply {
             text = measurement.comment ?: ""
+            visibility = if (measurement.comment != null) View.VISIBLE else View.GONE
         }
         meterTextView.apply {
             text = stringRepository.getById(valueResId, measurement.position)

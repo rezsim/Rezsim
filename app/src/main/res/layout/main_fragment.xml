@@ -83,7 +83,7 @@
                 app:cardUseCompatPadding="true"
                 app:cardElevation="8dp"
                 app:cardCornerRadius="6dp"
-                android:backgroundTint="@color/material_indigo_0">
+                android:backgroundTint="@color/electricity_background">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -110,7 +110,7 @@
                         android:text="@string/main_title_electricity"
                         android:textSize="@dimen/text_size_large"
                         android:textStyle="bold"
-                        android:textColor="@color/material_indigo_8"/>
+                        android:textColor="@color/material_orange_8"/>
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btReadElectricity"
@@ -121,7 +121,7 @@
                         app:layout_constraintBottom_toBottomOf="@id/ivIconElectricity"
                         android:layout_marginEnd="8dp"
                         android:background="@drawable/statelist_button_background"
-                        android:backgroundTint="@color/material_indigo_9"
+                        android:backgroundTint="@color/material_orange_9"
                         android:backgroundTintMode="add"
                         android:text="@string/main_read"
                         android:textAllCaps="false"
@@ -135,7 +135,7 @@
                         app:layout_constraintTop_toBottomOf="@id/btReadElectricity"
                         android:layout_marginTop="16dp"
                         android:layout_marginHorizontal="12dp"
-                        android:background="@color/material_indigo_3"/>
+                        android:background="@color/material_orange_3"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvTitleLastMeterElectricity"
@@ -227,7 +227,7 @@
                 app:cardUseCompatPadding="true"
                 app:cardElevation="8dp"
                 app:cardCornerRadius="6dp"
-                android:backgroundTint="@color/material_orange_0">
+                android:backgroundTint="@color/gas_background">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -254,7 +254,7 @@
                         android:text="@string/main_title_gas"
                         android:textSize="@dimen/text_size_large"
                         android:textStyle="bold"
-                        android:textColor="@color/material_orange_8"/>
+                        android:textColor="@color/material_indigo_8"/>
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btReadGas"
@@ -265,7 +265,7 @@
                         app:layout_constraintBottom_toBottomOf="@id/ivIconGas"
                         android:layout_marginEnd="8dp"
                         android:background="@drawable/statelist_button_background"
-                        android:backgroundTint="@color/material_orange_9"
+                        android:backgroundTint="@color/material_indigo_9"
                         android:backgroundTintMode="add"
                         android:text="@string/main_read"
                         android:textAllCaps="false"
@@ -279,7 +279,7 @@
                         app:layout_constraintTop_toBottomOf="@id/btReadGas"
                         android:layout_marginTop="16dp"
                         android:layout_marginHorizontal="12dp"
-                        android:background="@color/material_orange_3"/>
+                        android:background="@color/material_indigo_3"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvTitleLastMeterGas"

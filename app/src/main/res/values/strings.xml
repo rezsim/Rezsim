@@ -104,6 +104,10 @@
     <string name="overview_month_9">Okt</string>
     <string name="overview_month_10">Nov</string>
     <string name="overview_month_11">Dec</string>
+    <string name="overview_payment">Fizetendő</string>
+    <string name="overview_payment_under_limit">Átlag alatti</string>
+    <string name="overview_payment_above_limit">Átlag feletti</string>
+    <string name="overview_meters">Leolvasások</string>
     <string name="overview_consumption">Fogyasztás</string>
     <string name="overview_meter">Leolvasás</string>
 

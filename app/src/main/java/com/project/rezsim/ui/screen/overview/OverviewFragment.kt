@@ -16,6 +16,7 @@ import com.project.rezsim.ui.screen.activity.MainActivityViewModel
 import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.screen.main.MainFragment
 import com.project.rezsim.ui.screen.overview.list.MeasurementAdapter
+import com.project.rezsim.ui.screen.overview.list.MeasurementMarginDecoration
 import com.project.rezsim.ui.view.message.MessageType
 import org.koin.android.ext.android.inject
 
@@ -35,6 +36,7 @@ class OverviewFragment : RezsimFragment() {
 
     override fun setupViews() {
         super.setupViews()
+        viewModel.init()
         headerViewModel.setTitle(viewModel.title())
         view?.let {
             yearButton = it.findViewById<AppCompatButton>(R.id.btYear).apply {
@@ -44,6 +46,7 @@ class OverviewFragment : RezsimFragment() {
                 layoutManager = LinearLayoutManager(requireContext())
                 measurementAdapter = MeasurementAdapter()
                 adapter = measurementAdapter
+                addItemDecoration(MeasurementMarginDecoration())
             }
         }
         refreshMonthSelector()

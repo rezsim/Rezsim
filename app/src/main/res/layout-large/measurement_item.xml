@@ -7,10 +7,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layout_constraintTop_toBottomOf="@id/flHouseholdSelector"
-    android:backgroundTint="@color/material_grey_1"
     app:cardUseCompatPadding="false"
     app:cardElevation="8dp"
-    app:cardCornerRadius="16dp">
+    app:cardCornerRadius="16dp"
+    android:backgroundTint="@color/material_indigo_0">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -104,14 +104,22 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glHalf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"/>
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvComment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/llConsumption"
-            app:layout_constraintEnd_toEndOf="@id/llMeter"
-            app:layout_constraintTop_toBottomOf="@id/llMeter"
-            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@id/glHalf"
+            app:layout_constraintEnd_toStartOf="@id/llMeter"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="16dp"
             android:textColor="@color/text_color"
             android:textSize="@dimen/text_size_extra_small"
             android:textStyle="italic"

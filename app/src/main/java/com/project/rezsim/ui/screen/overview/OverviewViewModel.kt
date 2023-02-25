@@ -22,6 +22,10 @@ class OverviewViewModel : RezsimViewModel() {
 
     private val stringRepository: StringRepository by inject()
 
+    fun init() {
+        months = null
+    }
+
     fun title() = stringRepository.getById(if (utility == Utility.GAS) R.string.overview_header_title_gas else R.string.overview_header_title_electricity)
 
     fun months() = months ?: calculateMonths().also {

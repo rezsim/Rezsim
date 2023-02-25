@@ -12,6 +12,9 @@
 
     <color name="disable_screen_color">#10000000</color>
 
+    <color name="electricity_background">@color/material_orange_0</color>
+    <color name="gas_background">@color/material_indigo_0</color>
+
     <color name="normal_comsumption_color">@color/material_green_7</color>
     <color name="overhead_comsumption_color">@color/material_red_7</color>
     <color name="text_color">@color/material_grey_8</color>

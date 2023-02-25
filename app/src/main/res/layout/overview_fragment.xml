@@ -28,7 +28,7 @@
         app:layout_constraintTop_toBottomOf="@id/btYear">
 
         <HorizontalScrollView
-            android:id="@+id/swHouseholds"
+            android:id="@+id/swMonths"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none">
@@ -38,6 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"/>
+
         </HorizontalScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -47,13 +48,196 @@
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/clDateSelector"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:padding="@dimen/page_margin">
+        android:paddingStart="@dimen/page_margin"
+        android:paddingEnd="@dimen/page_margin">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvPayment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="4dp"
+            app:cardUseCompatPadding="false"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="16dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPaymentTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textColor="@color/text_color"
+                    android:text="@string/overview_payment"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPaymentValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPaymentTitle"
+                    android:textSize="@dimen/text_size_very_large"
+                    android:textStyle="bold"
+                    tools:text="9 221 Ft"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPaymentConsunption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPaymentValue"
+                    android:textSize="@dimen/text_size_normal"
+                    tools:text="535 kWh"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvPaymentUnderLimit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/cvPaymentAboveLimit"
+            app:layout_constraintTop_toBottomOf="@id/cvPayment"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="4dp"
+            app:cardUseCompatPadding="false"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="16dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPaymentUnderLimit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textColor="@color/text_color"
+                    android:text="@string/overview_payment_under_limit"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPaymentValueUnderLimit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPaymentUnderLimit"
+                    android:textSize="@dimen/text_size_large"
+                    android:textStyle="bold"
+                    tools:text="9 221 Ft"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPaymentConsunptionUnderLimit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPaymentValueUnderLimit"
+                    android:textSize="@dimen/text_size_normal"
+                    tools:text="535 kWh"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvPaymentAboveLimit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/cvPaymentUnderLimit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cvPayment"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="4dp"
+            app:cardUseCompatPadding="false"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="16dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPaymentAboveLimit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textColor="@color/text_color"
+                    android:text="@string/overview_payment_above_limit"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPaymentValueAboveLimit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPaymentAboveLimit"
+                    android:textSize="@dimen/text_size_large"
+                    android:textStyle="bold"
+                    tools:text="9 221 Ft"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPaymentConsunptionAboveLimit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPaymentValueAboveLimit"
+                    android:textSize="@dimen/text_size_normal"
+                    tools:text="535 kWh"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvMeters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cvPaymentUnderLimit"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_size_normal"
+            android:text="@string/overview_meters"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            app:layout_constraintStart_toEndOf="@id/tvMeters"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvMeters"
+            app:layout_constraintBottom_toBottomOf="@id/tvMeters"
+            android:layout_marginStart="8dp"
+            android:background="@color/material_grey_3"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMeters"
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvMeters"
+            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

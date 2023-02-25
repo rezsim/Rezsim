@@ -8,7 +8,7 @@
 
 
     <solid
-        android:color="@color/material_grey_4"/>
+        android:color="@color/material_grey_5"/>
 
 
 </shape>
