@@ -28,9 +28,9 @@ class OverviewViewModel : RezsimViewModel() {
         months = it
     }
 
-    fun setMonth(monthIndex: Int) {
-
-    }
+    fun collectMeasurements(monthIndex: Int) = measurements()
+        .filter { true }
+        .sortedByDescending { it.date }
 
     private fun calculateMonths(): List<Month> = measurements().map {
         Log.d("DEBINFO-R", "calculateMonths()")
