@@ -6,11 +6,10 @@
     android:id="@+id/clRoot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:layout_constraintTop_toBottomOf="@id/flHouseholdSelector"
     app:cardUseCompatPadding="false"
     app:cardElevation="8dp"
     app:cardCornerRadius="16dp"
-    android:backgroundTint="@color/material_indigo_0">
+    android:backgroundTint="@color/material_grey_0">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
