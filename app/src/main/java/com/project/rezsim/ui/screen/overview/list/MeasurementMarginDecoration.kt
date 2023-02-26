@@ -19,7 +19,11 @@ class MeasurementMarginDecoration : RecyclerView.ItemDecoration() {
             }
             left = 8.dp
             right = 8.dp
-            bottom = 16.dp
+            bottom = if (parent.getChildAdapterPosition(view) == (parent.adapter?.itemCount ?: 0) - 1) {
+                80.dp
+            } else {
+                16.dp
+            }
         }
     }
 }
