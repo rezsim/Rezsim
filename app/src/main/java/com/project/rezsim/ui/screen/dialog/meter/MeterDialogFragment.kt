@@ -33,6 +33,7 @@ class MeterDialogFragment : RezsimDialogFragment() {
     private lateinit var rootView: View
     private lateinit var editValue: AppCompatEditText
     private lateinit var editDate: AppCompatEditText
+    private lateinit var lastValue: AppCompatTextView
     private lateinit var editComment: AppCompatEditText
     private lateinit var buttonSave: AppCompatButton
 
@@ -43,7 +44,9 @@ class MeterDialogFragment : RezsimDialogFragment() {
                 set(Calendar.MONTH, month)
                 set(Calendar.DAY_OF_MONTH, day)
             }
+            viewModel.date = calendar
             editDate.setText(DateHelper.calendarToDisplayDateString(calendar))
+            showPossibleValues()
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,8 +68,8 @@ class MeterDialogFragment : RezsimDialogFragment() {
             editDate = it.findViewById<AppCompatEditText>(R.id.etDate).apply {
                 setText(DateHelper.calendarToDisplayDateString(viewModel.date))
             }
-//            it.findViewById<View>(R.id.vDateClickProvider).setOnClickListener { selectDate(editDate.text.toString()) }
-            it.findViewById<AppCompatTextView>(R.id.tvLastValue).apply {
+            it.findViewById<View>(R.id.vDateClickProvider).setOnClickListener { selectDate(editDate.text.toString()) }
+            lastValue = it.findViewById<AppCompatTextView>(R.id.tvLastValue).apply {
                 viewModel.lastValue().let {
                     it?.let {
                         text = stringRepository.getById(R.string.dialog_meter_read_last_value, viewModel.lastValue().toString())
@@ -114,7 +117,17 @@ class MeterDialogFragment : RezsimDialogFragment() {
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH)
-        ).show()
+        ).apply {
+            datePicker.maxDate = DateHelper.now().timeInMillis
+        }.show()
+    }
+
+    private fun showPossibleValues() {
+        viewModel.possibleValues().let {
+            val min = it.first.toString()
+            val max = if (it.second != Int.MAX_VALUE) it.second.toString() else ""
+            lastValue.text = stringRepository.getById(R.string.dialog_meter_read_possible_values, min, max)
+        }
     }
 
     companion object {

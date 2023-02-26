@@ -17,10 +17,12 @@ class StringRepository : KoinComponent {
             getById(it)
     }
 
-    fun getById(id: Int, param: Any? = null) = if (param == null) {
+    fun getById(id: Int, param: Any? = null, param1: Any? = null) = if (param == null) {
         context.resources.getString(id)
-    } else {
+    } else if (param1 == null) {
         context.resources.getString(id, param)
+    } else {
+        context.resources.getString(id, param, param1)
     }
 
     fun isExistsByName(name: String) = getIdByName(name) != 0

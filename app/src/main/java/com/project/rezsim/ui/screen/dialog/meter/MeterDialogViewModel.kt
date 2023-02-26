@@ -58,9 +58,20 @@ class MeterDialogViewModel : RezsimViewModel() {
         ?.position
 
     fun save(position: Int, comment: String?, rootView: View) {
-        if (position < lastValue() ?: 0) {
-            activityViewModel.showMessage(null, R.string.dialog_meter_small_value_error, MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR, rootView)
-            return
+        if (date == DateHelper.now()) {
+            if (position < lastValue() ?: 0) {
+                activityViewModel.showMessage(null, R.string.dialog_meter_small_value_error, MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR, rootView)
+                return
+            }
+        } else {
+            val possibleValues = possibleValues()
+            if (position < possibleValues.first) {
+                activityViewModel.showMessage(null, R.string.dialog_meter_small_possible_value_error, MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR, rootView)
+                return
+            } else if (position > possibleValues.second) {
+                activityViewModel.showMessage(null, R.string.dialog_meter_large_possible_value_error, MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR, rootView)
+                return
+            }
         }
         progressLiveData.value = true
         measurementRepository.addNewMeasurement(createMeasurement(position, comment)).observeForever {
@@ -71,6 +82,23 @@ class MeterDialogViewModel : RezsimViewModel() {
                 activityViewModel.showMessage(null, R.string.dialog_meter_message_unsuccesfull_save, MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR, rootView)
             }
         }
+    }
+
+    fun possibleValues(): Pair<Int, Int> {
+        val dateString = DateHelper.calendarToServerDateString(date)
+        val min = userModel.getUser()
+            ?.householdList()?.find { it.id == householdId }
+            ?.measurementList(utility)
+            ?.lastOrNull { it.date <= dateString }
+            ?.position
+            ?: 0
+        val max = userModel.getUser()
+            ?.householdList()?.find { it.id == householdId }
+            ?.measurementList(utility)
+            ?.firstOrNull { it.date >= dateString }
+            ?.position
+            ?: Integer.MAX_VALUE
+        return Pair(min, max)
     }
 
     private fun createMeasurement(position: Int, comment: String?) = Measurement(
