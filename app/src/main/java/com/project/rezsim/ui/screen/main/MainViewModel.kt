@@ -73,4 +73,11 @@ class MainViewModel : RezsimViewModel() {
         (Singletons.instance(MainActivityViewModel::class) as MainActivityViewModel).dialogLiveData.value = DialogParameter(MeterDialogFragment.TAG, meterDialogParam)
     }
 
+    fun onPanelClick(utility: Utility) {
+        if (userModel.getUser()?.householdList()?.get(currentHousehold())?.measurementList(utility).isNullOrEmpty()) {
+            return
+        }
+        (Singletons.instance(MainActivityViewModel::class) as MainActivityViewModel).goOverviewScreen(currentHousehold(), utility)
+    }
+
 }

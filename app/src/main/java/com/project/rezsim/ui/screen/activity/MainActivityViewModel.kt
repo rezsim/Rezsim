@@ -64,6 +64,7 @@ class MainActivityViewModel : RezsimViewModel() {
     private val fabImages = HashMap<String, Int>().apply {
         put(MainFragment.TAG, R.drawable.ic_edit)
         put(HouseholdFragment.TAG, R.drawable.ic_floppy)
+        put(OverviewFragment.TAG, R.drawable.ic_add)
     }
 
     private val headerButtons = HashMap<String, IntArray>().apply {
