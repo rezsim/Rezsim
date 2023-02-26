@@ -21,6 +21,7 @@
     <dimen name="icon_size_header">32dp</dimen>
     <dimen name="text_size_header">@dimen/text_size_extra_large</dimen>
 
+    <dimen name="icon_size_footer">32dp</dimen>
 
 
 

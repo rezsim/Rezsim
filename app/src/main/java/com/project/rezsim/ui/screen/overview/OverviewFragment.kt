@@ -49,10 +49,11 @@ class OverviewFragment : RezsimFragment() {
     private val monthSelectorButtons = mutableListOf<AppCompatButton>()
     private lateinit var measurementAdapter: MeasurementAdapter
 
+    private val itemDecoration = MeasurementMarginDecoration()
+
     private val selectDateListener = object : DatePickerDialog.OnDateSetListener {
         override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {
         }
-
     }
 
     override fun setupViews() {
@@ -69,7 +70,8 @@ class OverviewFragment : RezsimFragment() {
                 layoutManager = LinearLayoutManager(requireContext())
                 measurementAdapter = MeasurementAdapter()
                 adapter = measurementAdapter
-                addItemDecoration(MeasurementMarginDecoration())
+                removeItemDecoration(itemDecoration)
+                addItemDecoration(itemDecoration)
             }
             it.findViewById<CardView>(R.id.cvPayment).backgroundTintList = colorRepository.stateList(viewModel.paymentBackground())
         }
@@ -89,6 +91,7 @@ class OverviewFragment : RezsimFragment() {
                 viewModel.readMeter()
             }
         }
+        viewModel.reinitLiveData.observe(this) { setupViews() }
     }
 
     private fun setMonthSelectorVisibility(visible: Boolean) {

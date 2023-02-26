@@ -25,6 +25,7 @@ class OverviewViewModel : RezsimViewModel() {
 
     val monthSelectorVisibilityLiveData = MutableLiveData<Boolean>()
     val meterItemsLiveData = MutableLiveData<List<Measurement>>()
+    val reinitLiveData = MutableLiveData<Boolean>()
 
     private val userModel: UserModel by inject()
     private val headerViewModel: HeaderViewModel by inject()
@@ -79,6 +80,10 @@ class OverviewViewModel : RezsimViewModel() {
 
     fun refresh() {
         meterItemsLiveData.value = collectMeasurements()
+    }
+
+    fun reInit() {
+        reinitLiveData.value = true
     }
 
     private fun setMonthSelectorVisibility(visible: Boolean) {

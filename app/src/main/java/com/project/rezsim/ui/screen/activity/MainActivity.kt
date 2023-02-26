@@ -9,26 +9,20 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.widget.ContentLoadingProgressBar
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import com.madhava.keyboard.vario.base.Singletons
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimDialogFragment
 import com.project.rezsim.device.DrawableRepository
-import com.project.rezsim.teszt.FragmentA
-import com.project.rezsim.teszt.FragmentB
 import com.project.rezsim.ui.screen.dialog.DialogParameter
 import com.project.rezsim.ui.screen.dialog.message.MessageDialogFragment
 import com.project.rezsim.ui.screen.dialog.meter.MeterDialogFragment
 import com.project.rezsim.ui.screen.dialog.user.UserDialogFragment
 import com.project.rezsim.ui.screen.footer.FooterFragment
+import com.project.rezsim.ui.screen.footer.FooterViewModel
 import com.project.rezsim.ui.screen.header.HeaderFragment
 import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.screen.household.HouseholdFragment
@@ -126,8 +120,6 @@ class MainActivity : AppCompatActivity() {
                 MainFragment.TAG -> MainFragment.newInstance()
                 HouseholdFragment.TAG -> HouseholdFragment.newInstance()
                 OverviewFragment.TAG -> OverviewFragment.newinstance()
-                FragmentA.TAG -> FragmentA.newInstance()
-                FragmentB.TAG -> FragmentB.newInstance()
                 else -> error("Failed to create fragment $tag")
             }
 

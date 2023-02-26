@@ -20,10 +20,10 @@ import com.project.rezsim.ui.view.message.MessageSeverity
 import com.project.rezsim.ui.view.message.MessageType
 import com.project.rezsim.server.UserModel
 import com.project.rezsim.server.dto.measurement.Utility
-import com.project.rezsim.teszt.FragmentA
-import com.project.rezsim.teszt.FragmentB
 import com.project.rezsim.ui.screen.dialog.DialogParameter
 import com.project.rezsim.ui.screen.dialog.user.UserDialogFragment
+import com.project.rezsim.ui.screen.footer.FooterButton
+import com.project.rezsim.ui.screen.footer.FooterViewModel
 import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.screen.household.HouseholdViewModel
 import com.project.rezsim.ui.screen.main.MainViewModel
@@ -31,6 +31,7 @@ import com.project.rezsim.ui.screen.overview.OverviewFragment
 import com.project.rezsim.ui.screen.overview.OverviewViewModel
 import com.project.rezsim.ui.view.message.Message
 import com.project.rezsim.ui.view.message.MessageParameter
+import org.koin.android.ext.android.inject
 import org.koin.core.component.inject
 
 class MainActivityViewModel : RezsimViewModel() {
@@ -52,6 +53,7 @@ class MainActivityViewModel : RezsimViewModel() {
     private val householdViewModel: HouseholdViewModel by inject()
     private val userModel: UserModel by inject()
     private val headerViewModel: HeaderViewModel by inject()
+    private val footerViewModel: FooterViewModel by inject()
     private val stringRepository: StringRepository by inject()
     private val overviewViewModel: OverviewViewModel by inject()
 
@@ -83,7 +85,7 @@ class MainActivityViewModel : RezsimViewModel() {
         headerViewModel.backLiveData.observeForever { goBack(it) }
         mainViewModel.addHouseholdLiveData.observeForever { addNewHousehold() }
         userModel.logoutLiveData.observeForever { logout() }
-
+        footerViewModel.selectButtonLiveData.observeForever { shortTo(it) }
     }
 
     fun currentFragmentTag() = currentFragmentTag
@@ -142,6 +144,22 @@ class MainActivityViewModel : RezsimViewModel() {
         fabPressedLiveData.value = false
     }
 
+    private fun shortTo(button: FooterButton) {
+        when (button) {
+            FooterButton.HOME -> currentFragmentTag = MainFragment.TAG
+            FooterButton.GAS -> {
+                overviewViewModel.utility = Utility.GAS
+                currentFragmentTag = OverviewFragment.TAG
+                overviewViewModel.reInit()
+            }
+            FooterButton.ELECTRICITY -> {
+                overviewViewModel.utility = Utility.ELECTRICITY_A
+                currentFragmentTag = OverviewFragment.TAG
+                overviewViewModel.reInit()
+            }
+        }
+    }
+
     private fun setWorkFragment(fragmentTag: String) {
         loadWorkFragmentLiveData.value = fragmentTag
         headerVisbileLiveData.value = needHeader(fragmentTag).also {
@@ -151,6 +169,14 @@ class MainActivityViewModel : RezsimViewModel() {
         }
         footerVisbileLiveData.value = needFooter(fragmentTag)
         fabIconLiveData.value = fabIcon(fragmentTag)
+        val footerButton = when (fragmentTag) {
+            MainFragment.TAG -> FooterButton.HOME
+            OverviewFragment.TAG -> if (overviewViewModel.utility == Utility.GAS) FooterButton.GAS else FooterButton.ELECTRICITY
+            else -> null
+        }
+        footerButton?.let {
+            footerViewModel.selectButton(it)
+        }
     }
 
     private fun splashFinished() {
@@ -168,10 +194,10 @@ class MainActivityViewModel : RezsimViewModel() {
     private fun startScreen() = if (userModel.hasHousehold()) MainFragment.TAG else HouseholdFragment.TAG
 
     private fun needHeader(fragmentId: String) =
-        fragmentId in listOf(MainFragment.TAG, HouseholdFragment.TAG, OverviewFragment.TAG, FragmentA.TAG, FragmentB.TAG)
+        fragmentId in listOf(MainFragment.TAG, HouseholdFragment.TAG, OverviewFragment.TAG)
 
     private fun needFooter(fragmentId: String) =
-        fragmentId in listOf(MainFragment.TAG, OverviewFragment.TAG, FragmentA.TAG, FragmentB.TAG)
+        fragmentId in listOf(MainFragment.TAG, OverviewFragment.TAG)
 
     private fun fabIcon(fragmentId: String) =
         fabImages[fragmentId]
