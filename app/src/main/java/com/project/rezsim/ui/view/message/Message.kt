@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.SnackbarContentLayout
 import com.project.rezsim.R
+import com.project.rezsim.device.ColorRepository
 
 object Message {
 
@@ -49,10 +50,10 @@ object Message {
 
             (getView() as Snackbar.SnackbarLayout).apply {
                 setBackgroundResource(bkg)
-                setTextColor(activity.resources.getColor(ctxt))
+                setTextColor(ColorRepository().color(ctxt))
                 val tv = (getChildAt(0) as SnackbarContentLayout).findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
                 tv.isSingleLine = false
-                setActionTextColor(activity.resources.getColor(cbut))
+                setActionTextColor(ColorRepository().color(cbut))
             }
             show()
         }

@@ -3,7 +3,9 @@ package com.project.rezsim.ui.screen.overview
 import android.graphics.PorterDuff
 import android.view.View
 import android.view.ViewGroup
+import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -12,9 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
+import com.project.rezsim.device.ColorRepository
 import com.project.rezsim.device.DrawableRepository
 import com.project.rezsim.device.StringRepository
 import com.project.rezsim.device.dp
+import com.project.rezsim.server.dto.measurement.Measurement
 import com.project.rezsim.ui.screen.activity.MainActivityViewModel
 import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.screen.household.HouseholdFragment
@@ -33,6 +37,7 @@ class OverviewFragment : RezsimFragment() {
     private val headerViewModel: HeaderViewModel by inject()
     private val drawableRepository: DrawableRepository by inject()
     private val stringRepository: StringRepository by inject()
+    private val colorRepository: ColorRepository by inject()
 
     private lateinit var layoutDateSelector: ConstraintLayout
     private lateinit var yearButton: AppCompatButton
@@ -54,7 +59,7 @@ class OverviewFragment : RezsimFragment() {
                 adapter = measurementAdapter
                 addItemDecoration(MeasurementMarginDecoration())
             }
-            it.findViewById<CardView>(R.id.cvPayment).backgroundTintList = ContextCompat.getColorStateList(requireContext(), viewModel.paymentBackground())
+            it.findViewById<CardView>(R.id.cvPayment).backgroundTintList = colorRepository.stateList(viewModel.paymentBackground())
         }
         refreshMonthSelector()
         monthSelectorButtons.last().performClick()
@@ -65,6 +70,7 @@ class OverviewFragment : RezsimFragment() {
         viewModel.monthSelectorVisibilityLiveData.observe (this) { setMonthSelectorVisibility(it) }
         headerViewModel.backLiveData.observeForever { goBack(it) }
         headerViewModel.buttonPressedLiveData.observe(this) { viewModel.headerButtonPressed(it) }
+        viewModel.meterItemsLiveData.observe(this) { setMeterItems(it) }
     }
 
     private fun setMonthSelectorVisibility(visible: Boolean) {
@@ -81,6 +87,11 @@ class OverviewFragment : RezsimFragment() {
                 monthSelectorButtons.add(button)
                 layout.addView(button)
             }
+            it.findViewById<HorizontalScrollView>(R.id.swMonths).let {
+                it.post {
+                    it.fullScroll(View.FOCUS_RIGHT)
+                }
+            }
 
         }
     }
@@ -92,10 +103,10 @@ class OverviewFragment : RezsimFragment() {
         }
         background = drawableRepository.getById(R.drawable.statelist_button_background)
         text = stringRepository.getByName("overview_month_${month.month}")
-        setTextColor(resources.getColor(R.color.button_text_color_dark))
+        setTextColor(colorRepository.color(R.color.button_text_color_dark))
         textAlignment = View.TEXT_ALIGNMENT_CENTER
         setPadding(8.dp, 0, 8.dp, 0)
-        backgroundTintList = resources.getColorStateList(R.color.material_grey_5, null)
+        backgroundTintList = colorRepository.stateList(R.color.material_grey_5)
         backgroundTintMode = PorterDuff.Mode.ADD
         isAllCaps = false
         setOnClickListener { v ->
@@ -103,7 +114,7 @@ class OverviewFragment : RezsimFragment() {
                 it.isSelected = it.id == v.id
             }
             yearButton.text = viewModel.months()[v.id].year.toString()
-            measurementAdapter.setItems(viewModel.collectMeasurements(v.id))
+            viewModel.selectMonth(v.id)
         }
     }
 
@@ -112,6 +123,10 @@ class OverviewFragment : RezsimFragment() {
             headerViewModel.clearBackLiveData()
             activityViewModel.switchToFragment(MainFragment.TAG)
         }
+    }
+
+    private fun setMeterItems(measurements: List<Measurement>) {
+        measurementAdapter.setItems(measurements)
     }
 
     companion object {

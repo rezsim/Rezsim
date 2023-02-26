@@ -26,4 +26,15 @@ object DateHelper {
         time = serverDateFormatter.parse(dateString) ?: error("Invalid date string: $dateString")
     }
 
+    fun lastDayOf(year: Int, month: Int) = firstDayOf(year, month).apply {
+        add(Calendar.MONTH, 1)
+        add(Calendar.DAY_OF_YEAR, -1)
+    }
+
+    fun firstDayOf(year: Int, month: Int) = Calendar.getInstance(Locale.getDefault()).apply {
+        set(Calendar.YEAR, year)
+        set(Calendar.MONTH, month)
+        set(Calendar.DAY_OF_MONTH, getActualMaximum(Calendar.DAY_OF_MONTH))
+    }
+
 }

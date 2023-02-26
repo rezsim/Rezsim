@@ -1,9 +1,6 @@
 package com.project.rezsim.di
 
-import com.project.rezsim.device.DrawableRepository
-import com.project.rezsim.device.ScreenRepository
-import com.project.rezsim.device.SettingsRepository
-import com.project.rezsim.device.StringRepository
+import com.project.rezsim.device.*
 import org.koin.dsl.module
 
 val deviceModule = module {
@@ -15,5 +12,7 @@ val deviceModule = module {
     factory { StringRepository() }
 
     factory { DrawableRepository() }
+
+    factory { ColorRepository() }
 
 }

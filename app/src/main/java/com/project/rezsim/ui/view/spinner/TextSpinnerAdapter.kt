@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.project.rezsim.R
+import com.project.rezsim.device.ColorRepository
 
 class TextSpinnerAdapter<String>(context: Context, items: List<String>)
     : ArrayAdapter<String>(context, R.layout.spinner_item, items) {
@@ -16,7 +17,7 @@ class TextSpinnerAdapter<String>(context: Context, items: List<String>)
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
         return (super.getDropDownView(position, convertView, parent) as TextView).apply {
             if (position == 0) {
-                setTextColor(ContextCompat.getColor(context, R.color.edit_hint_color))
+                setTextColor(ColorRepository().color(R.color.edit_hint_color))
             }
         }
     }

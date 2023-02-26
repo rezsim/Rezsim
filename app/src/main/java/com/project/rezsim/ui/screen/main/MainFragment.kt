@@ -10,10 +10,7 @@ import androidx.appcompat.widget.*
 import androidx.cardview.widget.CardView
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
-import com.project.rezsim.device.DrawableRepository
-import com.project.rezsim.device.ScreenRepository
-import com.project.rezsim.device.StringRepository
-import com.project.rezsim.device.dp
+import com.project.rezsim.device.*
 import com.project.rezsim.server.UserModel
 import com.project.rezsim.server.dto.measurement.Measurement
 import com.project.rezsim.server.dto.measurement.Utility
@@ -33,6 +30,7 @@ class MainFragment : RezsimFragment() {
     private val screenRepository: ScreenRepository by inject()
     private val stringRepository: StringRepository by inject()
     private val drawableRepository: DrawableRepository by inject()
+    private val colorRepository: ColorRepository by inject()
     private val headerViewModel: HeaderViewModel by inject()
 
     private var spinnerHouseholds: AppCompatSpinner? = null
@@ -166,10 +164,10 @@ class MainFragment : RezsimFragment() {
         }
         background = drawableRepository.getById(R.drawable.statelist_button_background)
         setText(text)
-        setTextColor(resources.getColor(R.color.button_text_color_dark))
+        setTextColor(colorRepository.color(R.color.button_text_color_dark))
         textAlignment = View.TEXT_ALIGNMENT_CENTER
         setPadding(8.dp, 0, 8.dp, 0)
-        backgroundTintList = resources.getColorStateList(R.color.material_grey_5, null)
+        backgroundTintList = colorRepository.stateList(R.color.material_grey_5)
         backgroundTintMode = PorterDuff.Mode.ADD
         isAllCaps = false
         setOnClickListener(householdsButtonClickListener)

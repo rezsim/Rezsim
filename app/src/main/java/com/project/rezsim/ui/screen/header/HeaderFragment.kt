@@ -5,6 +5,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
+import com.project.rezsim.device.ColorRepository
 import org.koin.android.ext.android.inject
 
 class HeaderFragment : RezsimFragment() {
@@ -12,6 +13,7 @@ class HeaderFragment : RezsimFragment() {
     override val contentId = R.layout.header_fragment
 
     private val viewModel: HeaderViewModel by inject()
+    private val colorRepository: ColorRepository by inject()
 
     private lateinit var imageBack: AppCompatImageView
     private lateinit var imageUser: AppCompatImageView
@@ -40,12 +42,17 @@ class HeaderFragment : RezsimFragment() {
         super.subscribeObservers()
         viewModel.titleLiveData.observe(this) { textTitle.text = it }
         viewModel.buttonsLiveData.observe(this) { setButtonsVisibility(it) }
+        viewModel.buttonColorLiveData.observe(this) { setButtonColor(it.first, it.second) }
     }
 
     private fun setButtonsVisibility(buttons: IntArray) {
         buttonIds.forEach {
             view?.findViewById<AppCompatImageView>(it)?.visibility = if (buttons.contains(it)) View.VISIBLE else View.GONE
         }
+    }
+
+    private fun setButtonColor(buttonResId: Int, colorResId: Int) {
+        view?.findViewById<AppCompatImageView>(buttonResId)?.imageTintList = colorRepository.stateList(colorResId)
     }
 
 

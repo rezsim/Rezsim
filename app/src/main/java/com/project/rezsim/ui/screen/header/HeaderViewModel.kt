@@ -7,12 +7,13 @@ import org.koin.core.component.inject
 
 class HeaderViewModel : RezsimViewModel() {
 
-    private val stringRepository: StringRepository by inject()
-
     val buttonPressedLiveData = MutableLiveData<Int>()
+    val buttonColorLiveData = MutableLiveData<Pair<Int, Int>>()
     val backLiveData = MutableLiveData<Boolean>()
     val titleLiveData = MutableLiveData<String>()
     val buttonsLiveData = MutableLiveData<IntArray>()
+
+    private val stringRepository: StringRepository by inject()
 
     fun onBackPressed() {
         backLiveData.value = true
@@ -36,6 +37,10 @@ class HeaderViewModel : RezsimViewModel() {
 
     fun setButtons(buttonsResId: IntArray?) {
         buttonsLiveData.value = buttonsResId ?: intArrayOf()
+    }
+
+    fun setButtonColor(buttonResId: Int, colorResId: Int) {
+        buttonColorLiveData.value = Pair(buttonResId, colorResId)
     }
 
 

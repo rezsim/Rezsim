@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.project.rezsim.R
+import com.project.rezsim.device.ColorRepository
 import com.project.rezsim.device.DrawableRepository
 import com.project.rezsim.device.StringRepository
 import com.project.rezsim.server.dto.measurement.Level
@@ -23,6 +24,7 @@ class MeasurementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
 
     private val drawableRepository: DrawableRepository by inject()
     private val stringRepository: StringRepository by inject()
+    private val colorRepository: ColorRepository by inject()
 
     private val iconLayout: FrameLayout = itemView.findViewById(R.id.flIcon)
     private val iconImageView: AppCompatImageView = itemView.findViewById(R.id.ivIcon)
@@ -36,17 +38,17 @@ class MeasurementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         val limitColor = if (measurement.level == Level.UNDERLIMIT.value) R.color.normal_comsumption_color else R.color.overhead_comsumption_color
         val valueResId = if (measurement.utility == Utility.GAS.value) R.string.gas_value else R.string.electricity_value
         iconLayout.apply {
-            backgroundTintList = ContextCompat.getColorStateList(context, limitColor)
+            backgroundTintList = colorRepository.stateList(limitColor)
             backgroundTintMode = PorterDuff.Mode.ADD
         }
         iconImageView.apply {
             val drawableId = if (measurement.utility == Utility.GAS.value) R.drawable.ic_gas else R.drawable.ic_electricity
             setImageDrawable(drawableRepository.getById(drawableId))
-            imageTintList = ContextCompat.getColorStateList(context, limitColor)
+            imageTintList = colorRepository.stateList(limitColor)
         }
         consumptionTextView.apply {
             text = stringRepository.getById(valueResId, measurement.consumption)
-            setTextColor(ContextCompat.getColorStateList(context, limitColor))
+            setTextColor(colorRepository.stateList(limitColor))
         }
         commentTextView.apply {
             text = measurement.comment ?: ""

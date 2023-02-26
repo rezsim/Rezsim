@@ -13,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.MutableLiveData
 import com.project.rezsim.R
+import com.project.rezsim.device.ColorRepository
 import com.project.rezsim.device.ScreenRepository
 import com.project.rezsim.device.dp
 import com.project.rezsim.ui.screen.activity.MainActivityViewModel
@@ -33,6 +34,7 @@ open class RezsimDialogFragment : DialogFragment(), KoinComponent {
     open fun start() {}
 
     protected val screenRepository: ScreenRepository by inject()
+    protected val colorRepository: ColorRepository by inject()
     protected val activityViewModel: MainActivityViewModel by inject()
 
     private var root: FrameLayout? = null
@@ -80,7 +82,7 @@ open class RezsimDialogFragment : DialogFragment(), KoinComponent {
         val margin = resources.getDimension(R.dimen.dialog_margin).toInt().dp
         root?.layoutParams?.width = width - 2 * margin
         requireDialog().window?.apply {
-            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            setBackgroundDrawable(colorRepository.drawable(Color.TRANSPARENT))
             attributes.width = width
             setAttributes(attributes)
         }

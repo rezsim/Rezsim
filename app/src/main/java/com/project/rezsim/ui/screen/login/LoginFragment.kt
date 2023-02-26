@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
+import com.project.rezsim.device.ColorRepository
 import org.koin.android.ext.android.inject
 
 class LoginFragment : RezsimFragment() {
@@ -15,6 +16,7 @@ class LoginFragment : RezsimFragment() {
     override val contentId = R.layout.login_fragment
 
     private val viewModel: LoginViewModel by inject()
+    private val colorRepository: ColorRepository by inject()
 
     private lateinit var textTitle: AppCompatTextView
     private lateinit var textDescription: AppCompatTextView
@@ -70,7 +72,7 @@ class LoginFragment : RezsimFragment() {
     private fun setLoginButtonState(enabled: Boolean) {
         buttonLogin.apply {
             isEnabled = enabled
-            backgroundTintList = if (enabled) ContextCompat.getColorStateList(requireContext(), R.color.material_orange_8) else null
+            backgroundTintList = if (enabled) colorRepository.stateList(R.color.material_orange_8) else null
         }
     }
 
