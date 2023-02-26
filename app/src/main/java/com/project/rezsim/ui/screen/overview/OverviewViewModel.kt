@@ -60,6 +60,10 @@ class OverviewViewModel : RezsimViewModel() {
         meterItemsLiveData.value = collectMeasurements()
     }
 
+    fun minDate() = months().firstOrNull()?.startDate()?.let {
+        DateHelper.serverDateStringToCalendar(it).time.time
+    }
+
     private fun setMonthSelectorVisibility(visible: Boolean) {
         monthSelectorVisibilityLiveData.value = visible
         headerViewModel.setButtonColor(R.id.ivCalendar, if (visible) R.color.material_indigo_5 else R.color.material_grey_8)

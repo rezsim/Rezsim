@@ -1,8 +1,11 @@
 package com.project.rezsim.ui.screen.overview
 
+import android.app.DatePickerDialog
+import android.content.res.Resources
 import android.graphics.PorterDuff
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import android.widget.ScrollView
@@ -19,6 +22,7 @@ import com.project.rezsim.device.DrawableRepository
 import com.project.rezsim.device.StringRepository
 import com.project.rezsim.device.dp
 import com.project.rezsim.server.dto.measurement.Measurement
+import com.project.rezsim.tool.DateHelper
 import com.project.rezsim.ui.screen.activity.MainActivityViewModel
 import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.screen.household.HouseholdFragment
@@ -27,6 +31,7 @@ import com.project.rezsim.ui.screen.overview.list.MeasurementAdapter
 import com.project.rezsim.ui.screen.overview.list.MeasurementMarginDecoration
 import com.project.rezsim.ui.view.message.MessageType
 import org.koin.android.ext.android.inject
+import java.util.*
 
 class OverviewFragment : RezsimFragment() {
 
@@ -44,6 +49,12 @@ class OverviewFragment : RezsimFragment() {
     private val monthSelectorButtons = mutableListOf<AppCompatButton>()
     private lateinit var measurementAdapter: MeasurementAdapter
 
+    private val selectDateListener = object : DatePickerDialog.OnDateSetListener {
+        override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {
+        }
+
+    }
+
     override fun setupViews() {
         super.setupViews()
         headerViewModel.setTitle(viewModel.title())
@@ -51,6 +62,7 @@ class OverviewFragment : RezsimFragment() {
             layoutDateSelector = it.findViewById(R.id.clDateSelector)
             yearButton = it.findViewById<AppCompatButton>(R.id.btYear).apply {
                 isSelected = true
+//                setOnClickListener { selectDate() }
             }
             viewModel.init()
             it.findViewById<RecyclerView>(R.id.rvMeters).apply {
@@ -116,6 +128,23 @@ class OverviewFragment : RezsimFragment() {
             yearButton.text = viewModel.months()[v.id].year.toString()
             viewModel.selectMonth(v.id)
         }
+    }
+
+    private fun selectDate() {
+        val calendar = DateHelper.now()
+        DatePickerDialog(
+            requireContext(),
+            selectDateListener,
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        ).apply {
+            datePicker.apply {
+                viewModel.minDate()?.let {
+                    minDate = it
+                }
+            }
+        }.show()
     }
 
     private fun goBack(value: Boolean) {
