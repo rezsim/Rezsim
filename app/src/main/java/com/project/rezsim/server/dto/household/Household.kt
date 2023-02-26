@@ -41,7 +41,7 @@ data class Household(
 
     fun measurementList(utility: Utility) = measurements
         .filter { it.utility == utility.value }
-        .sortedBy { it.date }
+        .sortedWith(compareBy({ it.date }, { it.id }))
 
 
     fun lastMeasurement(utility: Utility) = measurementList(utility).lastOrNull()

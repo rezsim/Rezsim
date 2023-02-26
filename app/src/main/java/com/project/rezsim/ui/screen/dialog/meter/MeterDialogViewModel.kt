@@ -17,6 +17,8 @@ import com.project.rezsim.ui.screen.activity.MainActivityViewModel
 import com.project.rezsim.ui.screen.household.HouseholdFragment
 import com.project.rezsim.ui.screen.main.MainFragment
 import com.project.rezsim.ui.screen.main.MainViewModel
+import com.project.rezsim.ui.screen.overview.OverviewFragment
+import com.project.rezsim.ui.screen.overview.OverviewViewModel
 import com.project.rezsim.ui.view.message.MessageSeverity
 import com.project.rezsim.ui.view.message.MessageType
 import org.koin.core.component.inject
@@ -37,12 +39,13 @@ class MeterDialogViewModel : RezsimViewModel() {
     private val userRepository: UserRepository by inject()
     private val activityViewModel: MainActivityViewModel by inject()
     private val mainViewModel: MainViewModel by inject()
+    private val overviewViewModel: OverviewViewModel by inject()
 
     fun parseArguments(arg: Bundle?) {
         arg?.let {
             utility = Utility.valueOf(it.getString(MeterDialogFragment.ARG_UTILITY, ""))
             householdId = it.getLong(MeterDialogFragment.ARG_HOUSEHOLD)
-            date = Calendar.getInstance(Locale.getDefault())
+            date = DateHelper.today()
         }
     }
 
@@ -58,7 +61,7 @@ class MeterDialogViewModel : RezsimViewModel() {
         ?.position
 
     fun save(position: Int, comment: String?, rootView: View) {
-        if (date == DateHelper.now()) {
+        if (date == DateHelper.today()) {
             if (position < lastValue() ?: 0) {
                 activityViewModel.showMessage(null, R.string.dialog_meter_small_value_error, MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR, rootView)
                 return
@@ -122,8 +125,11 @@ class MeterDialogViewModel : RezsimViewModel() {
             } else {
                 userModel.updateUser(it.user!!)
                 finishLiveData.postValue(true)
-                activityViewModel.switchToFragment(MainFragment.TAG)
-                mainViewModel.refresh()
+                if (activityViewModel.currentFragmentTag() == MainFragment.TAG) {
+                    mainViewModel.refresh()
+                } else if (activityViewModel.currentFragmentTag() == OverviewFragment.TAG) {
+                    overviewViewModel.refresh()
+                }
             }
         }
     }

@@ -108,8 +108,7 @@ class MainActivityViewModel : RezsimViewModel() {
                 currentFragmentTag = HouseholdFragment.TAG
                 householdViewModel.household = userModel.getUser()?.householdList()?.get(mainViewModel.currentHousehold())
             }
-            HouseholdFragment.TAG -> {
-                Log.d("DEBINFO-R", "MainActivityModel.fabPressedLiveData set value:true")
+            HouseholdFragment.TAG, OverviewFragment.TAG -> {
                 fabPressedLiveData.value = true
             }
         }
@@ -137,6 +136,10 @@ class MainActivityViewModel : RezsimViewModel() {
         overviewViewModel.householdIndex = householdIndex
         overviewViewModel.utility = utility
         currentFragmentTag = OverviewFragment.TAG
+    }
+
+    fun clearFabLiveData() {
+        fabPressedLiveData.value = false
     }
 
     private fun setWorkFragment(fragmentTag: String) {

@@ -110,7 +110,10 @@ class HouseholdFragment : RezsimFragment() {
         Log.d("DEBINFO-R", "activityViewModel.fabPressedLiveData start observing")
         activityViewModel.fabPressedLiveData.observe(this) {
             Log.d("DEBINFO-R", "activityViewModel.fabPressedLiveData triggered: $it")
-            save()
+            if (it) {
+                activityViewModel.clearFabLiveData()
+                save()
+            }
         }
         viewModel.childrenValueLiveData.observe(this) { editChildren.setText(it.toString()) }
         viewModel.contentLiveData.observe(this) { setContent(it) }

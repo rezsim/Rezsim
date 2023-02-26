@@ -12,6 +12,13 @@ object DateHelper {
 
     fun now(): Calendar = Calendar.getInstance(Locale.getDefault())
 
+    fun today(): Calendar = Calendar.getInstance(Locale.getDefault()).apply {
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }
+
     fun calendarToServerDateTimeString(calendar: Calendar) = serverDateTimeFormatter.format(calendar.time)
 
     fun calendarToServerDateString(calendar: Calendar) = serverDateFormatter.format(calendar.time)
@@ -31,10 +38,10 @@ object DateHelper {
         add(Calendar.DAY_OF_YEAR, -1)
     }
 
-    fun firstDayOf(year: Int, month: Int) = Calendar.getInstance(Locale.getDefault()).apply {
+    fun firstDayOf(year: Int, month: Int) = today().apply {
         set(Calendar.YEAR, year)
         set(Calendar.MONTH, month)
-        set(Calendar.DAY_OF_MONTH, getActualMaximum(Calendar.DAY_OF_MONTH))
+        set(Calendar.DAY_OF_MONTH, getActualMinimum(Calendar.DAY_OF_MONTH))
     }
 
 }

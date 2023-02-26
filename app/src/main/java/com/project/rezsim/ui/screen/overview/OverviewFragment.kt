@@ -83,6 +83,12 @@ class OverviewFragment : RezsimFragment() {
         headerViewModel.backLiveData.observeForever { goBack(it) }
         headerViewModel.buttonPressedLiveData.observe(this) { viewModel.headerButtonPressed(it) }
         viewModel.meterItemsLiveData.observe(this) { setMeterItems(it) }
+        activityViewModel.fabPressedLiveData.observe(this) {
+            if (it) {
+                activityViewModel.clearFabLiveData()
+                viewModel.readMeter()
+            }
+        }
     }
 
     private fun setMonthSelectorVisibility(visible: Boolean) {

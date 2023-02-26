@@ -6,8 +6,8 @@ data class Month(
     val year: Int,
     val month: Int
 ) {
-    fun startDate(): String = DateHelper.calendarToServerDateString(DateHelper.firstDayOf(year, month - 1))
+    fun startDate(): String = DateHelper.calendarToServerDateString(DateHelper.firstDayOf(year, month))
 
-    fun endDate(): String = DateHelper.calendarToServerDateString(DateHelper.lastDayOf(year, month - 1))
+    fun endDate(): String = DateHelper.calendarToServerDateString(DateHelper.lastDayOf(year, month))
 
 }
