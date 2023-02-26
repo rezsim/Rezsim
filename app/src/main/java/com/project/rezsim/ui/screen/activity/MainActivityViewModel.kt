@@ -66,13 +66,19 @@ class MainActivityViewModel : RezsimViewModel() {
         put(HouseholdFragment.TAG, R.drawable.ic_floppy)
     }
 
+    private val headerButtons = HashMap<String, IntArray>().apply {
+        put(MainFragment.TAG, intArrayOf(R.id.ivUser))
+        put(HouseholdFragment.TAG, intArrayOf(R.id.ivUser))
+        put(OverviewFragment.TAG, intArrayOf(R.id.ivCalendar, R.id.ivUser))
+    }
+
 
     init {
         Log.d("DEBINFO", "MainActivityViewModel.init")
         currentFragmentTag = SplashFragment.TAG
         splashViewModel.finishedLiveData.observeForever { splashFinished() }
         loginViewModel.finishedLiveData.observeForever { loginFinished() }
-        headerViewModel.userLiveData.observeForever { showDialog(DialogParameter(UserDialogFragment.TAG)) }
+        headerViewModel.buttonPressedLiveData.observeForever { headerButtonPressed(it) }
         headerViewModel.backLiveData.observeForever { goBack(it) }
         mainViewModel.addHouseholdLiveData.observeForever { addNewHousehold() }
         userModel.logoutLiveData.observeForever { logout() }
@@ -126,9 +132,19 @@ class MainActivityViewModel : RezsimViewModel() {
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
     }
 
+    fun goOverviewScreen(householdIndex: Int, utility: Utility) {
+        overviewViewModel.householdIndex = householdIndex
+        overviewViewModel.utility = utility
+        currentFragmentTag = OverviewFragment.TAG
+    }
+
     private fun setWorkFragment(fragmentTag: String) {
         loadWorkFragmentLiveData.value = fragmentTag
-        headerVisbileLiveData.value = needHeader(fragmentTag)
+        headerVisbileLiveData.value = needHeader(fragmentTag).also {
+            if (it) {
+                headerViewModel.setButtons(headerButtons[fragmentTag])
+            }
+        }
         footerVisbileLiveData.value = needFooter(fragmentTag)
         fabIconLiveData.value = fabIcon(fragmentTag)
     }
@@ -180,10 +196,10 @@ class MainActivityViewModel : RezsimViewModel() {
         }
     }
 
-    fun goOverviewScreen(householdIndex: Int, utility: Utility) {
-        overviewViewModel.householdIndex = householdIndex
-        overviewViewModel.utility = utility
-        currentFragmentTag = OverviewFragment.TAG
+    private fun headerButtonPressed(buttonId: Int) {
+        if (buttonId == R.id.ivUser) {
+            showDialog(DialogParameter(UserDialogFragment.TAG))
+        }
     }
 
     companion object {

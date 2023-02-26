@@ -28,6 +28,12 @@ class SettingsRepository : KoinComponent {
         apply()
     }
 
+    fun readOverviewMonthSelectorVisible() = settings.getBoolean(KEY_OVERVIEW_MONTH_SELECTOR_VISIBLE, false)
+    fun writeOverviewMonthSelectorVisible(visible: Boolean) = settings.edit().apply {
+        putBoolean(KEY_OVERVIEW_MONTH_SELECTOR_VISIBLE, visible)
+        apply()
+    }
+
     fun clearUser() {
         settings.edit().apply {
             remove(KEY_USER_EMAIL)
@@ -53,6 +59,7 @@ class SettingsRepository : KoinComponent {
         private const val KEY_USER_EMAIL = "UserEmail"
         private const val KEY_USER_PASSWORD = "UserPassword"
         private const val KEY_LAST_HOUSEHOLD_ID = "LastHouseholdId"
+        private const val KEY_OVERVIEW_MONTH_SELECTOR_VISIBLE = "OverviewMonthSelectorVisible"
 
     }
 }

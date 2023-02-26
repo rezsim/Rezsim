@@ -177,7 +177,7 @@ class HouseholdFragment : RezsimFragment() {
     }
 
     private fun goBack(value: Boolean) {
-        if (value) {
+        if (value && activityViewModel.currentFragmentTag() == TAG) {
             headerViewModel.clearBackLiveData()
             if (content != collectValues()) {
                 activityViewModel.showMessage(

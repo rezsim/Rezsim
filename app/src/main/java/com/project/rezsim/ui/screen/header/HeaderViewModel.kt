@@ -9,16 +9,17 @@ class HeaderViewModel : RezsimViewModel() {
 
     private val stringRepository: StringRepository by inject()
 
-    val userLiveData = MutableLiveData<Boolean>()
+    val buttonPressedLiveData = MutableLiveData<Int>()
     val backLiveData = MutableLiveData<Boolean>()
     val titleLiveData = MutableLiveData<String>()
+    val buttonsLiveData = MutableLiveData<IntArray>()
 
     fun onBackPressed() {
         backLiveData.value = true
     }
 
-    fun onUserPressed() {
-        userLiveData.value = true
+    fun onButtonPressed(buttonId: Int) {
+        buttonPressedLiveData.value = buttonId
     }
 
     fun clearBackLiveData() {
@@ -31,6 +32,10 @@ class HeaderViewModel : RezsimViewModel() {
 
     fun setTitle(tilteText: String?) {
         titleLiveData.value = tilteText ?: ""
+    }
+
+    fun setButtons(buttonsResId: IntArray?) {
+        buttonsLiveData.value = buttonsResId ?: intArrayOf()
     }
 
 

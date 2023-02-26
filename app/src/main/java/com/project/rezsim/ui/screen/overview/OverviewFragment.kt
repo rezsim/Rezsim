@@ -5,6 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatButton
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.rezsim.R
@@ -14,6 +17,7 @@ import com.project.rezsim.device.StringRepository
 import com.project.rezsim.device.dp
 import com.project.rezsim.ui.screen.activity.MainActivityViewModel
 import com.project.rezsim.ui.screen.header.HeaderViewModel
+import com.project.rezsim.ui.screen.household.HouseholdFragment
 import com.project.rezsim.ui.screen.main.MainFragment
 import com.project.rezsim.ui.screen.overview.list.MeasurementAdapter
 import com.project.rezsim.ui.screen.overview.list.MeasurementMarginDecoration
@@ -30,24 +34,27 @@ class OverviewFragment : RezsimFragment() {
     private val drawableRepository: DrawableRepository by inject()
     private val stringRepository: StringRepository by inject()
 
+    private lateinit var layoutDateSelector: ConstraintLayout
     private lateinit var yearButton: AppCompatButton
     private val monthSelectorButtons = mutableListOf<AppCompatButton>()
     private lateinit var measurementAdapter: MeasurementAdapter
 
     override fun setupViews() {
         super.setupViews()
-        viewModel.init()
         headerViewModel.setTitle(viewModel.title())
         view?.let {
+            layoutDateSelector = it.findViewById(R.id.clDateSelector)
             yearButton = it.findViewById<AppCompatButton>(R.id.btYear).apply {
                 isSelected = true
             }
-            val listView = it.findViewById<RecyclerView>(R.id.rvMeters).apply {
+            viewModel.init()
+            it.findViewById<RecyclerView>(R.id.rvMeters).apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 measurementAdapter = MeasurementAdapter()
                 adapter = measurementAdapter
                 addItemDecoration(MeasurementMarginDecoration())
             }
+            it.findViewById<CardView>(R.id.cvPayment).backgroundTintList = ContextCompat.getColorStateList(requireContext(), viewModel.paymentBackground())
         }
         refreshMonthSelector()
         monthSelectorButtons.last().performClick()
@@ -55,10 +62,13 @@ class OverviewFragment : RezsimFragment() {
 
     override fun subscribeObservers() {
         super.subscribeObservers()
-        headerViewModel.backLiveData.observeForever {
-            goBack(it)
-        }
+        viewModel.monthSelectorVisibilityLiveData.observe (this) { setMonthSelectorVisibility(it) }
+        headerViewModel.backLiveData.observeForever { goBack(it) }
+        headerViewModel.buttonPressedLiveData.observe(this) { viewModel.headerButtonPressed(it) }
+    }
 
+    private fun setMonthSelectorVisibility(visible: Boolean) {
+        layoutDateSelector.visibility = if (visible) View.VISIBLE else View.GONE
     }
 
     private fun refreshMonthSelector() {
@@ -98,7 +108,7 @@ class OverviewFragment : RezsimFragment() {
     }
 
     private fun goBack(value: Boolean) {
-        if (value) {
+        if (value && activityViewModel.currentFragmentTag() == TAG) {
             headerViewModel.clearBackLiveData()
             activityViewModel.switchToFragment(MainFragment.TAG)
         }

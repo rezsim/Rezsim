@@ -1,5 +1,6 @@
 package com.project.rezsim.ui.screen.header
 
+import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.project.rezsim.R
@@ -14,7 +15,10 @@ class HeaderFragment : RezsimFragment() {
 
     private lateinit var imageBack: AppCompatImageView
     private lateinit var imageUser: AppCompatImageView
+    private lateinit var imageCalendar: AppCompatImageView
     private lateinit var textTitle: AppCompatTextView
+
+    private val buttonIds = intArrayOf(R.id.ivCalendar, R.id.ivUser)
 
     override fun setupViews() {
         super.setupViews()
@@ -24,7 +28,10 @@ class HeaderFragment : RezsimFragment() {
                 setOnClickListener { viewModel.onBackPressed() }
             }
             imageUser = it.findViewById<AppCompatImageView>(R.id.ivUser).apply {
-                setOnClickListener { viewModel.onUserPressed() }
+                setOnClickListener { viewModel.onButtonPressed(R.id.ivUser) }
+            }
+            imageCalendar = it.findViewById<AppCompatImageView>(R.id.ivCalendar).apply {
+                setOnClickListener { viewModel.onButtonPressed(R.id.ivCalendar) }
             }
         }
     }
@@ -32,6 +39,13 @@ class HeaderFragment : RezsimFragment() {
     override fun subscribeObservers() {
         super.subscribeObservers()
         viewModel.titleLiveData.observe(this) { textTitle.text = it }
+        viewModel.buttonsLiveData.observe(this) { setButtonsVisibility(it) }
+    }
+
+    private fun setButtonsVisibility(buttons: IntArray) {
+        buttonIds.forEach {
+            view?.findViewById<AppCompatImageView>(it)?.visibility = if (buttons.contains(it)) View.VISIBLE else View.GONE
+        }
     }
 
 

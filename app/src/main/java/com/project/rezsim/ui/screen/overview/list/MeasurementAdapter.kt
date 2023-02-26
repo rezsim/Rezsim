@@ -10,12 +10,15 @@ class MeasurementAdapter() : RecyclerView.Adapter<MeasurementViewHolder>() {
 
     private val measurements: MutableList<Measurement> = mutableListOf()
 
+    private var listView: RecyclerView? = null
+
     fun setItems(items: List<Measurement>) {
         measurements.apply {
             clear()
             addAll(items)
-            notifyDataSetChanged()
         }
+        notifyDataSetChanged()
+        listView?.post { listView?.scrollToPosition(0) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MeasurementViewHolder {
@@ -28,5 +31,10 @@ class MeasurementAdapter() : RecyclerView.Adapter<MeasurementViewHolder>() {
     }
 
     override fun getItemCount(): Int = measurements.size
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        listView = recyclerView
+    }
 
 }
