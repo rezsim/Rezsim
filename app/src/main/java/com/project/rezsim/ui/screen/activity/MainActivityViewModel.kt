@@ -134,11 +134,17 @@ class MainActivityViewModel : RezsimViewModel() {
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
     }
 
-    fun goOverviewScreen(householdIndex: Int, utility: Utility) {
-        overviewViewModel.householdIndex = householdIndex
-        overviewViewModel.utility = utility
-        currentFragmentTag = OverviewFragment.TAG
-    }
+    fun goOverviewScreen(householdIndex: Int, utility: Utility): Boolean =
+        if (userModel.hasMeasurement(mainViewModel.currentHousehold(), utility)) {
+            overviewViewModel.householdIndex = householdIndex
+            overviewViewModel.utility = utility
+            currentFragmentTag = OverviewFragment.TAG
+            true
+        } else {
+            showMessage(null, R.string.footer_no_meter, MessageType.TOAST_LONG)
+            false
+        }
+
 
     fun clearFabLiveData() {
         fabPressedLiveData.value = false
@@ -147,16 +153,14 @@ class MainActivityViewModel : RezsimViewModel() {
     private fun shortTo(button: FooterButton) {
         when (button) {
             FooterButton.HOME -> currentFragmentTag = MainFragment.TAG
-            FooterButton.GAS -> {
-                overviewViewModel.utility = Utility.GAS
-                currentFragmentTag = OverviewFragment.TAG
-                overviewViewModel.reInit()
-            }
-            FooterButton.ELECTRICITY -> {
-                overviewViewModel.utility = Utility.ELECTRICITY_A
-                currentFragmentTag = OverviewFragment.TAG
-                overviewViewModel.reInit()
-            }
+            FooterButton.GAS -> shortToOverview(Utility.GAS)
+            FooterButton.ELECTRICITY -> shortToOverview(Utility.ELECTRICITY_A)
+        }
+    }
+
+    private fun shortToOverview(utility: Utility) {
+        if (goOverviewScreen(mainViewModel.currentHousehold(), utility)) {
+            overviewViewModel.reInit()
         }
     }
 

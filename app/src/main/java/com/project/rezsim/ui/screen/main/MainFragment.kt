@@ -50,8 +50,8 @@ class MainFragment : RezsimFragment() {
             it.findViewById<AppCompatButton>(R.id.btAddHousehold).setOnClickListener { viewModel.addHouseholdLiveData.value = true }
             it.findViewById<AppCompatButton>(R.id.btReadElectricity).setOnClickListener { viewModel.readMeter(Utility.ELECTRICITY_A) }
             it.findViewById<AppCompatButton>(R.id.btReadGas).setOnClickListener { viewModel.readMeter(Utility.GAS) }
-            it.findViewById<CardView>(R.id.cwElectricity).setOnClickListener { viewModel.onPanelClick(Utility.ELECTRICITY_A) }
-            it.findViewById<CardView>(R.id.cwGas).setOnClickListener { viewModel.onPanelClick(Utility.GAS) }
+            it.findViewById<CardView>(R.id.cwElectricity).setOnClickListener { activityViewModel.goOverviewScreen(viewModel.currentHousehold(), Utility.ELECTRICITY_A) }
+            it.findViewById<CardView>(R.id.cwGas).setOnClickListener { activityViewModel.goOverviewScreen(viewModel.currentHousehold(), Utility.GAS) }
         }
 
         if (userModel.hasHousehold()) {

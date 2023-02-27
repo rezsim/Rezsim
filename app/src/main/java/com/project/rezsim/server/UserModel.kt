@@ -6,6 +6,7 @@ import com.project.rezsim.base.singleton.Singleton
 import com.project.rezsim.device.SettingsRepository
 import com.project.rezsim.server.dto.household.Household
 import com.project.rezsim.server.dto.User
+import com.project.rezsim.server.dto.measurement.Utility
 import com.project.rezsim.server.login.LoginResult
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -28,6 +29,12 @@ class UserModel : KoinComponent, Singleton {
     fun isLoggedIn() = token != null
 
     fun hasHousehold() = user?.householdList()?.isNotEmpty() ?: false
+
+    fun hasMeasurement(householdIndex: Int, utility: Utility) = if (hasHousehold()) {
+        user?.householdList()?.get(householdIndex)?.measurementList(utility)?.isNotEmpty() ?: false
+    } else {
+        false
+    }
 
     fun getEmail() = email
     fun getPassword() = password
