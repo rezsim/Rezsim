@@ -184,6 +184,17 @@
                app:layout_constraintTop_toTopOf="@id/ivTitleElectricity"
                app:layout_constraintBottom_toBottomOf="@id/ivTitleElectricity"/>
 
+           <androidx.appcompat.widget.AppCompatImageView
+               android:id="@+id/ivElectricitySetting"
+               android:layout_width="24dp"
+               android:layout_height="24dp"
+               app:layout_constraintEnd_toStartOf="@id/swElectricityOn"
+               app:layout_constraintTop_toTopOf="@id/swElectricityOn"
+               app:layout_constraintBottom_toBottomOf="@id/swElectricityOn"
+               android:layout_marginEnd="16dp"
+               android:tint="@color/text_color"
+               app:srcCompat="@drawable/ic_setting"/>
+
            <View
                android:id="@+id/vElectricity"
                android:layout_width="match_parent"
@@ -197,91 +208,103 @@
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                app:layout_constraintTop_toBottomOf="@id/vElectricity"
-               android:layout_marginTop="16dp">
+               android:layout_marginTop="16dp"
+               android:animateLayoutChanges="true">
 
-               <androidx.appcompat.widget.AppCompatTextView
-                   android:id="@+id/tvUsage"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   app:layout_constraintStart_toStartOf="@id/spUsage"
-                   app:layout_constraintTop_toTopOf="parent"
-                   android:layout_marginTop="16dp"
-                   android:layout_marginStart="12dp"
-                   android:textStyle="bold"
-                   android:textSize="@dimen/text_size_normal"
-                   android:textColor="@color/text_color"
-                   android:text="@string/household_usage_title"/>
-
-               <androidx.appcompat.widget.AppCompatSpinner
-                   android:id="@+id/spUsage"
+               <androidx.constraintlayout.widget.ConstraintLayout
+                   android:id="@+id/clElectricitySettings"
                    android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toBottomOf="@id/tvUsage"
-                   android:layout_marginTop="4dp"
-                   android:background="@drawable/background_spinner"
-                   android:spinnerMode="dropdown"
-                   android:prompt="@string/household_meters_title"
-                   android:popupBackground="@drawable/background_spinner_popup"
-                   android:textColor="@color/edit_text_color"
-                   android:textSize="@dimen/text_size_edit"
-                   android:gravity="center" />
+                   android:layout_height="match_parent"
+                   android:visibility="gone"
+                   tools:visibility="visible">
 
-               <androidx.appcompat.widget.AppCompatTextView
-                   android:id="@+id/tvPricingTypeA"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   app:layout_constraintStart_toStartOf="@id/spPricingTypeA"
-                   app:layout_constraintTop_toBottomOf="@id/spUsage"
-                   android:layout_marginTop="16dp"
-                   android:layout_marginStart="12dp"
-                   android:textStyle="bold"
-                   android:textSize="@dimen/text_size_normal"
-                   android:textColor="@color/text_color"
-                   android:text="@string/household_pricing_type_a_title"/>
+                   <androidx.appcompat.widget.AppCompatTextView
+                       android:id="@+id/tvUsage"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       app:layout_constraintStart_toStartOf="@id/spUsage"
+                       app:layout_constraintTop_toTopOf="parent"
+                       android:layout_marginTop="16dp"
+                       android:layout_marginStart="12dp"
+                       android:textStyle="bold"
+                       android:textSize="@dimen/text_size_normal"
+                       android:textColor="@color/text_color"
+                       android:text="@string/household_usage_title"/>
 
-               <androidx.appcompat.widget.AppCompatSpinner
-                   android:id="@+id/spPricingTypeA"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toBottomOf="@id/tvPricingTypeA"
-                   android:layout_marginTop="4dp"
-                   android:background="@drawable/background_spinner"
-                   android:spinnerMode="dropdown"
-                   android:prompt="@string/household_meters_title"
-                   android:popupBackground="@drawable/background_spinner_popup"
-                   android:textColor="@color/edit_text_color"
-                   android:textSize="@dimen/text_size_edit"
-                   android:gravity="center"/>
+                   <androidx.appcompat.widget.AppCompatSpinner
+                       android:id="@+id/spUsage"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toBottomOf="@id/tvUsage"
+                       android:layout_marginTop="4dp"
+                       android:background="@drawable/background_spinner"
+                       android:spinnerMode="dropdown"
+                       android:prompt="@string/household_meters_title"
+                       android:popupBackground="@drawable/background_spinner_popup"
+                       android:textColor="@color/edit_text_color"
+                       android:textSize="@dimen/text_size_edit"
+                       android:gravity="center" />
 
-               <androidx.appcompat.widget.AppCompatTextView
-                   android:id="@+id/tvPricingTypeB"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   app:layout_constraintStart_toStartOf="@id/spPricingTypeB"
-                   app:layout_constraintTop_toBottomOf="@id/spPricingTypeA"
-                   android:layout_marginTop="16dp"
-                   android:layout_marginStart="12dp"
-                   android:textStyle="bold"
-                   android:textSize="@dimen/text_size_normal"
-                   android:textColor="@color/text_color"
-                   android:text="@string/household_pricing_type_b_title"/>
+                   <androidx.appcompat.widget.AppCompatTextView
+                       android:id="@+id/tvPricingTypeA"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       app:layout_constraintStart_toStartOf="@id/spPricingTypeA"
+                       app:layout_constraintTop_toBottomOf="@id/spUsage"
+                       android:layout_marginTop="16dp"
+                       android:layout_marginStart="12dp"
+                       android:textStyle="bold"
+                       android:textSize="@dimen/text_size_normal"
+                       android:textColor="@color/text_color"
+                       android:text="@string/household_pricing_type_a_title"/>
 
-               <androidx.appcompat.widget.AppCompatSpinner
-                   android:id="@+id/spPricingTypeB"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toBottomOf="@id/tvPricingTypeB"
-                   android:layout_marginTop="4dp"
-                   android:background="@drawable/background_spinner"
-                   android:spinnerMode="dropdown"
-                   android:prompt="@string/household_meters_title"
-                   android:popupBackground="@drawable/background_spinner_popup"
-                   android:textColor="@color/edit_text_color"
-                   android:textSize="@dimen/text_size_edit"
-                   android:gravity="center"/>
+                   <androidx.appcompat.widget.AppCompatSpinner
+                       android:id="@+id/spPricingTypeA"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toBottomOf="@id/tvPricingTypeA"
+                       android:layout_marginTop="4dp"
+                       android:background="@drawable/background_spinner"
+                       android:spinnerMode="dropdown"
+                       android:prompt="@string/household_meters_title"
+                       android:popupBackground="@drawable/background_spinner_popup"
+                       android:textColor="@color/edit_text_color"
+                       android:textSize="@dimen/text_size_edit"
+                       android:gravity="center"/>
+
+                   <androidx.appcompat.widget.AppCompatTextView
+                       android:id="@+id/tvPricingTypeB"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       app:layout_constraintStart_toStartOf="@id/spPricingTypeB"
+                       app:layout_constraintTop_toBottomOf="@id/spPricingTypeA"
+                       android:layout_marginTop="16dp"
+                       android:layout_marginStart="12dp"
+                       android:textStyle="bold"
+                       android:textSize="@dimen/text_size_normal"
+                       android:visibility="gone"
+                       android:textColor="@color/text_color"
+                       android:text="@string/household_pricing_type_b_title"/>
+
+                   <androidx.appcompat.widget.AppCompatSpinner
+                       android:id="@+id/spPricingTypeB"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toBottomOf="@id/tvPricingTypeB"
+                       android:layout_marginTop="4dp"
+                       android:background="@drawable/background_spinner"
+                       android:spinnerMode="dropdown"
+                       android:prompt="@string/household_meters_title"
+                       android:popupBackground="@drawable/background_spinner_popup"
+                       android:textColor="@color/edit_text_color"
+                       android:textSize="@dimen/text_size_edit"
+                       android:visibility="gone"
+                       android:gravity="center"/>
+
+               </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -317,6 +340,17 @@
                android:textSize="@dimen/text_size_large"
                android:text="@string/household_gas_title"/>
 
+           <androidx.appcompat.widget.AppCompatImageView
+               android:id="@+id/ivGasSetting"
+               android:layout_width="24dp"
+               android:layout_height="24dp"
+               app:layout_constraintEnd_toStartOf="@id/swGasOn"
+               app:layout_constraintTop_toTopOf="@id/swGasOn"
+               app:layout_constraintBottom_toBottomOf="@id/swGasOn"
+               android:layout_marginEnd="16dp"
+               android:tint="@color/text_color"
+               app:srcCompat="@drawable/ic_setting"/>
+
            <View
                android:id="@+id/vGas"
                android:layout_width="match_parent"
@@ -330,41 +364,52 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/vGas"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="16dp"
+               android:animateLayoutChanges="true">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvHeatingValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="@id/spHeatingValue"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="12dp"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/text_size_normal"
-                    android:textColor="@color/text_color"
-                    android:text="@string/household_heating_value_title"/>
+               <androidx.constraintlayout.widget.ConstraintLayout
+                   android:id="@+id/clGasSettings"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   app:layout_constraintTop_toTopOf="parent"
+                   android:visibility="gone"
+                   tools:visibility="visible">
 
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/spHeatingValue"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/tvHeatingValue"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/background_spinner"
-                    android:spinnerMode="dropdown"
-                    android:prompt="@string/household_meters_title"
-                    android:popupBackground="@drawable/background_spinner_popup"
-                    android:textColor="@color/edit_text_color"
-                    android:textSize="@dimen/text_size_edit"
-                    android:gravity="center" />
+                   <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvHeatingValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="@id/spHeatingValue"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="12dp"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/text_color"
+                        android:text="@string/household_heating_value_title"/>
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/spHeatingValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/tvHeatingValue"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/background_spinner"
+                        android:spinnerMode="dropdown"
+                        android:prompt="@string/household_meters_title"
+                        android:popupBackground="@drawable/background_spinner_popup"
+                        android:textColor="@color/edit_text_color"
+                        android:textSize="@dimen/text_size_edit"
+                        android:gravity="center" />
+
+               </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvChildrenCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="@id/spHeatingValue"
-                    app:layout_constraintTop_toBottomOf="@id/spHeatingValue"
+                    app:layout_constraintStart_toStartOf="@id/clGasSettings"
+                    app:layout_constraintTop_toBottomOf="@id/clGasSettings"
                     android:layout_marginTop="32dp"
                     android:layout_marginStart="12dp"
                     android:textStyle="bold"

@@ -36,9 +36,9 @@
     <color name="snackbar_button_color_info">@color/material_indigo_7</color>
     <color name="snackbar_button_color_error">@color/material_indigo_7</color>
 
-    <color name="footer_background">@color/material_grey_3</color>
+    <color name="footer_background">@color/transparent</color>
 
-    <color name="header_background">@color/material_grey_3</color>
+    <color name="header_background">@color/transparent</color>
 
 
 </resources>

@@ -4,6 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -42,10 +43,11 @@ class HouseholdFragment : RezsimFragment() {
     private lateinit var layoutElectricityMeter: FrameLayout
     private lateinit var layoutGasMeter: FrameLayout
     private lateinit var layoutElectricityParameters: ConstraintLayout
+    private lateinit var layoutElectricitySettings: ConstraintLayout
     private lateinit var layoutGasParameters: ConstraintLayout
+    private lateinit var layoutGasSettings: ConstraintLayout
 
     private var content: Content? = null
-
 
     private val spinnerItemSelectedListener = TextSpinnerOnItemSelectedListener()
 
@@ -57,7 +59,9 @@ class HouseholdFragment : RezsimFragment() {
             layoutElectricityMeter = it.findViewById(R.id.flElectricityMeter)
             layoutGasMeter = it.findViewById(R.id.flGasMeter)
             layoutElectricityParameters = it.findViewById(R.id.clElectricityParameters)
+            layoutElectricitySettings = it.findViewById(R.id.clElectricitySettings)
             layoutGasParameters = it.findViewById(R.id.clGasParameters)
+            layoutGasSettings = it.findViewById(R.id.clGasSettings)
             editElectricityMeter = it.findViewById(R.id.etElectricityMeter)
             editGasMeter = it.findViewById(R.id.etGasMeter)
             spinnerUsage = it.findViewById<AppCompatSpinner?>(R.id.spUsage).apply {
@@ -102,6 +106,8 @@ class HouseholdFragment : RezsimFragment() {
             switchGas = it.findViewById<SwitchCompat>(R.id.swGasOn).apply {
                 setOnCheckedChangeListener { _, b -> viewModel.gasSwitchChanged(b) }
             }
+            it.findViewById<AppCompatImageView>(R.id.ivElectricitySetting).setOnClickListener { toggleElectricitySetting() }
+            it.findViewById<AppCompatImageView>(R.id.ivGasSetting).setOnClickListener { toggleGasSetting() }
         }
     }
 
@@ -192,6 +198,22 @@ class HouseholdFragment : RezsimFragment() {
             } else {
                 exit()
             }
+        }
+    }
+
+    private fun toggleElectricitySetting() {
+        if (layoutElectricitySettings.visibility == View.VISIBLE) {
+            layoutElectricitySettings.visibility = View.GONE
+        } else {
+            layoutElectricitySettings.visibility = View.VISIBLE
+        }
+    }
+
+    private fun toggleGasSetting() {
+        if (layoutGasSettings.visibility == View.VISIBLE) {
+            layoutGasSettings.visibility = View.GONE
+        } else {
+            layoutGasSettings.visibility = View.VISIBLE
         }
     }
 
