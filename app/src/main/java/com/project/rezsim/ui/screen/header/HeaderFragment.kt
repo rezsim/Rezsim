@@ -1,11 +1,13 @@
 package com.project.rezsim.ui.screen.header
 
-import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
 import com.project.rezsim.device.ColorRepository
+import com.project.rezsim.device.dp
 import org.koin.android.ext.android.inject
 
 class HeaderFragment : RezsimFragment() {
@@ -17,10 +19,7 @@ class HeaderFragment : RezsimFragment() {
 
     private lateinit var imageBack: AppCompatImageView
     private lateinit var imageUser: AppCompatImageView
-    private lateinit var imageCalendar: AppCompatImageView
     private lateinit var textTitle: AppCompatTextView
-
-    private val buttonIds = intArrayOf(R.id.ivCalendar, R.id.ivUser)
 
     override fun setupViews() {
         super.setupViews()
@@ -29,29 +28,40 @@ class HeaderFragment : RezsimFragment() {
             imageBack = it.findViewById<AppCompatImageView>(R.id.ivBack).apply {
                 setOnClickListener { viewModel.onBackPressed() }
             }
-            imageUser = it.findViewById<AppCompatImageView>(R.id.ivUser).apply {
-                setOnClickListener { viewModel.onButtonPressed(R.id.ivUser) }
-            }
-            imageCalendar = it.findViewById<AppCompatImageView>(R.id.ivCalendar).apply {
-                setOnClickListener { viewModel.onButtonPressed(R.id.ivCalendar) }
-            }
         }
     }
 
     override fun subscribeObservers() {
         super.subscribeObservers()
         viewModel.titleLiveData.observe(this) { textTitle.text = it }
-        viewModel.buttonsLiveData.observe(this) { setButtonsVisibility(it) }
-        viewModel.buttonColorLiveData.observe(this) { setButtonColor(it.first, it.second) }
+        viewModel.toolButtonsLiveData.observe(this) { setToolButtons(it) }
+        viewModel.buttonColorLiveData.observe(this) { setToolButtonColor(it.first, it.second) }
     }
 
-    private fun setButtonsVisibility(buttons: IntArray) {
-        buttonIds.forEach {
-            view?.findViewById<AppCompatImageView>(it)?.visibility = if (buttons.contains(it)) View.VISIBLE else View.GONE
+    private fun setToolButtons(buttons: IntArray) {
+        view?.let {
+            it.findViewById<LinearLayout>(R.id.llTools).apply {
+                removeAllViews()
+                buttons.forEach {
+                    addView(createToolButton(it))
+                }
+            }
         }
     }
 
-    private fun setButtonColor(buttonResId: Int, colorResId: Int) {
+    private fun createToolButton(iconResId: Int) = AppCompatImageView(requireContext()).apply {
+        id = iconResId
+        setImageResource(iconResId)
+        imageTintList = colorRepository.stateList(R.color.material_grey_8)
+        layoutParams = LinearLayout.LayoutParams(resources.getDimension(R.dimen.icon_size_header).toInt(), resources.getDimension(R.dimen.icon_size_header).toInt()).apply {
+            marginEnd = 8.dp
+            marginStart = 8.dp
+        }
+        scaleType = ImageView.ScaleType.FIT_CENTER
+        setOnClickListener { viewModel.onToolButtonPressed(id) }
+    }
+
+    private fun setToolButtonColor(buttonResId: Int, colorResId: Int) {
         view?.findViewById<AppCompatImageView>(buttonResId)?.imageTintList = colorRepository.stateList(colorResId)
     }
 

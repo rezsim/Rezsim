@@ -53,7 +53,7 @@ class OverviewViewModel : RezsimViewModel() {
     fun paymentBackground() = if (utility == Utility.GAS) R.color.gas_background else R.color.electricity_background
 
     fun headerButtonPressed(buttonId: Int) {
-        if (buttonId == R.id.ivCalendar) {
+        if (buttonId == R.drawable.ic_calendar) {
             setMonthSelectorVisibility(!(monthSelectorVisibilityLiveData.value == true))
             settingsRepository.writeOverviewMonthSelectorVisible(monthSelectorVisibilityLiveData.value!!)
             meterItemsLiveData.value = collectMeasurements()
@@ -88,7 +88,7 @@ class OverviewViewModel : RezsimViewModel() {
 
     private fun setMonthSelectorVisibility(visible: Boolean) {
         monthSelectorVisibilityLiveData.value = visible
-        headerViewModel.setButtonColor(R.id.ivCalendar, if (visible) R.color.material_indigo_5 else R.color.material_grey_8)
+        headerViewModel.setButtonColor(R.drawable.ic_calendar, if (visible) R.color.material_indigo_5 else R.color.material_grey_8)
     }
 
     private fun calculateMonths(): List<Month> = measurements().map {

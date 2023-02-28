@@ -70,9 +70,9 @@ class MainActivityViewModel : RezsimViewModel() {
     }
 
     private val headerButtons = HashMap<String, IntArray>().apply {
-        put(MainFragment.TAG, intArrayOf(R.id.ivUser))
-        put(HouseholdFragment.TAG, intArrayOf(R.id.ivUser))
-        put(OverviewFragment.TAG, intArrayOf(R.id.ivCalendar, R.id.ivUser))
+        put(MainFragment.TAG, intArrayOf(R.drawable.ic_user))
+        put(HouseholdFragment.TAG, intArrayOf(R.drawable.ic_user))
+        put(OverviewFragment.TAG, intArrayOf(R.drawable.ic_dollar, R.drawable.ic_calendar, R.drawable.ic_user))
     }
 
 
@@ -168,7 +168,7 @@ class MainActivityViewModel : RezsimViewModel() {
         loadWorkFragmentLiveData.value = fragmentTag
         headerVisbileLiveData.value = needHeader(fragmentTag).also {
             if (it) {
-                headerViewModel.setButtons(headerButtons[fragmentTag])
+                headerViewModel.setToolButtons(headerButtons[fragmentTag])
             }
         }
         footerVisbileLiveData.value = needFooter(fragmentTag)
@@ -231,7 +231,7 @@ class MainActivityViewModel : RezsimViewModel() {
     }
 
     private fun headerButtonPressed(buttonId: Int) {
-        if (buttonId == R.id.ivUser) {
+        if (buttonId == R.drawable.ic_user) {
             showDialog(DialogParameter(UserDialogFragment.TAG))
         }
     }

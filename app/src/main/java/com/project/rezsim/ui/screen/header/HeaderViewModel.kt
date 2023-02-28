@@ -11,7 +11,7 @@ class HeaderViewModel : RezsimViewModel() {
     val buttonColorLiveData = MutableLiveData<Pair<Int, Int>>()
     val backLiveData = MutableLiveData<Boolean>()
     val titleLiveData = MutableLiveData<String>()
-    val buttonsLiveData = MutableLiveData<IntArray>()
+    val toolButtonsLiveData = MutableLiveData<IntArray>()
 
     private val stringRepository: StringRepository by inject()
 
@@ -19,7 +19,7 @@ class HeaderViewModel : RezsimViewModel() {
         backLiveData.value = true
     }
 
-    fun onButtonPressed(buttonId: Int) {
+    fun onToolButtonPressed(buttonId: Int) {
         buttonPressedLiveData.value = buttonId
     }
 
@@ -35,8 +35,8 @@ class HeaderViewModel : RezsimViewModel() {
         titleLiveData.value = tilteText ?: ""
     }
 
-    fun setButtons(buttonsResId: IntArray?) {
-        buttonsLiveData.value = buttonsResId ?: intArrayOf()
+    fun setToolButtons(buttonsResId: IntArray?) {
+        toolButtonsLiveData.value = buttonsResId ?: intArrayOf()
     }
 
     fun setButtonColor(buttonResId: Int, colorResId: Int) {
