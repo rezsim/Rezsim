@@ -24,6 +24,7 @@ import java.util.*
 class OverviewViewModel : RezsimViewModel() {
 
     val monthSelectorVisibilityLiveData = MutableLiveData<Boolean>()
+    val paymentVisibilityLiveData = MutableLiveData<Boolean>()
     val meterItemsLiveData = MutableLiveData<List<Measurement>>()
     val reinitLiveData = MutableLiveData<Boolean>()
 
@@ -42,6 +43,7 @@ class OverviewViewModel : RezsimViewModel() {
     fun init() {
         months = null
         setMonthSelectorVisibility(settingsRepository.readOverviewMonthSelectorVisible())
+        setPaymentVisibility(settingsRepository.readOverviewPaymentVisible())
     }
 
     fun title() = stringRepository.getById(if (utility == Utility.GAS) R.string.overview_header_title_gas else R.string.overview_header_title_electricity)
@@ -57,6 +59,10 @@ class OverviewViewModel : RezsimViewModel() {
             setMonthSelectorVisibility(!(monthSelectorVisibilityLiveData.value == true))
             settingsRepository.writeOverviewMonthSelectorVisible(monthSelectorVisibilityLiveData.value!!)
             meterItemsLiveData.value = collectMeasurements()
+        } else if (buttonId == R.drawable.ic_dollar) {
+            setPaymentVisibility(!(paymentVisibilityLiveData.value == true))
+            settingsRepository.writeOverviewPaymentVisible(paymentVisibilityLiveData.value!!)
+
         }
     }
 
@@ -89,6 +95,11 @@ class OverviewViewModel : RezsimViewModel() {
     private fun setMonthSelectorVisibility(visible: Boolean) {
         monthSelectorVisibilityLiveData.value = visible
         headerViewModel.setButtonColor(R.drawable.ic_calendar, if (visible) R.color.material_indigo_5 else R.color.material_grey_8)
+    }
+
+    private fun setPaymentVisibility(visible: Boolean) {
+        paymentVisibilityLiveData.value = visible
+        headerViewModel.setButtonColor(R.drawable.ic_dollar, if (visible) R.color.material_indigo_5 else R.color.material_grey_8)
     }
 
     private fun calculateMonths(): List<Month> = measurements().map {

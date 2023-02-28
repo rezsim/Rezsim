@@ -10,6 +10,7 @@ import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -48,6 +49,9 @@ class OverviewFragment : RezsimFragment() {
     private lateinit var yearButton: AppCompatButton
     private val monthSelectorButtons = mutableListOf<AppCompatButton>()
     private lateinit var measurementAdapter: MeasurementAdapter
+    private lateinit var paymentCard: CardView
+    private lateinit var paymentUnderText: AppCompatTextView
+    private lateinit var paymentAboveText: AppCompatTextView
 
     private val itemDecoration = MeasurementMarginDecoration()
 
@@ -65,6 +69,10 @@ class OverviewFragment : RezsimFragment() {
                 isSelected = true
 //                setOnClickListener { selectDate() }
             }
+            paymentCard = it.findViewById(R.id.cvPayment)
+            paymentUnderText = it.findViewById(R.id.tvPaymentValueUnderLimit)
+            paymentAboveText = it.findViewById(R.id.tvPaymentValueAboveLimit)
+
             viewModel.init()
             it.findViewById<RecyclerView>(R.id.rvMeters).apply {
                 layoutManager = LinearLayoutManager(requireContext())
@@ -82,6 +90,7 @@ class OverviewFragment : RezsimFragment() {
     override fun subscribeObservers() {
         super.subscribeObservers()
         viewModel.monthSelectorVisibilityLiveData.observe (this) { setMonthSelectorVisibility(it) }
+        viewModel.paymentVisibilityLiveData.observe(this) { setPaymentVisibility(it) }
         headerViewModel.backLiveData.observeForever { goBack(it) }
         headerViewModel.buttonPressedLiveData.observe(this) { viewModel.headerButtonPressed(it) }
         viewModel.meterItemsLiveData.observe(this) { setMeterItems(it) }
@@ -96,6 +105,15 @@ class OverviewFragment : RezsimFragment() {
 
     private fun setMonthSelectorVisibility(visible: Boolean) {
         layoutDateSelector.visibility = if (visible) View.VISIBLE else View.GONE
+    }
+
+    private fun setPaymentVisibility(visible: Boolean) {
+        (if (visible) View.VISIBLE else View.GONE).let {
+            paymentCard.visibility = it
+            paymentUnderText.visibility = it
+            paymentAboveText.visibility = it
+        }
+
     }
 
     private fun refreshMonthSelector() {
