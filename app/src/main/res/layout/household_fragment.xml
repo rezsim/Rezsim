@@ -208,13 +208,14 @@
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                app:layout_constraintTop_toBottomOf="@id/vElectricity"
-               android:layout_marginTop="16dp"
                android:animateLayoutChanges="true">
 
                <androidx.constraintlayout.widget.ConstraintLayout
                    android:id="@+id/clElectricitySettings"
                    android:layout_width="match_parent"
-                   android:layout_height="match_parent"
+                   android:layout_height="wrap_content"
+                   app:layout_constraintTop_toTopOf="parent"
+                   android:layout_marginTop="16dp"
                    android:visibility="gone"
                    tools:visibility="visible">
 
