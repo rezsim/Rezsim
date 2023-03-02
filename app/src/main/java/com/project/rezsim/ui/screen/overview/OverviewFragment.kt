@@ -1,19 +1,16 @@
 package com.project.rezsim.ui.screen.overview
 
 import android.app.DatePickerDialog
-import android.content.res.Resources
 import android.graphics.PorterDuff
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
-import android.widget.ScrollView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.rezsim.R
@@ -22,14 +19,16 @@ import com.project.rezsim.device.ColorRepository
 import com.project.rezsim.device.DrawableRepository
 import com.project.rezsim.device.StringRepository
 import com.project.rezsim.device.dp
+import com.project.rezsim.server.dto.calculation.Calculation
 import com.project.rezsim.server.dto.measurement.Measurement
+import com.project.rezsim.server.dto.measurement.Utility
 import com.project.rezsim.tool.DateHelper
 import com.project.rezsim.ui.screen.activity.MainActivityViewModel
 import com.project.rezsim.ui.screen.header.HeaderViewModel
-import com.project.rezsim.ui.screen.household.HouseholdFragment
 import com.project.rezsim.ui.screen.main.MainFragment
 import com.project.rezsim.ui.screen.overview.list.MeasurementAdapter
 import com.project.rezsim.ui.screen.overview.list.MeasurementMarginDecoration
+import com.project.rezsim.ui.view.message.MessageSeverity
 import com.project.rezsim.ui.view.message.MessageType
 import org.koin.android.ext.android.inject
 import java.util.*
@@ -51,7 +50,11 @@ class OverviewFragment : RezsimFragment() {
     private lateinit var measurementAdapter: MeasurementAdapter
     private lateinit var paymentCard: CardView
     private lateinit var paymentUnderText: AppCompatTextView
+    private lateinit var comsumptionUnderText: AppCompatTextView
     private lateinit var paymentAboveText: AppCompatTextView
+    private lateinit var comsumptionAboveText: AppCompatTextView
+    private lateinit var paymentFullText: AppCompatTextView
+    private lateinit var comsumptionFullText: AppCompatTextView
 
     private val itemDecoration = MeasurementMarginDecoration()
 
@@ -72,6 +75,10 @@ class OverviewFragment : RezsimFragment() {
             paymentCard = it.findViewById(R.id.cvPayment)
             paymentUnderText = it.findViewById(R.id.tvPaymentValueUnderLimit)
             paymentAboveText = it.findViewById(R.id.tvPaymentValueAboveLimit)
+            comsumptionUnderText = it.findViewById(R.id.tvPaymentConsunptionUnderLimit)
+            comsumptionAboveText = it.findViewById(R.id.tvPaymentConsunptionAboveLimit)
+            paymentFullText = it.findViewById(R.id.tvPaymentValue)
+            comsumptionFullText = it.findViewById(R.id.tvPaymentConsunption)
 
             viewModel.init()
             it.findViewById<RecyclerView>(R.id.rvMeters).apply {
@@ -81,7 +88,7 @@ class OverviewFragment : RezsimFragment() {
                 removeItemDecoration(itemDecoration)
                 addItemDecoration(itemDecoration)
             }
-            it.findViewById<CardView>(R.id.cvPayment).backgroundTintList = colorRepository.stateList(viewModel.paymentBackground())
+            paymentCard.backgroundTintList = colorRepository.stateList(viewModel.paymentBackground())
         }
         refreshMonthSelector()
         monthSelectorButtons.last().performClick()
@@ -101,6 +108,7 @@ class OverviewFragment : RezsimFragment() {
             }
         }
         viewModel.reinitLiveData.observe(this) { setupViews() }
+        viewModel.calculationLiveData.observe(this) { showCalculation(it) }
     }
 
     private fun setMonthSelectorVisibility(visible: Boolean) {
@@ -183,6 +191,20 @@ class OverviewFragment : RezsimFragment() {
 
     private fun setMeterItems(measurements: List<Measurement>) {
         measurementAdapter.setItems(measurements)
+    }
+
+    private fun showCalculation(calculation: Calculation?) {
+        if (calculation != null) {
+            paymentUnderText.text = stringRepository.getById(R.string.payment_value, calculation.discountPrice)
+            paymentAboveText.text = stringRepository.getById(R.string.payment_value, calculation.fullPrice)
+            paymentFullText.text = stringRepository.getById(R.string.payment_value, calculation.discountPrice + calculation.fullPrice)
+            val comsumptionResId = if (viewModel.utility == Utility.GAS) R.string.gas_value else R.string.electricity_value
+            comsumptionUnderText.text = stringRepository.getById(comsumptionResId, calculation.underConsumption)
+            comsumptionAboveText.text = stringRepository.getById(comsumptionResId, calculation.overConsumption)
+            comsumptionFullText.text = stringRepository.getById(comsumptionResId, calculation.underConsumption + calculation.overConsumption)
+        } else {
+            activityViewModel.showMessage(null, stringRepository.getById(R.string.overview_calculation_error), MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.ERROR)
+        }
     }
 
     companion object {

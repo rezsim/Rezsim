@@ -3,6 +3,7 @@ package com.project.rezsim.di
 import com.madhava.keyboard.vario.base.Singletons
 import com.project.rezsim.server.register.RegisterRepository
 import com.project.rezsim.server.UserModel
+import com.project.rezsim.server.calculation.CalculationRepository
 import com.project.rezsim.server.household.HouseholdRepository
 import com.project.rezsim.server.login.LoginRepository
 import com.project.rezsim.server.measurement.MeasurementRepository
@@ -22,5 +23,7 @@ val serverModule = module {
     factory { HouseholdRepository() }
 
     factory { MeasurementRepository() }
+
+    factory { CalculationRepository() }
 
 }

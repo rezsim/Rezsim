@@ -189,7 +189,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/text_color"
                             android:textSize="@dimen/text_size_small"
-                            android:text="@string/main_title_monthly_consumption"/>
+                            android:text="@string/main_title_last_consumption"/>
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvValueMonthlyConsumptionElectricity"
@@ -333,7 +333,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/text_color"
                             android:textSize="@dimen/text_size_small"
-                            android:text="@string/main_title_monthly_consumption"/>
+                            android:text="@string/main_title_last_consumption"/>
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvValueMonthlyConsumptionGas"

@@ -9,6 +9,8 @@ import com.project.rezsim.base.RezsimViewModel
 import com.project.rezsim.device.SettingsRepository
 import com.project.rezsim.device.StringRepository
 import com.project.rezsim.server.UserModel
+import com.project.rezsim.server.calculation.CalculationRepository
+import com.project.rezsim.server.dto.calculation.Calculation
 import com.project.rezsim.server.dto.household.Household
 import com.project.rezsim.server.dto.measurement.Measurement
 import com.project.rezsim.server.dto.measurement.Utility
@@ -27,9 +29,11 @@ class OverviewViewModel : RezsimViewModel() {
     val paymentVisibilityLiveData = MutableLiveData<Boolean>()
     val meterItemsLiveData = MutableLiveData<List<Measurement>>()
     val reinitLiveData = MutableLiveData<Boolean>()
+    val calculationLiveData = MutableLiveData<Calculation?>()
 
     private val userModel: UserModel by inject()
     private val headerViewModel: HeaderViewModel by inject()
+    private val calculationRepository: CalculationRepository by inject()
 
     var householdIndex: Int = 0
     lateinit var utility: Utility
@@ -44,6 +48,7 @@ class OverviewViewModel : RezsimViewModel() {
         months = null
         setMonthSelectorVisibility(settingsRepository.readOverviewMonthSelectorVisible())
         setPaymentVisibility(settingsRepository.readOverviewPaymentVisible())
+        calculate()
     }
 
     fun title() = stringRepository.getById(if (utility == Utility.GAS) R.string.overview_header_title_gas else R.string.overview_header_title_electricity)
@@ -86,6 +91,7 @@ class OverviewViewModel : RezsimViewModel() {
 
     fun refresh() {
         meterItemsLiveData.value = collectMeasurements()
+        calculate()
     }
 
     fun reInit() {
@@ -119,5 +125,14 @@ class OverviewViewModel : RezsimViewModel() {
 
     private fun measurements() = userModel.getUser()!!.householdList()[householdIndex].measurementList(utility)
 
+    private fun calculate() {
+        val activityViewModel = Singletons.instance(MainActivityViewModel::class) as MainActivityViewModel
+        activityViewModel.showProgress()
+        val householdId = userModel.getUser()!!.householdList()[householdIndex].id
+        calculationRepository.getCalculation(householdId, utility.value).observeForever {
+            activityViewModel.hideProgress()
+            calculationLiveData.postValue(it)
+        }
+    }
 
 }
