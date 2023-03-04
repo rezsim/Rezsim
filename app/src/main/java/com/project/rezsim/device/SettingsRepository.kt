@@ -1,12 +1,14 @@
 package com.project.rezsim.device
 
 import android.content.Context
+import com.project.rezsim.server.UserModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class SettingsRepository : KoinComponent {
 
     private val context: Context by inject()
+    private val userModel: UserModel by inject()
 
     private val settings = context.getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE)
 
@@ -22,21 +24,21 @@ class SettingsRepository : KoinComponent {
         apply()
     }
 
-    fun readLastHouseholdId() = settings.getLong(KEY_LAST_HOUSEHOLD_ID, 0)
+    fun readLastHouseholdId() = settings.getLong(key(KEY_LAST_HOUSEHOLD_ID), 0)
     fun writeLastHouseholdId(lastHouseholdId: Long) = settings.edit().apply {
-        putLong(KEY_LAST_HOUSEHOLD_ID, lastHouseholdId)
+        putLong(key(KEY_LAST_HOUSEHOLD_ID), lastHouseholdId)
         apply()
     }
 
-    fun readOverviewMonthSelectorVisible() = settings.getBoolean(KEY_OVERVIEW_MONTH_SELECTOR_VISIBLE, false)
+    fun readOverviewMonthSelectorVisible() = settings.getBoolean(key(KEY_OVERVIEW_MONTH_SELECTOR_VISIBLE), false)
     fun writeOverviewMonthSelectorVisible(visible: Boolean) = settings.edit().apply {
-        putBoolean(KEY_OVERVIEW_MONTH_SELECTOR_VISIBLE, visible)
+        putBoolean(key(KEY_OVERVIEW_MONTH_SELECTOR_VISIBLE), visible)
         apply()
     }
 
-    fun readOverviewPaymentVisible() = settings.getBoolean(KEY_OVERVIEW_PAYMENT_VISIBLE, false)
+    fun readOverviewPaymentVisible() = settings.getBoolean(key(KEY_OVERVIEW_PAYMENT_VISIBLE), false)
     fun writeOverviewPaymentVisible(visible: Boolean) = settings.edit().apply {
-        putBoolean(KEY_OVERVIEW_PAYMENT_VISIBLE, visible)
+        putBoolean(key(KEY_OVERVIEW_PAYMENT_VISIBLE), visible)
         apply()
     }
 
@@ -58,6 +60,8 @@ class SettingsRepository : KoinComponent {
             apply()
         }
     }
+
+    private fun key(KEY: String) = "${userModel.getEmail()}_$KEY"
 
     companion object {
         private const val SHARED_PREFERENCE_NAME = "RezsimApp"

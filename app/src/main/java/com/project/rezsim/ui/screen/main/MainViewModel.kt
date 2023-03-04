@@ -46,7 +46,6 @@ class MainViewModel : RezsimViewModel() {
     }.toList()
 
     fun householdSelected(householdIndex: Int) {
-        Log.d("DEBINFO-R", "householdIndex:$householdIndex")
         currentHousehold = householdIndex
         userModel.getUser()?.householdList()?.get(currentHousehold!!)?.let {
             settingsRepository.writeLastHouseholdId(it.id)
@@ -71,13 +70,6 @@ class MainViewModel : RezsimViewModel() {
             putLong(MeterDialogFragment.ARG_HOUSEHOLD, userModel.getUser()?.householdList()?.get(currentHousehold!!)?.id ?: error("No household for read meter."))
         }
         (Singletons.instance(MainActivityViewModel::class) as MainActivityViewModel).dialogLiveData.value = DialogParameter(MeterDialogFragment.TAG, meterDialogParam)
-    }
-
-    fun onPanelClick(utility: Utility) {
-        if (userModel.getUser()?.householdList()?.get(currentHousehold())?.measurementList(utility).isNullOrEmpty()) {
-            return
-        }
-        (Singletons.instance(MainActivityViewModel::class) as MainActivityViewModel).goOverviewScreen(currentHousehold(), utility)
     }
 
 }

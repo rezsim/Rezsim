@@ -61,7 +61,7 @@ class LoginViewModel : RezsimViewModel() {
                     loginButtonEnabledLiveData.value = true
                 }
             } else {
-                finishedLiveData.value = it
+                finishedLiveData.postValue(it)
             }
         }
     }

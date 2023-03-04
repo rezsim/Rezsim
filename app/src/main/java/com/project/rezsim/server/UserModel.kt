@@ -61,12 +61,14 @@ class UserModel : KoinComponent, Singleton {
         }
     }
 
-    fun logout() {
+    fun logout(restart: Boolean = false) {
         user = null
         token = null
         password = null
         settingsRepository.clearPassword()
-        logoutLiveData.postValue(true)
+        if (restart) {
+            logoutLiveData.postValue(true)
+        }
     }
 
     fun updateUser(user: User) {

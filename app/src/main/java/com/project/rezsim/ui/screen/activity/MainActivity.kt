@@ -17,6 +17,10 @@ import com.madhava.keyboard.vario.base.Singletons
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimDialogFragment
 import com.project.rezsim.device.DrawableRepository
+import com.project.rezsim.di.deviceModule
+import com.project.rezsim.di.serverModule
+import com.project.rezsim.di.viewModelModule
+import com.project.rezsim.server.UserModel
 import com.project.rezsim.ui.screen.dialog.DialogParameter
 import com.project.rezsim.ui.screen.dialog.message.MessageDialogFragment
 import com.project.rezsim.ui.screen.dialog.meter.MeterDialogFragment
@@ -32,6 +36,8 @@ import com.project.rezsim.ui.screen.overview.OverviewFragment
 import com.project.rezsim.ui.screen.splash.SplashFragment
 import com.project.rezsim.ui.view.message.*
 import org.koin.android.ext.android.inject
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.unloadKoinModules
 import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
@@ -39,6 +45,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainActivityViewModel by inject()
     private val headerViewModel: HeaderViewModel by inject()
     private val drawableRepository: DrawableRepository by inject()
+    private val userModel: UserModel by inject()
 
     private lateinit var rootView: View
     private lateinit var progress: ContentLoadingProgressBar
@@ -59,16 +66,10 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         val currFrag = viewModel.currentFragmentTag()
         if (currFrag == SplashFragment.TAG || currFrag == LoginFragment.TAG) {
-            super.onBackPressed()
+            quit()
         } else {
             headerViewModel.backLiveData.value = true
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Singletons.clearAll()
-        exitProcess(0)
     }
 
     private fun setupViews() {
@@ -90,12 +91,13 @@ class MainActivity : AppCompatActivity() {
         viewModel.fabIconLiveData.observe(this) { showFab(it) }
         viewModel.messageLiveData.observe(this) { showMessage(it) }
         viewModel.dialogLiveData.observe(this) { showDialog(it) }
-        viewModel.quitLiveData.observe(this) { finish() }
+        viewModel.quitLiveData.observe(this) { quit() }
         viewModel.hideKeyboardLiveData.observe(this) { hideKeyboard(it) }
+        userModel.logoutLiveData.observe(this) { logout() }
     }
 
     private fun setFragment(containerId: Int, fragmentTag: String) {
-        Log.d("DEBINFO", "MainActivity.setFragment() fragmentTag:$fragmentTag")
+        Log.d("DEBINFO-R", "MainActivity.setFragment() fragmentTag:$fragmentTag")
         val fm = supportFragmentManager
         val tr = fm.beginTransaction()
         val currentFragment = fm.findFragmentById(containerId)
@@ -198,5 +200,21 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    private fun logout() {
+        unloadKoinModules(listOf(viewModelModule, serverModule, deviceModule))
+        Singletons.clearAll()
+        loadKoinModules(listOf(viewModelModule, serverModule, deviceModule))
+        coldBoot = false
+        recreate()
+    }
+
+    private fun quit() {
+        Singletons.clearAll()
+        exitProcess(0)
+    }
+
+    companion object {
+        var coldBoot = true
+    }
 
 }

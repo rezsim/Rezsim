@@ -11,7 +11,7 @@ class UserDialogViewModel : RezsimViewModel() {
     fun user() = userModel.getEmail()
 
     fun logoutClicked() {
-        userModel.logout()
+        userModel.logout(restart = true)
 
     }
 

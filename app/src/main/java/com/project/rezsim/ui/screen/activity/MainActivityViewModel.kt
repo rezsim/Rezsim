@@ -77,14 +77,12 @@ class MainActivityViewModel : RezsimViewModel() {
 
 
     init {
-        Log.d("DEBINFO", "MainActivityViewModel.init")
-        currentFragmentTag = SplashFragment.TAG
+        currentFragmentTag = if (MainActivity.coldBoot) SplashFragment.TAG else LoginFragment.TAG
         splashViewModel.finishedLiveData.observeForever { splashFinished() }
         loginViewModel.finishedLiveData.observeForever { loginFinished() }
         headerViewModel.buttonPressedLiveData.observeForever { headerButtonPressed(it) }
         headerViewModel.backLiveData.observeForever { goBack(it) }
         mainViewModel.addHouseholdLiveData.observeForever { addNewHousehold() }
-        userModel.logoutLiveData.observeForever { logout() }
         footerViewModel.selectButtonLiveData.observeForever { shortTo(it) }
     }
 
@@ -190,9 +188,7 @@ class MainActivityViewModel : RezsimViewModel() {
     }
 
     private fun loginFinished() {
-        if (currentFragmentTag == LoginFragment.TAG) {
-            currentFragmentTag = startScreen()
-        }
+        currentFragmentTag = startScreen()
     }
 
     private fun startScreen() = if (userModel.hasHousehold()) MainFragment.TAG else HouseholdFragment.TAG
@@ -211,11 +207,6 @@ class MainActivityViewModel : RezsimViewModel() {
             currentFragmentTag = HouseholdFragment.TAG
             householdViewModel.household = null
         }
-    }
-
-    private fun logout() {
-        Message.clear()
-        currentFragmentTag = LoginFragment.TAG
     }
 
     private fun goBack(value: Boolean) {
