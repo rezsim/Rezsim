@@ -8,7 +8,7 @@
     <string name="fab_save">Mentés</string>
     <string name="fill_all_mandatory">Töltsön ki minden pirossal jelölt kötelező mezőt!</string>
 
-    <string name="payment_value">%d Ft</string>
+    <string name="payment_value">%s Ft</string>
     <string name="electricity_value">%d kWh</string>
     <string name="gas_value">%d m3</string>
 

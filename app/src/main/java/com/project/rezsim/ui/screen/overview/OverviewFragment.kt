@@ -15,10 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
-import com.project.rezsim.device.ColorRepository
-import com.project.rezsim.device.DrawableRepository
-import com.project.rezsim.device.StringRepository
-import com.project.rezsim.device.dp
+import com.project.rezsim.device.*
 import com.project.rezsim.server.dto.calculation.Calculation
 import com.project.rezsim.server.dto.measurement.Measurement
 import com.project.rezsim.server.dto.measurement.Utility
@@ -195,9 +192,9 @@ class OverviewFragment : RezsimFragment() {
 
     private fun showCalculation(calculation: Calculation?) {
         if (calculation != null) {
-            paymentUnderText.text = stringRepository.getById(R.string.payment_value, calculation.discountPrice)
-            paymentAboveText.text = stringRepository.getById(R.string.payment_value, calculation.fullPrice)
-            paymentFullText.text = stringRepository.getById(R.string.payment_value, calculation.discountPrice + calculation.fullPrice)
+            paymentUnderText.text = stringRepository.getById(R.string.payment_value, calculation.discountPrice.divThousands)
+            paymentAboveText.text = stringRepository.getById(R.string.payment_value, calculation.fullPrice.divThousands)
+            paymentFullText.text = stringRepository.getById(R.string.payment_value, (calculation.discountPrice + calculation.fullPrice).divThousands)
             val comsumptionResId = if (viewModel.utility == Utility.GAS) R.string.gas_value else R.string.electricity_value
             comsumptionUnderText.text = stringRepository.getById(comsumptionResId, calculation.underConsumption)
             comsumptionAboveText.text = stringRepository.getById(comsumptionResId, calculation.overConsumption)

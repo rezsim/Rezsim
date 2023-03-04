@@ -1,8 +1,14 @@
 package com.project.rezsim.device
 
 import android.content.Context
+import android.util.Log
+import okhttp3.internal.format
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.text.NumberFormat
+import java.util.*
 
 class StringRepository : KoinComponent {
 
@@ -32,3 +38,15 @@ class StringRepository : KoinComponent {
     private fun getNameById(id: Int) = context.resources.getResourceEntryName(id)
 
 }
+val Int.divThousands: String
+    get() {
+        val f = NumberFormat.getInstance(Locale.getDefault()).apply {
+            val customSymbol = DecimalFormatSymbols()
+            customSymbol.decimalSeparator = ','
+            customSymbol.groupingSeparator = ' '
+            (this as DecimalFormat).decimalFormatSymbols = customSymbol
+            this.setGroupingUsed(true)
+        }
+        val formatted = f.format(this)
+        return formatted
+    }
