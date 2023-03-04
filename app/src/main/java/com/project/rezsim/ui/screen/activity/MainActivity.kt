@@ -201,6 +201,7 @@ class MainActivity : AppCompatActivity() {
     private fun logout() {
         unloadKoinModules(listOf(viewModelModule, serverModule, deviceModule))
         loadKoinModules(listOf(viewModelModule, serverModule, deviceModule))
+        Message.clear()
         coldBoot = false
         recreate()
     }
