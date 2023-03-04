@@ -1,6 +1,5 @@
 package com.project.rezsim.di
 
-import com.madhava.keyboard.vario.base.Singletons
 import com.project.rezsim.server.register.RegisterRepository
 import com.project.rezsim.server.UserModel
 import com.project.rezsim.server.calculation.CalculationRepository
@@ -12,7 +11,7 @@ import org.koin.dsl.module
 
 val serverModule = module {
 
-    single { Singletons.instance(UserModel::class) as UserModel }
+    single { UserModel() }
 
     factory { RegisterRepository() }
 

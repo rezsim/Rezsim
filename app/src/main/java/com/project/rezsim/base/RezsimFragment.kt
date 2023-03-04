@@ -5,9 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.madhava.keyboard.vario.base.Singletons
-import org.koin.android.ext.android.get
-import kotlin.reflect.KClass
 
 open class RezsimFragment : Fragment() {
 

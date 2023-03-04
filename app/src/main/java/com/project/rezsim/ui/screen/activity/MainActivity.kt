@@ -13,7 +13,6 @@ import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.madhava.keyboard.vario.base.Singletons
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimDialogFragment
 import com.project.rezsim.device.DrawableRepository
@@ -26,7 +25,6 @@ import com.project.rezsim.ui.screen.dialog.message.MessageDialogFragment
 import com.project.rezsim.ui.screen.dialog.meter.MeterDialogFragment
 import com.project.rezsim.ui.screen.dialog.user.UserDialogFragment
 import com.project.rezsim.ui.screen.footer.FooterFragment
-import com.project.rezsim.ui.screen.footer.FooterViewModel
 import com.project.rezsim.ui.screen.header.HeaderFragment
 import com.project.rezsim.ui.screen.header.HeaderViewModel
 import com.project.rezsim.ui.screen.household.HouseholdFragment
@@ -202,14 +200,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun logout() {
         unloadKoinModules(listOf(viewModelModule, serverModule, deviceModule))
-        Singletons.clearAll()
         loadKoinModules(listOf(viewModelModule, serverModule, deviceModule))
         coldBoot = false
         recreate()
     }
 
     private fun quit() {
-        Singletons.clearAll()
         exitProcess(0)
     }
 

@@ -2,11 +2,9 @@ package com.project.rezsim.ui.screen.activity
 
 import android.app.Activity
 import android.os.IBinder
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.MutableLiveData
-import com.madhava.keyboard.vario.base.Singletons
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimViewModel
 import com.project.rezsim.device.StringRepository
@@ -29,9 +27,7 @@ import com.project.rezsim.ui.screen.household.HouseholdViewModel
 import com.project.rezsim.ui.screen.main.MainViewModel
 import com.project.rezsim.ui.screen.overview.OverviewFragment
 import com.project.rezsim.ui.screen.overview.OverviewViewModel
-import com.project.rezsim.ui.view.message.Message
 import com.project.rezsim.ui.view.message.MessageParameter
-import org.koin.android.ext.android.inject
 import org.koin.core.component.inject
 
 class MainActivityViewModel : RezsimViewModel() {
@@ -225,10 +221,6 @@ class MainActivityViewModel : RezsimViewModel() {
         if (buttonId == R.drawable.ic_user) {
             showDialog(DialogParameter(UserDialogFragment.TAG))
         }
-    }
-
-    companion object {
-        fun getInstance() = Singletons.instance(MainActivityViewModel::class) as MainActivityViewModel
     }
 
 }

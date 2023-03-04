@@ -3,7 +3,6 @@ package com.project.rezsim.ui.screen.overview
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.madhava.keyboard.vario.base.Singletons
 import com.project.rezsim.R
 import com.project.rezsim.base.RezsimViewModel
 import com.project.rezsim.device.SettingsRepository
@@ -11,14 +10,12 @@ import com.project.rezsim.device.StringRepository
 import com.project.rezsim.server.UserModel
 import com.project.rezsim.server.calculation.CalculationRepository
 import com.project.rezsim.server.dto.calculation.Calculation
-import com.project.rezsim.server.dto.household.Household
 import com.project.rezsim.server.dto.measurement.Measurement
 import com.project.rezsim.server.dto.measurement.Utility
 import com.project.rezsim.tool.DateHelper
 import com.project.rezsim.ui.screen.activity.MainActivityViewModel
 import com.project.rezsim.ui.screen.dialog.DialogParameter
 import com.project.rezsim.ui.screen.dialog.meter.MeterDialogFragment
-import com.project.rezsim.ui.screen.dialog.user.UserDialogFragment
 import com.project.rezsim.ui.screen.header.HeaderViewModel
 import org.koin.core.component.inject
 import java.util.*
@@ -34,6 +31,7 @@ class OverviewViewModel : RezsimViewModel() {
     private val userModel: UserModel by inject()
     private val headerViewModel: HeaderViewModel by inject()
     private val calculationRepository: CalculationRepository by inject()
+    private val activityViewModel: MainActivityViewModel by inject()
 
     var householdIndex: Int = 0
     lateinit var utility: Utility
@@ -85,7 +83,7 @@ class OverviewViewModel : RezsimViewModel() {
             putString(MeterDialogFragment.ARG_UTILITY, utility.name)
             putLong(MeterDialogFragment.ARG_HOUSEHOLD, userModel.getUser()?.householdList()?.get(householdIndex)?.id ?: error("No household for read meter."))
         }
-        (Singletons.instance(MainActivityViewModel::class) as MainActivityViewModel).dialogLiveData.value = DialogParameter(
+        activityViewModel.dialogLiveData.value = DialogParameter(
             MeterDialogFragment.TAG, meterDialogParam)
     }
 
@@ -109,7 +107,6 @@ class OverviewViewModel : RezsimViewModel() {
     }
 
     private fun calculateMonths(): List<Month> = measurements().map {
-        Log.d("DEBINFO-R", "calculateMonths()")
         val date = DateHelper.serverDateStringToCalendar(it.date)
         Month(date.get(Calendar.YEAR), date.get(Calendar.MONTH))
     }.distinct()
@@ -126,7 +123,6 @@ class OverviewViewModel : RezsimViewModel() {
     private fun measurements() = userModel.getUser()!!.householdList()[householdIndex].measurementList(utility)
 
     private fun calculate() {
-        val activityViewModel = Singletons.instance(MainActivityViewModel::class) as MainActivityViewModel
         activityViewModel.showProgress()
         val householdId = userModel.getUser()!!.householdList()[householdIndex].id
         calculationRepository.getCalculation(householdId, utility.value).observeForever {

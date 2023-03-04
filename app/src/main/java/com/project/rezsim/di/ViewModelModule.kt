@@ -1,6 +1,5 @@
 package com.project.rezsim.di
 
-import com.madhava.keyboard.vario.base.Singletons
 import com.project.rezsim.ui.screen.dialog.user.UserDialogViewModel
 import com.project.rezsim.ui.screen.activity.MainActivityViewModel
 import com.project.rezsim.ui.screen.dialog.message.MessageDialogViewModel
@@ -17,21 +16,21 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
 
-    single { Singletons.instance(MainActivityViewModel::class) as MainActivityViewModel }
+    single { MainActivityViewModel() }
 
-    single { Singletons.instance(SplashViewModel::class) as SplashViewModel }
+    single { SplashViewModel() }
 
-    single { Singletons.instance(FooterViewModel::class) as FooterViewModel }
+    single { FooterViewModel() }
 
-    single { Singletons.instance(HeaderViewModel::class) as HeaderViewModel }
+    single { HeaderViewModel() }
 
-    single { Singletons.instance(LoginViewModel::class) as LoginViewModel }
+    single { LoginViewModel() }
 
-    single { Singletons.instance(HouseholdViewModel::class) as HouseholdViewModel}
+    single { HouseholdViewModel() }
 
-    single { Singletons.instance(MainViewModel::class) as MainViewModel }
+    single { MainViewModel() }
 
-    single { Singletons.instance(OverviewViewModel::class) as OverviewViewModel }
+    single { OverviewViewModel() }
 
     factory { UserDialogViewModel() }
 

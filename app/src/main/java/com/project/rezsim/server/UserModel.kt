@@ -1,17 +1,14 @@
 package com.project.rezsim.server
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.project.rezsim.base.singleton.Singleton
 import com.project.rezsim.device.SettingsRepository
-import com.project.rezsim.server.dto.household.Household
 import com.project.rezsim.server.dto.User
 import com.project.rezsim.server.dto.measurement.Utility
 import com.project.rezsim.server.login.LoginResult
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class UserModel : KoinComponent, Singleton {
+class UserModel : KoinComponent {
 
     val logoutLiveData = MutableLiveData<Boolean>()
 
