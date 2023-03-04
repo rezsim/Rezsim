@@ -130,6 +130,11 @@ class HouseholdFragment : RezsimFragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.onResume()
+    }
+
     private fun setContent(content: Content?) {
         headerViewModel.setTitle(if (content == null) R.string.household_title_create else R.string.household_title_change)
         layoutMeters.visibility = if (content == null) View.VISIBLE else View.GONE

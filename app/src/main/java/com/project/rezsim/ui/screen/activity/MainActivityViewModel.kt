@@ -206,7 +206,7 @@ class MainActivityViewModel : RezsimViewModel() {
     }
 
     private fun goBack(value: Boolean) {
-        if (value && currentFragmentTag == MainFragment.TAG) {
+        if (value && (currentFragmentTag == MainFragment.TAG || currentFragmentTag == HouseholdFragment.TAG && !userModel.hasHousehold())) {
             headerViewModel.clearBackLiveData()
             showMessage(
                 titleResId = R.string.main_message_title_exit,

@@ -35,7 +35,7 @@ class HouseholdViewModel : RezsimViewModel() {
         contentLiveData.postValue(value?.let { Content.fromHousehold(value) } )
     }
 
-    init {
+    fun onResume() {
         if (!userModel.hasHousehold()) {
             mainActivityViewModel.showMessage(messageResId = R.string.household_no_household_yet, type = MessageType.SNACKBAR_MANUALCLOSE)
             household = null
