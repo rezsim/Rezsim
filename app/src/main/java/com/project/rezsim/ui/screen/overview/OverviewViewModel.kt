@@ -61,7 +61,7 @@ class OverviewViewModel : RezsimViewModel() {
         if (buttonId == R.drawable.ic_calendar) {
             setMonthSelectorVisibility(!(monthSelectorVisibilityLiveData.value == true))
             settingsRepository.writeOverviewMonthSelectorVisible(monthSelectorVisibilityLiveData.value!!)
-            meterItemsLiveData.value = collectMeasurements()
+            refresh()
         } else if (buttonId == R.drawable.ic_dollar) {
             setPaymentVisibility(!(paymentVisibilityLiveData.value == true))
             settingsRepository.writeOverviewPaymentVisible(paymentVisibilityLiveData.value!!)
@@ -71,7 +71,7 @@ class OverviewViewModel : RezsimViewModel() {
 
     fun selectMonth(monthIndex: Int) {
         currentMonth = monthIndex
-        meterItemsLiveData.value = collectMeasurements()
+        refresh()
     }
 
     fun minDate() = months().firstOrNull()?.startDate()?.let {
@@ -125,7 +125,8 @@ class OverviewViewModel : RezsimViewModel() {
     private fun calculate() {
         activityViewModel.showProgress()
         val householdId = userModel.getUser()!!.householdList()[householdIndex].id
-        calculationRepository.getCalculation(householdId, utility.value).observeForever {
+        val month = if (monthSelectorVisibilityLiveData.value == true) months?.get(currentMonth) else null
+        calculationRepository.getCalculation(householdId, utility.value, month).observeForever {
             activityViewModel.hideProgress()
             calculationLiveData.postValue(it)
         }

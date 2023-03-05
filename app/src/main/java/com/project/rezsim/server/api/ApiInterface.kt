@@ -30,6 +30,6 @@ interface ApiInterface {
     fun addNewMeasurement(@Body measurement: Measurement, @Header("Authorization") token: String): Call<Void>
 
     @GET("api/household/{householdId}/calculate/{utility}")
-    fun getCalculation(@Path("householdId") householdId: Long, @Path("utility") utility: Int, @Header("Authorization") token: String): Call<Calculation?>
+    fun getCalculation(@Path("householdId") householdId: Long, @Path("utility") utility: Int, @Query("year") year: String, @Query("month") month: String, @Header("Authorization") token: String): Call<Calculation?>
 
 }
