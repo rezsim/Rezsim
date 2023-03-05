@@ -46,7 +46,7 @@ class HouseholdRepository : ServerRepository() {
                     resultLiveData.postValue(false)
                     return@execute
                 }
-                val addedHouseholdId = userResponse.user.households.last().id
+                val addedHouseholdId = userResponse.user.householdList().last().id
                 var success = true
                 measurements.forEach {
                     it.householdId = addedHouseholdId
