@@ -128,7 +128,7 @@ class MeterDialogViewModel : RezsimViewModel() {
                 if (activityViewModel.currentFragmentTag() == MainFragment.TAG) {
                     mainViewModel.refresh()
                 } else if (activityViewModel.currentFragmentTag() == OverviewFragment.TAG) {
-                    overviewViewModel.refresh()
+                    overviewViewModel.refresh(true)
                 }
             }
         }

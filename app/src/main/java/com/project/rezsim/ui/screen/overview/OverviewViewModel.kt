@@ -27,6 +27,7 @@ class OverviewViewModel : RezsimViewModel() {
     val meterItemsLiveData = MutableLiveData<List<Measurement>>()
     val reinitLiveData = MutableLiveData<Boolean>()
     val calculationLiveData = MutableLiveData<Calculation?>()
+    val refreshMonthSelectorLiveData = MutableLiveData<Month?>()
 
     private val userModel: UserModel by inject()
     private val headerViewModel: HeaderViewModel by inject()
@@ -87,9 +88,18 @@ class OverviewViewModel : RezsimViewModel() {
             MeterDialogFragment.TAG, meterDialogParam)
     }
 
-    fun refresh() {
+    fun refresh(redrawMonthSelectorIfNeed: Boolean = false) {
         meterItemsLiveData.value = collectMeasurements()
         calculate()
+        if (redrawMonthSelectorIfNeed) {
+            val oldMonths = months ?: listOf()
+            val newMonths = calculateMonths()
+            if (newMonths.size != oldMonths.size) {
+                val selectedMonth = newMonths.firstOrNull { !oldMonths.contains(it) }
+                months = newMonths
+                refreshMonthSelectorLiveData.value = selectedMonth
+            }
+        }
     }
 
     fun reInit() {

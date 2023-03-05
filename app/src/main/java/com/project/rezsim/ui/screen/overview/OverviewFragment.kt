@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.postDelayed
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.rezsim.R
@@ -106,6 +107,7 @@ class OverviewFragment : RezsimFragment() {
         }
         viewModel.reinitLiveData.observe(this) { setupViews() }
         viewModel.calculationLiveData.observe(this) { showCalculation(it) }
+        viewModel.refreshMonthSelectorLiveData.observe(this) { refreshMonthSelector(it) }
     }
 
     private fun setMonthSelectorVisibility(visible: Boolean) {
@@ -121,7 +123,7 @@ class OverviewFragment : RezsimFragment() {
 
     }
 
-    private fun refreshMonthSelector() {
+    private fun refreshMonthSelector(selected: Month? = null) {
         view?.let {
             val layout: LinearLayout = it.findViewById(R.id.llMonths)
             monthSelectorButtons.clear()
@@ -132,11 +134,14 @@ class OverviewFragment : RezsimFragment() {
                 layout.addView(button)
             }
             it.findViewById<HorizontalScrollView>(R.id.swMonths).let {
-                it.post {
+                it.postDelayed({
                     it.fullScroll(View.FOCUS_RIGHT)
-                }
+                }, 100)
             }
-
+            selected?.let {
+                val button = monthSelectorButtons[viewModel.months().indexOf(it)]
+                button.performClick()
+            }
         }
     }
 
