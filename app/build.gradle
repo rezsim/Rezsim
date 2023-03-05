@@ -10,8 +10,8 @@ android {
         applicationId "com.project.rezsim"
         minSdk 23
         targetSdk 33
-        versionCode 13
-        versionName "1.0.7.3"
+        versionCode 14
+        versionName "1.0.7.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
