@@ -113,9 +113,7 @@ class HouseholdFragment : RezsimFragment() {
 
     override fun subscribeObservers() {
         super.subscribeObservers()
-        Log.d("DEBINFO-R", "activityViewModel.fabPressedLiveData start observing")
         activityViewModel.fabPressedLiveData.observe(this) {
-            Log.d("DEBINFO-R", "activityViewModel.fabPressedLiveData triggered: $it")
             if (it) {
                 activityViewModel.clearFabLiveData()
                 save()
@@ -180,14 +178,14 @@ class HouseholdFragment : RezsimFragment() {
         layoutElectricityMeter.visibility = if (enabled) View.VISIBLE else View.GONE
         editElectricityMeter.isEnabled = enabled
         layoutElectricityParameters.visibility = if (enabled) View.VISIBLE else View.GONE
-        switchGas.isEnabled = enabled
+//        switchGas.isEnabled = enabled
     }
 
     private fun setGasState(enabled: Boolean) {
         layoutGasMeter.visibility = if (enabled) View.VISIBLE else View.GONE
         editGasMeter.isEnabled = enabled
         layoutGasParameters.visibility = if (enabled) View.VISIBLE else View.GONE
-        switchElectricity.isEnabled = enabled
+//        switchElectricity.isEnabled = enabled
     }
 
     private fun goBack(value: Boolean) {
