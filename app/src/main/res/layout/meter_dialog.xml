@@ -170,7 +170,7 @@
         android:paddingHorizontal="8dp"
         android:visibility="gone"
         android:maxLines="2"
-        android:maxLength="400"
+        android:maxLength="250"
         android:hint="@string/dialog_meter_read_comment_hint"/>
 
 
