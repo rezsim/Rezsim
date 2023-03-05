@@ -134,6 +134,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:textSize="@dimen/text_size_normal"
+                    android:gravity="center"
                     android:textColor="@color/text_color"
                     android:text="@string/overview_payment_under_limit"/>
 
@@ -190,6 +191,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:textSize="@dimen/text_size_normal"
+                    android:gravity="center"
                     android:textColor="@color/text_color"
                     android:text="@string/overview_payment_above_limit"/>
 

@@ -109,8 +109,8 @@
     <string name="overview_month_10">Nov</string>
     <string name="overview_month_11">Dec</string>
     <string name="overview_payment">Összesen</string>
-    <string name="overview_payment_under_limit">Kedvezményes\n(átlag alatti)</string>
-    <string name="overview_payment_above_limit">Piaci\n(átlag feletti)</string>
+    <string name="overview_payment_under_limit">Kedvezményes (átlag alatti)</string>
+    <string name="overview_payment_above_limit">Piaci (átlag feletti)</string>
     <string name="overview_meters">Leolvasások</string>
     <string name="overview_consumption">Fogyasztás</string>
     <string name="overview_meter">Leolvasás</string>
