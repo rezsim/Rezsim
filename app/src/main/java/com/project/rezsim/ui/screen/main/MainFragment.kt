@@ -12,6 +12,7 @@ import com.project.rezsim.R
 import com.project.rezsim.base.RezsimFragment
 import com.project.rezsim.device.*
 import com.project.rezsim.server.UserModel
+import com.project.rezsim.server.dto.measurement.Level
 import com.project.rezsim.server.dto.measurement.Measurement
 import com.project.rezsim.server.dto.measurement.Utility
 import com.project.rezsim.ui.screen.activity.MainActivityViewModel
@@ -108,6 +109,7 @@ class MainFragment : RezsimFragment() {
             it.findViewById<AppCompatTextView>(R.id.tvTitleMonthlyConsumptionElectricity).visibility = if (measurement != null) View.VISIBLE else View.INVISIBLE
             it.findViewById<AppCompatTextView>(R.id.tvElectricityEmpty).visibility = if (measurement == null) View.VISIBLE else View.INVISIBLE
             if (measurement != null) {
+                val color = if (measurement.level == Level.UNDERLIMIT.value) R.color.normal_comsumption_color else R.color.overhead_comsumption_color
                 it.findViewById<AppCompatTextView>(R.id.tvValueLastMeterElectricity).apply {
                     text = stringRepository.getById(R.string.electricity_value, measurement.position)
                     visibility = View.VISIBLE
@@ -119,11 +121,14 @@ class MainFragment : RezsimFragment() {
                 it.findViewById<AppCompatTextView>(R.id.tvValueMonthlyConsumptionElectricity).apply {
                     text = stringRepository.getById(R.string.electricity_value, measurement.consumption)
                     visibility = View.VISIBLE
+                    setTextColor(colorRepository.color(color))
                 }
+                it.findViewById<AppCompatImageView>(R.id.ivIconElectricity).imageTintList = colorRepository.stateList(color)
             } else {
                 it.findViewById<AppCompatTextView>(R.id.tvValueLastMeterElectricity).visibility = View.INVISIBLE
                 it.findViewById<AppCompatTextView>(R.id.tvDateLastMeterElectricity).visibility = View.INVISIBLE
                 it.findViewById<AppCompatTextView>(R.id.tvValueMonthlyConsumptionElectricity).visibility = View.INVISIBLE
+                it.findViewById<AppCompatImageView>(R.id.ivIconElectricity).imageTintList = colorRepository.stateList(R.color.text_color)
             }
         }
     }
@@ -136,7 +141,9 @@ class MainFragment : RezsimFragment() {
             it.findViewById<AppCompatTextView>(R.id.tvTitleLastMeterGas).visibility = if (measurement != null) View.VISIBLE else View.INVISIBLE
             it.findViewById<AppCompatTextView>(R.id.tvTitleMonthlyConsumptionGas).visibility = if (measurement != null) View.VISIBLE else View.INVISIBLE
             it.findViewById<AppCompatTextView>(R.id.tvGasEmpty).visibility = if (measurement == null) View.VISIBLE else View.INVISIBLE
+
             if (measurement != null) {
+                val color = if (measurement.level == Level.UNDERLIMIT.value) R.color.normal_comsumption_color else R.color.overhead_comsumption_color
                 it.findViewById<AppCompatTextView>(R.id.tvValueLastMeterGas).apply {
                     text = stringRepository.getById(R.string.gas_value, measurement.position)
                     visibility = View.VISIBLE
@@ -148,11 +155,14 @@ class MainFragment : RezsimFragment() {
                 it.findViewById<AppCompatTextView>(R.id.tvValueMonthlyConsumptionGas).apply {
                     text = stringRepository.getById(R.string.gas_value, measurement.consumption)
                     visibility = View.VISIBLE
+                    setTextColor(colorRepository.color(color))
                 }
+                it.findViewById<AppCompatImageView>(R.id.ivIconGas).imageTintList = colorRepository.stateList(color)
             } else {
                 it.findViewById<AppCompatTextView>(R.id.tvValueLastMeterGas).visibility = View.INVISIBLE
                 it.findViewById<AppCompatTextView>(R.id.tvDateLastMeterGas).visibility = View.INVISIBLE
                 it.findViewById<AppCompatTextView>(R.id.tvValueMonthlyConsumptionGas).visibility = View.INVISIBLE
+                it.findViewById<AppCompatImageView>(R.id.ivIconGas).imageTintList = colorRepository.stateList(R.color.text_color)
             }
         }
     }
