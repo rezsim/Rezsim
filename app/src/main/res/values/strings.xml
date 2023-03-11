@@ -115,6 +115,7 @@
     <string name="overview_consumption">Fogyasztás</string>
     <string name="overview_meter">Leolvasás</string>
     <string name="overview_calculation_error">Nem sikerült lekérni a fogyasztási adatokat!</string>
+    <string name="overview_price_warning">Figyelem! Az árak tájékoztató jellegűek.</string>
 
     <string name="footer_no_meter">Még nincs megjeleníthető óraállás!</string>
 

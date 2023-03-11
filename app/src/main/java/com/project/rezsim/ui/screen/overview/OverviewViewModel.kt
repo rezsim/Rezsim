@@ -17,6 +17,9 @@ import com.project.rezsim.ui.screen.activity.MainActivityViewModel
 import com.project.rezsim.ui.screen.dialog.DialogParameter
 import com.project.rezsim.ui.screen.dialog.meter.MeterDialogFragment
 import com.project.rezsim.ui.screen.header.HeaderViewModel
+import com.project.rezsim.ui.view.message.Message
+import com.project.rezsim.ui.view.message.MessageSeverity
+import com.project.rezsim.ui.view.message.MessageType
 import org.koin.core.component.inject
 import java.util.*
 
@@ -48,6 +51,7 @@ class OverviewViewModel : RezsimViewModel() {
         setMonthSelectorVisibility(settingsRepository.readOverviewMonthSelectorVisible())
         setPaymentVisibility(settingsRepository.readOverviewPaymentVisible())
         calculate()
+
     }
 
     fun title() = stringRepository.getById(if (utility == Utility.GAS) R.string.overview_header_title_gas else R.string.overview_header_title_electricity)
@@ -114,6 +118,9 @@ class OverviewViewModel : RezsimViewModel() {
     private fun setPaymentVisibility(visible: Boolean) {
         paymentVisibilityLiveData.value = visible
         headerViewModel.setButtonColor(R.drawable.ic_dollar, if (visible) R.color.material_indigo_5 else R.color.material_grey_8)
+        if (visible) {
+            activityViewModel.showMessage(null, R.string.overview_price_warning, MessageType.SNACKBAR_CLOSEABLE_AND_MANUALCLOSE, MessageSeverity.INFO)
+        }
     }
 
     private fun calculateMonths(): List<Month> = measurements().map {
